@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Providers;
+
+use App\Models\Content;
+use App\Models\Partner;
+use App\Models\Testimonial;
+use App\Observers\ContentObserver;
+use App\Observers\PartnerObserver;
+use App\Observers\TestimonialObserver;
+use Carbon\CarbonImmutable;
+use Filament\Panel;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        $this->configureDefaults();
+        Content::observe(ContentObserver::class);
+        Partner::observe(PartnerObserver::class);
+        Testimonial::observe(TestimonialObserver::class);
+    }
+
+    /**
+     * Configure default behaviors for production-ready applications.
+     */
+    protected function configureDefaults(): void
+    {
+        Date::use(CarbonImmutable::class);
+
+        DB::prohibitDestructiveCommands(
+            app()->isProduction(),
+        );
+
+        Password::defaults(fn (): ?Password => app()->isProduction()
+            ? Password::min(12)
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+            : null,
+        );
+    }
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->default()
+            ->id('admin')
+            ->path('admin')
+            ->login();
+    }
+}
