@@ -1,174 +1,90 @@
-<div class="contact-form-component">
-
-    <style>
-        /* ── Contact form component ────────────────────────────── */
-        .contact-form-component {
-            width: 100%;
-        }
-
-        /* Success state */
-        .form-success-state {
-            display: flex; flex-direction: column; align-items: flex-start;
-            gap: 1rem; padding: 2.5rem;
-            background: var(--orange-pale);
-            border: 1px solid var(--cream-dark);
-            border-left: 4px solid var(--forest-mid);
-            border-radius: var(--r-lg);
-        }
-        .success-icon { font-size: 2rem; }
-        .form-success-state h3 {
-            font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
-            color: var(--earth);
-        }
-        .form-success-state p {
-            font-size: .95rem; color: var(--earth-muted); line-height: 1.7;
-        }
-        .mt-4 { margin-top: 1rem; }
-
-        /* Error banner */
-        .form-error {
-            background: #fef2f2; border: 1px solid #fecaca;
-            border-left: 4px solid #ef4444;
-            border-radius: var(--r-sm);
-            padding: .85rem 1.1rem;
-            font-size: .9rem; color: #b91c1c;
-            margin-bottom: 1.25rem;
-        }
-        .form-error a { color: #b91c1c; text-decoration: underline; }
-
-        /* Form layout */
-        .contact-form {
-            display: flex; flex-direction: column; gap: 1.25rem;
-        }
-        .form-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-        }
-        .form-group {
-            display: flex; flex-direction: column; gap: .4rem;
-        }
-        .form-group label {
-            font-size: .8rem; font-weight: 600;
-            color: var(--earth-mid);
-            text-transform: uppercase; letter-spacing: .08em;
-        }
-        .required { color: var(--orange); }
-
-        /* Inputs */
-        .form-input {
-            width: 100%;
-            font-family: var(--font-body); font-size: .95rem;
-            padding: .75rem 1rem;
-            background: var(--white);
-            border: 1.5px solid var(--cream-dark);
-            border-radius: var(--r-md);
-            color: var(--earth);
-            outline: none;
-            transition: border-color .2s, box-shadow .2s;
-            -webkit-appearance: none;
-        }
-        .form-input::placeholder { color: var(--earth-muted); opacity: .6; }
-        .form-input:focus {
-            border-color: var(--orange);
-            box-shadow: 0 0 0 3px rgba(224,120,24,.1);
-        }
-        .form-input.input-error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239,68,68,.08);
-        }
-        .form-textarea {
-            resize: vertical; min-height: 140px;
-        }
-
-        /* Validation error text */
-        .error-msg {
-            font-size: .78rem; color: #ef4444;
-            margin-top: -.1rem;
-        }
-
-        /* Submit button loading state */
-        .btn-loading { opacity: .7; cursor: not-allowed; }
-
-        @media (max-width: 600px) {
-            .form-row { grid-template-columns: 1fr; }
-        }
-    </style>
-
+<div>
     @if($state === 'success')
-        <div class="form-success-state">
-            <div class="success-icon">✅</div>
-            <h3>Message sent!</h3>
-            <p>Thank you for reaching out. We'll get back to you within 2 business days.</p>
-            <button wire:click="$set('state', 'idle')" class="btn-outline mt-4">
-                Send another message
-            </button>
+        <div style="padding:3rem 0; text-align:center;">
+            <div style="width:64px; height:64px; background:rgba(46,107,66,.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#2e6b42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            <h3 style="font-family:var(--font-display); font-size:1.5rem; font-weight:800; color:var(--earth); margin-bottom:.5rem;">Message Sent!</h3>
+            <p style="color:var(--earth-muted); margin-bottom:2rem; line-height:1.65;">
+                Thank you for reaching out. We'll get back to you within 2 business days.
+            </p>
+            <button wire:click="$set('state', 'idle')" class="btn-primary">Send Another Message</button>
         </div>
-
     @else
-        <form wire:submit="send" class="contact-form">
 
-            @if($state === 'error')
-                <div class="form-error">
-                    Something went wrong. Please email us directly at
-                    <a href="mailto:info@katosi.org">info@katosi.org</a>.
-                </div>
-            @endif
+        {{-- Title — plain on the page, orange like Red Cross --}}
+        <h3 class="contact-form-title">We love to hear from you</h3>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="name">Full Name <span class="required">*</span></label>
-                    <input type="text"
-                           id="name"
-                           wire:model="name"
-                           placeholder="Your full name"
-                           class="form-input @error('name') input-error @enderror">
-                    @error('name') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
+        @if($state === 'error')
+            <div style="margin-bottom:1.25rem; padding:.75rem 1rem; background:#fef2f2; border-left:3px solid #ef4444; border-radius:0 var(--r-sm) var(--r-sm) 0; font-size:.875rem; color:#b91c1c;">
+                <strong>Something went wrong.</strong>
+                Please email us at <a href="mailto:info@katosi.org" style="font-weight:600; text-decoration:underline;">info@katosi.org</a>
+            </div>
+        @endif
 
-                <div class="form-group">
-                    <label for="email">Email Address <span class="required">*</span></label>
-                    <input type="email"
-                           id="email"
-                           wire:model="email"
-                           placeholder="your@email.com"
-                           class="form-input @error('email') input-error @enderror">
-                    @error('email') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
+        <form wire:submit="send" class="contact-plain-form">
+
+            {{-- Name --}}
+            <div class="cpf-field">
+                <label class="cpf-label" for="name">Name <span class="cpf-req">*</span></label>
+                <input type="text" id="name" wire:model="name"
+                       class="cpf-input @error('name') cpf-input--error @enderror">
+                @error('name')<span class="cpf-error">{{ $message }}</span>@enderror
             </div>
 
-            <div class="form-group">
-                <label for="subject">Subject <span class="required">*</span></label>
-                <input type="text"
-                       id="subject"
-                       wire:model="subject"
-                       placeholder="What's this about?"
-                       class="form-input @error('subject') input-error @enderror">
-                @error('subject') <span class="error-msg">{{ $message }}</span> @enderror
+            {{-- Phone --}}
+            <div class="cpf-field">
+                <label class="cpf-label" for="phone">Phone <span class="cpf-req">*</span></label>
+                <input type="tel" id="phone" wire:model="phone"
+                       placeholder="+256 XXX XXX XXX"
+                       class="cpf-input">
             </div>
 
-            <div class="form-group">
-                <label for="message">Message <span class="required">*</span></label>
-                <textarea id="message"
-                          wire:model="message"
-                          placeholder="Tell us how we can help…"
-                          rows="6"
-                          class="form-input form-textarea @error('message') input-error @enderror"></textarea>
-                @error('message') <span class="error-msg">{{ $message }}</span> @enderror
-            </div>
-
-            <button type="submit"
-                    wire:loading.attr="disabled"
-                    wire:loading.class="btn-loading"
-                    class="btn-primary">
-                <span wire:loading.remove>
-                    Send Message
-                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" style="display:inline-block;vertical-align:middle;margin-left:.25rem">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            {{-- Email --}}
+            <div class="cpf-field">
+                <label class="cpf-label" for="email">Email <span class="cpf-req">*</span></label>
+                <div style="position:relative;">
+                    <input type="email" id="email" wire:model="email"
+                           class="cpf-input @error('email') cpf-input--error @enderror"
+                           style="padding-right:2.5rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                         style="position:absolute; right:.85rem; top:50%; transform:translateY(-50%); color:#999; pointer-events:none;">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M2 7l10 7 10-7"/>
                     </svg>
-                </span>
-                <span wire:loading>Sending…</span>
-            </button>
+                </div>
+                @error('email')<span class="cpf-error">{{ $message }}</span>@enderror
+            </div>
+
+            {{-- Comments --}}
+            <div class="cpf-field">
+                <label class="cpf-label" for="message">Comments <span class="cpf-req">*</span></label>
+                <textarea id="message" wire:model="message"
+                          rows="7"
+                          class="cpf-input cpf-textarea @error('message') cpf-input--error @enderror"></textarea>
+                @error('message')<span class="cpf-error">{{ $message }}</span>@enderror
+            </div>
+
+            {{-- Submit — right-aligned --}}
+            <div style="display:flex; justify-content:flex-end; margin-top:.75rem;">
+                <button type="submit"
+                        wire:loading.attr="disabled"
+                        class="btn-primary"
+                        style="min-width:150px; justify-content:center;">
+                    <span wire:loading.remove>Submit Form</span>
+                    <span wire:loading style="display:none; align-items:center; gap:.5rem;">
+                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             style="animation:spin 1s linear infinite;">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:.25"/>
+                            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" style="opacity:.75"/>
+                        </svg>
+                        Sending…
+                    </span>
+                </button>
+            </div>
 
         </form>
     @endif
-
 </div>

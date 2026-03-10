@@ -1,0 +1,199 @@
+/* ============================================================
+   _donate-form.css — Donation form components (.df-*)
+   Works on orange (homepage) + white (donate page) backgrounds
+   ============================================================ */
+
+/* ── Card wrapper ─────────────────────────────────────────── */
+.donation-form-card {
+    background: var(--white);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--cream-dark);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(43,26,14,.1);
+}
+
+.donation-form-header {
+    background: var(--earth);
+    padding: 1.5rem 1.75rem 1.35rem;
+    position: relative;
+    overflow: hidden;
+}
+.donation-form-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(224,120,24,.1);
+    pointer-events: none;
+}
+
+.donation-form-body {
+    padding: 1.75rem;
+}
+
+/* ── Amount pills / grid ──────────────────────────────────── */
+.df-amounts { display: flex; flex-wrap: wrap; gap: .45rem; }
+.donate-form-wrap .df-amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .65rem;
+}
+.df-amt {
+    font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+    padding: .55rem 1.15rem; border-radius: var(--r-pill);
+    border: 2px solid rgba(255,255,255,.45); background: transparent;
+    color: rgba(255,255,255,.9); cursor: pointer; white-space: nowrap;
+    transition: background .18s, border-color .18s, color .18s, transform .15s;
+}
+.df-amt:hover { background: rgba(255,255,255,.15); border-color: var(--white); transform: translateY(-1px); }
+.df-amt.is-active { background: var(--white); border-color: var(--white); color: var(--orange); }
+.donate-form-wrap .df-amt {
+    border-color: var(--cream-dark); color: var(--earth-mid);
+    border-radius: var(--r-md); padding: .85rem 1rem;
+    text-align: left; white-space: normal;
+}
+.donate-form-wrap .df-amt:hover { background: var(--orange-pale); border-color: var(--orange); color: var(--orange); }
+.donate-form-wrap .df-amt.is-active { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+.df-custom { display: flex; flex-direction: column; gap: .5rem; }
+.df-custom-currency { display: flex; gap: .35rem; }
+.df-curr {
+    font-size: .78rem; font-weight: 600; padding: .3rem .9rem;
+    border-radius: var(--r-pill); border: 1.5px solid rgba(255,255,255,.4);
+    background: transparent; color: rgba(255,255,255,.7); cursor: pointer;
+    transition: background .15s, color .15s;
+}
+.df-curr.is-active { background: var(--white); border-color: var(--white); color: var(--orange); }
+.donate-form-wrap .df-curr { border-color: var(--cream-dark); color: var(--earth-muted); }
+.donate-form-wrap .df-curr.is-active { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+.df-input {
+    width: 100%; font-family: var(--font-body); font-size: .95rem; font-weight: 400;
+    padding: .7rem 1rem; border-radius: var(--r-md);
+    border: 2px solid rgba(255,255,255,.35); background: rgba(255,255,255,.15);
+    color: var(--white); outline: none;
+    transition: border-color .2s, background .2s; -webkit-appearance: none;
+}
+.df-input::placeholder { color: rgba(255,255,255,.45); }
+.df-input:focus { border-color: var(--white); background: rgba(255,255,255,.22); }
+.df-input.is-error { border-color: #fca5a5; }
+.donate-form-wrap .df-input { background: var(--white); border-color: var(--cream-dark); color: var(--earth); }
+.donate-form-wrap .df-input::placeholder { color: var(--earth-muted); opacity: .7; }
+.donate-form-wrap .df-input:focus { border-color: var(--orange); background: var(--white); box-shadow: 0 0 0 3px rgba(224,120,24,.12); }
+.donate-form-wrap .df-input.is-error { border-color: #ef4444; }
+
+.df-impact {
+    display: flex; align-items: flex-start; gap: .6rem;
+    background: rgba(255,255,255,.12); border-left: 3px solid rgba(255,255,255,.45);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: .65rem 1rem;
+    font-size: .875rem; font-weight: 500; color: rgba(255,255,255,.9); line-height: 1.5;
+}
+.df-impact-dot { flex-shrink: 0; font-size: .95rem; }
+.donate-form-wrap .df-impact { background: var(--orange-pale); border-left-color: var(--orange); color: var(--earth-mid); }
+
+.df-methods-wrap { display: flex; flex-direction: column; gap: .45rem; }
+.df-methods-label { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.6); }
+.donate-form-wrap .df-methods-label { color: var(--earth-muted); }
+.df-methods { display: flex; flex-wrap: wrap; gap: .4rem; }
+.df-method {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .85rem; font-weight: 600; padding: .5rem 1.1rem;
+    border-radius: var(--r-pill); border: 2px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.1); color: rgba(255,255,255,.85);
+    cursor: pointer; white-space: nowrap;
+    transition: background .18s, border-color .18s, color .18s, transform .15s;
+}
+.df-method:hover { background: rgba(255,255,255,.2); border-color: var(--white); transform: translateY(-1px); }
+.df-method.is-active { background: var(--white); border-color: var(--white); color: var(--orange); }
+.donate-form-wrap .df-method { border-color: var(--cream-dark); background: var(--white); color: var(--earth-mid); }
+.donate-form-wrap .df-method:hover { border-color: var(--orange); background: var(--orange-pale); color: var(--orange); }
+.donate-form-wrap .df-method.is-active { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+.df-error { font-size: .84rem; font-weight: 500; color: #fde68a; background: rgba(0,0,0,.15); border-radius: var(--r-sm); padding: .55rem .9rem; }
+.donate-form-wrap .df-error { color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; }
+
+.df-submit {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    width: 100%; font-family: var(--font-body); font-size: 1rem; font-weight: 700;
+    padding: .9rem 1.5rem; border-radius: var(--r-pill);
+    border: 2px solid var(--white); background: var(--white); color: var(--orange);
+    cursor: pointer; margin-top: .25rem;
+    transition: background .2s, color .2s, transform .2s, box-shadow .2s;
+}
+.df-submit:hover { background: var(--earth); border-color: var(--earth); color: var(--white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.df-submit:disabled, .df-submit.is-loading { opacity: .7; cursor: not-allowed; transform: none; }
+.donate-form-wrap .df-submit { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.donate-form-wrap .df-submit:hover { background: var(--orange-dark); border-color: var(--orange-dark); box-shadow: 0 8px 24px rgba(224,120,24,.35); }
+
+.df-summary {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    border-radius: var(--r-md); padding: .75rem 1rem;
+}
+.donate-form-wrap .df-summary { background: var(--orange-pale); border-color: var(--cream-dark); }
+.df-summary-left { display: flex; flex-direction: column; gap: .1rem; }
+.df-summary-amt { font-family: var(--font-display); font-size: 1.3rem; font-weight: 900; color: var(--white); line-height: 1; }
+.donate-form-wrap .df-summary-amt { color: var(--orange); }
+.df-summary-via { font-size: .75rem; color: rgba(255,255,255,.65); }
+.donate-form-wrap .df-summary-via { color: var(--earth-muted); }
+.df-change {
+    font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.8); background: none;
+    border: 1px solid rgba(255,255,255,.3); border-radius: var(--r-pill); padding: .35rem .85rem;
+    cursor: pointer; transition: background .15s, color .15s;
+}
+.df-change:hover { background: rgba(255,255,255,.12); color: var(--white); }
+.donate-form-wrap .df-change { color: var(--orange); border-color: var(--orange); }
+.donate-form-wrap .df-change:hover { background: var(--orange); color: var(--white); }
+
+.df-check-row {
+    display: flex; align-items: center; gap: .6rem;
+    font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.85);
+    cursor: pointer; user-select: none;
+}
+.donate-form-wrap .df-check-row { color: var(--earth-mid); }
+.df-checkbox { width: 16px; height: 16px; accent-color: var(--white); cursor: pointer; }
+.donate-form-wrap .df-checkbox { accent-color: var(--orange); }
+
+.df-field { display: flex; flex-direction: column; gap: .35rem; }
+.df-label { font-size: .8rem; font-weight: 600; color: rgba(255,255,255,.75); display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.donate-form-wrap .df-label { color: var(--earth-mid); }
+.df-req { color: #fca5a5; }
+.donate-form-wrap .df-req { color: #ef4444; }
+.df-hint { font-weight: 400; font-size: .72rem; color: rgba(255,255,255,.5); }
+.donate-form-wrap .df-hint { color: var(--earth-muted); }
+
+.df-phone {
+    display: flex; align-items: stretch; border-radius: var(--r-md); overflow: hidden;
+    border: 2px solid rgba(255,255,255,.35); background: rgba(255,255,255,.15); transition: border-color .2s;
+}
+.df-phone:focus-within { border-color: var(--white); }
+.donate-form-wrap .df-phone { background: var(--white); border-color: var(--cream-dark); }
+.donate-form-wrap .df-phone:focus-within { border-color: var(--orange); }
+.df-phone-code {
+    padding: .7rem .85rem; font-size: .88rem; font-weight: 700; color: rgba(255,255,255,.65);
+    background: rgba(255,255,255,.08); border-right: 1px solid rgba(255,255,255,.2);
+    white-space: nowrap; display: flex; align-items: center; user-select: none;
+}
+.donate-form-wrap .df-phone-code { color: var(--earth-light); background: var(--cream-mid); border-right-color: var(--cream-dark); }
+.df-phone-input { border: none !important; background: transparent !important; border-radius: 0 !important; padding-left: .7rem !important; flex: 1; }
+.df-textarea { resize: vertical; min-height: 80px; }
+.df-field-err { font-size: .78rem; color: #fca5a5; margin-top: -.1rem; }
+.donate-form-wrap .df-field-err { color: #ef4444; }
+
+.df-secure { display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: rgba(255,255,255,.5); margin-top: -.2rem; }
+.donate-form-wrap .df-secure { color: var(--earth-muted); }
+
+.df-state { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1.5rem 0; }
+.df-state-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--white); }
+.donate-form-wrap .df-state-title { color: var(--earth); }
+.df-state-sub { font-size: .88rem; color: rgba(255,255,255,.7); }
+.donate-form-wrap .df-state-sub { color: var(--earth-muted); }
+.df-state-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.df-state-icon--fail { background: rgba(239,68,68,.15); color: #fca5a5; border: 2px solid rgba(239,68,68,.3); }
+
+@keyframes df-spin { to { transform: rotate(360deg); } }
+.df-spin { animation: df-spin .8s linear infinite; color: var(--white); }
+.df-spin--lg { width: 36px; height: 36px; }
+.donate-form-wrap .df-spin { color: var(--orange); }
+.df-loading-label { display: flex; align-items: center; gap: .5rem; color: inherit; }

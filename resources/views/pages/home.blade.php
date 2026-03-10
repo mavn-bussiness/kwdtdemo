@@ -1,66 +1,158 @@
 <x-layouts.app title="Home" metaDescription="Empowering women and youth in Uganda's rural and fisher communities since 1995.">
 
     {{-- ══════════════════════════════════════════════════════════
-         HERO
+         HERO — Dynamic content-driven slideshow
+         Slides: 2 latest news articles + 1 featured ongoing project.
+         Falls back to static photography when no CMS content exists yet.
     ══════════════════════════════════════════════════════════ --}}
     <section class="hero">
-        <div class="hero-left">
-            <div class="hero-shape hero-shape--1" aria-hidden="true"></div>
-            <div class="hero-shape hero-shape--2" aria-hidden="true"></div>
 
-            <span class="hero-tag">Established 1995 · Uganda</span>
+        {{-- ── Slideshow background ─────────────────────────────────── --}}
+        <div class="hero-slideshow" id="heroSlideshow" aria-hidden="true">
 
-            <h1 class="hero-headline">
-                Empowering<br>
-                <em>Women</em><br>
-                in Fisher<br>Communities
-            </h1>
+            @if(isset($heroSlides) && count($heroSlides))
 
-            <p class="hero-sub">
-                KWDT works with rural and fishing communities across Mukono,
-                Kalangala and Buvuma — enabling women to lead their own
-                social, economic and political development.
-            </p>
+                {{-- Dynamic slides: one image per CMS item --}}
+                @foreach($heroSlides as $i => $slide)
+                    @php
+                        $fallbacks = [
+                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg',
+                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
+                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',
+                        ];
+                        $imgSrc = $slide['image'] ?? $fallbacks[$i % count($fallbacks)];
+                    @endphp
+                    <img class="hero-slide {{ $i === 0 ? 'active' : '' }}"
+                         src="{{ $imgSrc }}"
+                         alt="{{ $slide['title'] }}"
+                        {{ $i === 0 ? 'loading=eager' : 'loading=lazy' }}>
+                @endforeach
 
-            <div class="hero-actions">
-                <a href="{{ route('projects.index') }}" class="btn-primary">Our Projects</a>
-                <a href="{{ route('about.index') }}" class="btn-ghost">Learn Our Story →</a>
-            </div>
+            @else
 
-            <div class="hero-badge" aria-hidden="true">
-                <span class="hero-badge-num">30+</span>
-                <span class="hero-badge-label">Years<br>of Impact</span>
-            </div>
-        </div>
-
-        <div class="hero-right">
-            <div class="hero-slideshow" id="heroSlideshow">
+                {{-- Static fallback when DB is empty / seeding ──────── --}}
                 @foreach([
                     ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg', 'alt' => 'KWDT women community'],
                     ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg', 'alt' => 'Economic Empowerment'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',           'alt' => 'Community field work'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',           'alt' => 'Clean water project'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg', 'alt' => 'Fisheries forum'],
+                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',          'alt' => 'Community field work'],
+                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',          'alt' => 'Clean water project'],
+                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg',  'alt' => 'Fisheries forum'],
                 ] as $i => $slide)
                     <img class="hero-slide {{ $i === 0 ? 'active' : '' }}"
-                         src="{{ $slide['src'] }}" alt="{{ $slide['alt'] }}">
+                         src="{{ $slide['src'] }}" alt="{{ $slide['alt'] }}"
+                        {{ $i === 0 ? 'loading=eager' : 'loading=lazy' }}>
                 @endforeach
-            </div>
-            <div class="hero-overlay"></div>
-            <div class="hero-slide-dots" id="heroSlideDots"></div>
-            <div class="hero-stats">
-                @foreach([
-                    ['num' => '1,235', 'label' => 'Women Supported'],
-                    ['num' => '52',    'label' => 'Community Groups'],
-                    ['num' => '3',     'label' => 'Districts Covered'],
-                ] as $stat)
-                    <div class="stat-item">
-                        <span class="stat-num">{{ $stat['num'] }}</span>
-                        <span class="stat-label">{{ $stat['label'] }}</span>
+
+            @endif
+        </div>
+
+        {{-- Dark gradient overlay --}}
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        {{-- Scroll indicator --}}
+        <div class="hero-scroll-hint" aria-hidden="true">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+
+        {{-- Slide dots --}}
+        <div class="hero-slide-dots" id="heroSlideDots" aria-hidden="true"></div>
+
+        {{-- ── Dynamic slide content panels — one per CMS item ──────── --}}
+        {{--
+            Each panel IS the hero content for that slide.
+            JS toggles .is-active to crossfade between them.
+            Static fallback panel shown when no CMS data exists.
+        --}}
+        <div class="hero-slides-content" id="heroSlidesContent">
+
+            @if(isset($heroSlides) && count($heroSlides))
+
+                @foreach($heroSlides as $i => $slide)
+                    <div class="hero-content hero-content--slide {{ $i === 0 ? 'is-active' : '' }}"
+                         data-slide-content="{{ $i }}">
+
+                        {{-- Organisation tag + type badge ──────────────── --}}
+                        <div class="hero-tag-row">
+                            <span class="hero-tag">Katosi Women Development Trust</span>
+                            <span class="hero-content-type hero-content-type--{{ $slide['type'] }}">
+                                @if($slide['type'] === 'news')
+                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-8H7v8M7 4v4h8"/></svg>
+                                    Latest News
+                                @elseif($slide['type'] === 'project')
+                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                    Featured Project
+                                @elseif($slide['type'] === 'event')
+                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" stroke-linecap="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                    Upcoming Event
+                                @endif
+                            </span>
+                        </div>
+
+                        {{-- Main headline — the article/project title ───── --}}
+                        <h1 class="hero-headline">
+                            {{ Str::limit($slide['title'], 80) }}
+                        </h1>
+
+                        {{-- Meta line (date / location / status) ─────────── --}}
+                        @if($slide['meta'])
+                            <p class="hero-sub hero-sub--meta">{{ $slide['meta'] }}</p>
+                        @endif
+
+                        {{-- CTAs ─────────────────────────────────────────── --}}
+                        <div class="hero-actions">
+                            <a href="{{ $slide['url'] }}" class="btn-primary">
+                                @if($slide['type'] === 'news') Read Article
+                                @elseif($slide['type'] === 'project') View Project
+                                @else Learn More
+                                @endif
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                            <a href="{{ route('about.index') }}" class="btn-ghost">About KWDT</a>
+                        </div>
+
                     </div>
                 @endforeach
-            </div>
+
+            @else
+
+                {{-- Static fallback ──────────────────────────────────── --}}
+                <div class="hero-content hero-content--slide is-active" data-slide-content="0">
+                    <div class="hero-tag-row">
+                        <span class="hero-tag">Katosi Women Development Trust</span>
+                        <span class="hero-content-type hero-content-type--project">Established 1995</span>
+                    </div>
+                    <h1 class="hero-headline">
+                        Empowering Women<br>in Fisher Communities
+                    </h1>
+                    <p class="hero-sub hero-sub--meta">
+                        Mukono · Kalangala · Buvuma
+                    </p>
+                    <div class="hero-actions">
+                        <a href="{{ route('projects.index') }}" class="btn-primary">Our Projects →</a>
+                        <a href="{{ route('about.index') }}" class="btn-ghost">About KWDT</a>
+                    </div>
+                </div>
+
+            @endif
+
+        </div>{{-- /.hero-slides-content --}}
+
+        {{-- Stats bar at the very bottom --}}
+        <div class="hero-stats">
+            @foreach([
+                ['num' => '1,235', 'label' => 'Women Supported'],
+                ['num' => '52',    'label' => 'Community Groups'],
+                ['num' => '3',     'label' => 'Districts Covered'],
+                ['num' => '30+',   'label' => 'Years of Impact'],
+            ] as $stat)
+                <div class="stat-item">
+                    <span class="stat-num">{{ $stat['num'] }}</span>
+                    <span class="stat-label">{{ $stat['label'] }}</span>
+                </div>
+            @endforeach
         </div>
+
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
@@ -334,148 +426,277 @@
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
-         DONATE — orange with clearer payment UI
+         DONATE SECTION
     ══════════════════════════════════════════════════════════ --}}
-    <section class="donate-section">
-        <div class="donate-left">
-            <div class="donate-shape" aria-hidden="true"></div>
-            <span class="section-label" style="color:rgba(255,255,255,0.65)">Make an Impact</span>
-            <h2 class="section-title reveal">Support a Woman,<br>Transform a Community</h2>
-            <p class="reveal">Every contribution directly supports women and their families in Uganda's most vulnerable fishing communities.</p>
-            @livewire('donation-form')
-        </div>
-        <div class="donate-right reveal">
-            @foreach([
-                ['initial' => 'N', 'quote' => 'KWDT gave me the skills and confidence to run my own fish trading business. I can now educate all four of my children and have a voice in my community.', 'name' => 'Namutebi Florence', 'location' => 'Katosi Landing Site, Mukono'],
-                ['initial' => 'A', 'quote' => 'Before KWDT, our community had no clean water. Today, 718 of us have safe water every day. Our children are no longer getting sick.', 'name' => 'Akello Grace', 'location' => 'Katooke Landing Site, Buikwe'],
-            ] as $t)
-                <div class="testimonial-card">
-                    <svg style="margin-bottom:0.75rem;opacity:0.22" width="24" height="18" viewBox="0 0 24 18" fill="white">
-                        <path d="M0 18V10.8C0 4.68 3.36.6 10.08 0l1.44 2.64C8.4 3.84 6.72 6.12 6.48 10.8H10.8V18H0zm13.2 0V10.8C13.2 4.68 16.56.6 23.28 0l1.44 2.64c-3.12 1.2-4.8 3.48-5.04 8.16H24V18H13.2z"/>
-                    </svg>
-                    <blockquote>"{{ $t['quote'] }}"</blockquote>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">{{ $t['initial'] }}</div>
-                        <div class="author-info">
-                            <span class="author-name">{{ $t['name'] }}</span>
-                            <span class="author-location">{{ $t['location'] }}</span>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+    <section class="donate-section" id="donate">
 
-            <div class="donate-payment-bar">
-                <span class="donate-payment-label">
-                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                    Secure payments accepted via
-                </span>
-                <div class="donate-payment-pills">
-                    <span class="donate-pill">PayPal</span>
-                    <span class="donate-pill">MTN MoMo</span>
-                    <span class="donate-pill">Airtel Money</span>
-                </div>
-            </div>
+        {{-- Left: Community photo --}}
+        <div class="donate-img-panel">
+            <img
+                src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
+                alt="KWDT women community members at Katosi"
+                loading="lazy">
+            <div class="donate-img-panel-overlay" aria-hidden="true"></div>
         </div>
+
+        {{-- Right: Orange content panel --}}
+        <div class="donate-content-panel">
+
+            <span class="section-label">Make an Impact</span>
+
+            <h2 class="section-title reveal">
+                Support a Woman,<br>Transform a Community
+            </h2>
+
+            <p class="donate-body-text reveal">
+                Every contribution directly supports women and their families
+                in Uganda's most vulnerable fishing communities. Your gift
+                creates lasting, generational change.
+            </p>
+
+            <ul class="donate-impact-list reveal" aria-label="What your donation achieves">
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
+                    </svg>
+                    <span><strong>$25</strong> provides clean water access for a family for one month</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                    <span><strong>$50</strong> funds a girl's school term, keeping her in education</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <line x1="12" y1="1" x2="12" y2="23"/>
+                        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                    </svg>
+                    <span><strong>$100</strong> helps a woman launch her own micro-enterprise</span>
+                </li>
+            </ul>
+
+            <a href="{{ route('donate') }}" class="btn-donate-page reveal" aria-label="Go to the donation page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                </svg>
+                Donate Now
+            </a>
+
+            <div class="donate-pay-row reveal">
+                <span class="donate-pay-label">Pay via</span>
+                <span class="donate-pay-pill">PayPal</span>
+                <span class="donate-pay-pill">MTN MoMo</span>
+                <span class="donate-pay-pill">Airtel Money</span>
+            </div>
+
+        </div>
+
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
-         PARTNERS
+         PARTNERS — Auto-scrolling carousel
     ══════════════════════════════════════════════════════════ --}}
     <section class="partners-section">
-        <p class="partners-label">Trusted partners &amp; funders</p>
-        <div class="partners-row">
-            @forelse($partners as $partner)
-                <a href="{{ $partner->website ?? '#' }}" target="_blank" rel="noopener" class="partner-logo" title="{{ $partner->name }}">
-                    @if($partner->logo_url)
-                        <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}">
-                    @else
-                        {{ $partner->name }}
+        <div class="pattern-dots" aria-hidden="true"></div>
+
+        <p class="partners-label">Trusted Partners &amp; Funders</p>
+
+        <div class="partners-carousel">
+            <div class="partners-track-container">
+                <div class="partners-track" id="partnersTrack">
+
+                    {{-- ── Primary set ── --}}
+                    @forelse($partners as $partner)
+                        <div class="partner-item">
+                            <a href="{{ $partner->website ?? '#' }}"
+                               target="{{ $partner->website ? '_blank' : '_self' }}"
+                               rel="noopener"
+                               title="{{ $partner->name }}">
+
+                                @if($partner->has_logo)
+                                    <img
+                                        class="partner-logo-img"
+                                        src="{{ $partner->logo_url }}"
+                                        alt="{{ $partner->name }} logo"
+                                        loading="lazy"
+                                        data-fallback="{{ e($partner->short_name) }}"
+                                        onerror="
+                                            this.onerror = null;
+                                            var s = document.createElement('span');
+                                            s.className = 'partner-fallback';
+                                            s.textContent = this.dataset.fallback;
+                                            this.parentNode.replaceChild(s, this);
+                                        "
+                                    >
+                                @else
+                                    <span class="partner-fallback">{{ $partner->short_name }}</span>
+                                @endif
+
+                                <span class="partner-tooltip">{{ $partner->name }}</span>
+                            </a>
+                        </div>
+                    @empty
+                        {{-- Fallback when DB is empty --}}
+                        @foreach([
+                            'World Forum for Fish Workers',
+                            'Gender Water Alliance',
+                            'Uganda National NGO Forum',
+                            'UWONET',
+                            'WOUGNET',
+                            'UNWFO',
+                        ] as $name)
+                            <div class="partner-item">
+                                <span class="partner-fallback">{{ $name }}</span>
+                            </div>
+                        @endforeach
+                    @endforelse
+
+                    {{-- ── Duplicate set for seamless loop ── --}}
+                    @if($partners->count() > 0)
+                        @foreach($partners as $partner)
+                            <div class="partner-item" aria-hidden="true">
+                                <a href="{{ $partner->website ?? '#' }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   tabindex="-1"
+                                   title="{{ $partner->name }}">
+
+                                    @if($partner->has_logo)
+                                        <img
+                                            class="partner-logo-img"
+                                            src="{{ $partner->logo_url }}"
+                                            alt=""
+                                            loading="lazy"
+                                            data-fallback="{{ e($partner->short_name) }}"
+                                            onerror="
+                                                this.onerror = null;
+                                                var s = document.createElement('span');
+                                                s.className = 'partner-fallback';
+                                                s.textContent = this.dataset.fallback;
+                                                this.parentNode.replaceChild(s, this);
+                                            "
+                                        >
+                                    @else
+                                        <span class="partner-fallback">{{ $partner->short_name }}</span>
+                                    @endif
+                                </a>
+                            </div>
+                        @endforeach
                     @endif
-                </a>
-            @empty
-                @foreach(['GIZ', 'ARCHE NOVA', 'FIAN Uganda', 'Fokus Frauen', 'EU Delegation', 'FAO', 'NGO Bureau Uganda'] as $p)
-                    <span class="partner-logo">{{ $p }}</span>
-                @endforeach
-            @endforelse
-        </div>
+
+                </div>{{-- /.partners-track --}}
+            </div>{{-- /.partners-track-container --}}
+        </div>{{-- /.partners-carousel --}}
     </section>
 
     @push('scripts')
-    <script>
-    // ── Hero slideshow with dots
-    (function() {
-        const slides   = document.querySelectorAll('#heroSlideshow .hero-slide');
-        const dotsWrap = document.getElementById('heroSlideDots');
-        if (!slides.length) return;
-        let current = 0;
-        slides.forEach((_, i) => {
-            const d = document.createElement('button');
-            d.className = 'hero-dot' + (i === 0 ? ' active' : '');
-            d.setAttribute('aria-label', 'Slide ' + (i+1));
-            d.addEventListener('click', () => go(i));
-            dotsWrap.appendChild(d);
-        });
-        function go(n) {
-            slides[current].classList.remove('active');
-            dotsWrap.children[current].classList.remove('active');
-            current = n;
-            slides[current].classList.add('active');
-            dotsWrap.children[current].classList.add('active');
-        }
-        setInterval(() => go((current + 1) % slides.length), 4500);
-    })();
+        <script>
+            // ── Hero slideshow with dots + synced content panels ─────
+            (function () {
+                const slides   = document.querySelectorAll('#heroSlideshow .hero-slide');
+                const panels   = document.querySelectorAll('[data-slide-content]');
+                const dotsWrap = document.getElementById('heroSlideDots');
+                if (!slides.length) return;
+                let current = 0, timer;
 
-    // ── About / community photo slider
-    (function() {
-        const track    = document.getElementById('photoSliderTrack');
-        const dotsWrap = document.getElementById('photoSliderDots');
-        if (!track) return;
-        const slides = track.querySelectorAll('.about-slide');
-        const total  = slides.length;
-        let idx = 0, timer;
-        const vis = () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                // Build dots
+                slides.forEach(function (_, i) {
+                    const d = document.createElement('button');
+                    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                    d.addEventListener('click', function () { go(i); reset(); });
+                    dotsWrap.appendChild(d);
+                });
 
-        slides.forEach((_, i) => {
-            const d = document.createElement('button');
-            d.className = 'photo-dot' + (i === 0 ? ' active' : '');
-            d.setAttribute('aria-label', 'Slide ' + (i+1));
-            d.addEventListener('click', () => { goTo(i); reset(); });
-            dotsWrap.appendChild(d);
-        });
+                function go(n) {
+                    // Background image swap
+                    slides[current].classList.remove('active');
+                    dotsWrap.children[current] && dotsWrap.children[current].classList.remove('active');
 
-        function goTo(n) {
-            const max = Math.max(0, total - vis());
-            idx = Math.max(0, Math.min(n, max));
-            track.style.transform = 'translateX(-' + (100 / vis() * idx) + '%)';
-            Array.from(dotsWrap.children).forEach((d,i) => d.classList.toggle('active', i === idx));
-        }
-        function reset() {
-            clearInterval(timer);
-            timer = setInterval(() => goTo(idx + 1 > total - vis() ? 0 : idx + 1), 4200);
-        }
+                    // Content panel swap — deactivate old, activate new
+                    const oldPanel = document.querySelector('[data-slide-content="' + current + '"]');
+                    if (oldPanel) oldPanel.classList.remove('is-active');
 
-        document.getElementById('photoPrev').addEventListener('click', () => { goTo(idx-1); reset(); });
-        document.getElementById('photoNext').addEventListener('click', () => { goTo(idx+1); reset(); });
+                    current = n;
+                    slides[current].classList.add('active');
+                    dotsWrap.children[current] && dotsWrap.children[current].classList.add('active');
 
-        let tx = 0;
-        track.addEventListener('touchstart', e => tx = e.changedTouches[0].clientX, { passive:true });
-        track.addEventListener('touchend', e => {
-            const d = tx - e.changedTouches[0].clientX;
-            if (Math.abs(d) > 40) { goTo(d > 0 ? idx+1 : idx-1); reset(); }
-        });
-        window.addEventListener('resize', () => goTo(idx));
-        reset();
-    })();
+                    const newPanel = document.querySelector('[data-slide-content="' + current + '"]');
+                    if (newPanel) newPanel.classList.add('is-active');
+                }
 
-    // ── Scroll reveal
-    (function() {
-        const obs = new IntersectionObserver(
-            entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
-            { threshold: 0.1 }
-        );
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    })();
-    </script>
+                function reset() {
+                    clearInterval(timer);
+                    timer = setInterval(function () { go((current + 1) % slides.length); }, 6000);
+                }
+
+                reset();
+            })();
+
+            // ── About / community photo slider ──────────────────────
+            (function () {
+                const track    = document.getElementById('photoSliderTrack');
+                const dotsWrap = document.getElementById('photoSliderDots');
+                if (!track) return;
+
+                const slides = track.querySelectorAll('.about-slide');
+                const total  = slides.length;
+                let idx = 0, timer;
+
+                function vis() {
+                    return window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                }
+
+                slides.forEach(function (_, i) {
+                    const d = document.createElement('button');
+                    d.className = 'photo-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    d.addEventListener('click', function () { goTo(i); reset(); });
+                    dotsWrap.appendChild(d);
+                });
+
+                function goTo(n) {
+                    const max = Math.max(0, total - vis());
+                    idx = Math.max(0, Math.min(n, max));
+                    track.style.transform = 'translateX(-' + (100 / vis() * idx) + '%)';
+                    Array.from(dotsWrap.children).forEach(function (d, i) {
+                        d.classList.toggle('active', i === idx);
+                    });
+                }
+
+                function reset() {
+                    clearInterval(timer);
+                    timer = setInterval(function () {
+                        goTo(idx + 1 > total - vis() ? 0 : idx + 1);
+                    }, 4200);
+                }
+
+                document.getElementById('photoPrev').addEventListener('click', function () { goTo(idx - 1); reset(); });
+                document.getElementById('photoNext').addEventListener('click', function () { goTo(idx + 1); reset(); });
+
+                let tx = 0;
+                track.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
+                track.addEventListener('touchend', function (e) {
+                    const d = tx - e.changedTouches[0].clientX;
+                    if (Math.abs(d) > 40) { goTo(d > 0 ? idx + 1 : idx - 1); reset(); }
+                });
+
+                window.addEventListener('resize', function () { goTo(idx); });
+                reset();
+            })();
+
+            // ── Scroll reveal ────────────────────────────────────────
+            (function () {
+                const obs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+            })();
+        </script>
     @endpush
 
 </x-layouts.app>

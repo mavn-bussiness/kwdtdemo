@@ -8,13 +8,31 @@
     </div>
 
     <section class="section">
+        {{-- Optional: Status filter tabs --}}
+        @if(request()->has('status') || $projects->count() > 0)
+            <div class="filter-tabs">
+                <a href="{{ route('projects.index') }}"
+                   class="filter-tab {{ !request('status') ? 'active' : '' }}">
+                    All
+                </a>
+                <a href="{{ route('projects.index', ['status' => 'ongoing']) }}"
+                   class="filter-tab {{ request('status') == 'ongoing' ? 'active' : '' }}">
+                    Ongoing
+                </a>
+                <a href="{{ route('projects.index', ['status' => 'completed']) }}"
+                   class="filter-tab {{ request('status') == 'completed' ? 'active' : '' }}">
+                    Completed
+                </a>
+                <a href="{{ route('projects.index', ['status' => 'upcoming']) }}"
+                   class="filter-tab {{ request('status') == 'upcoming' ? 'active' : '' }}">
+                    Upcoming
+                </a>
+            </div>
+        @endif
+
         <div class="projects-grid">
             @forelse($projects as $project)
-                <a href="{{ route('projects.show', $project->content->slug) }}" class="project-card reveal">
-                    <h3>{{ $project->content->title }}</h3>
-                    <p>{{ $project->content->excerpt }}</p>
-                    <span class="project-status">● {{ ucfirst($project->status) }}</span>
-                </a>
+                <x-project-card :project="$project" />
             @empty
                 <div class="empty-state">
                     <p>No projects available at the moment.</p>
@@ -33,7 +51,10 @@
         (function () {
             const obs = new IntersectionObserver(
                 entries => entries.forEach(e => {
-                    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        obs.unobserve(e.target);
+                    }
                 }),
                 { threshold: 0.1 }
             );

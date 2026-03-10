@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Webhooks;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donation;
+use App\Models\PaymentTransaction;
 use App\Services\Payment\PayPalService;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,7 @@ class PaypalWebhookController extends Controller
                 ?? null;
 
             if ($orderId) {
-                $transaction = \App\Models\PaymentTransaction::where('gateway_ref', $orderId)->first();
+                $transaction = PaymentTransaction::where('gateway_ref', $orderId)->first();
                 if ($transaction) {
                     $transaction->update(['status' => 'success', 'raw_response' => $payload]);
                     $transaction->donation->update(['status' => 'success']);
@@ -84,7 +85,7 @@ class PaypalWebhookController extends Controller
         if ($eventType === 'PAYMENT.CAPTURE.DENIED') {
             $orderId = $payload['resource']['id'] ?? null;
             if ($orderId) {
-                $transaction = \App\Models\PaymentTransaction::where('gateway_ref', $orderId)->first();
+                $transaction = PaymentTransaction::where('gateway_ref', $orderId)->first();
                 if ($transaction) {
                     $transaction->update(['status' => 'failed', 'raw_response' => $payload]);
                     $transaction->donation->update(['status' => 'failed']);
