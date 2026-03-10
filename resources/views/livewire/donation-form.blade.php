@@ -1,203 +1,239 @@
-<div class="df" x-data="{ step: @entangle('step') }">
+<div class="donation-form-card donate-form-wrap"
+     x-data="{ step: @entangle('step') }">
 
-    {{-- ══ STEP: AMOUNT ══════════════════════════════════════════ --}}
-    <div x-show="step === 'amount'" x-transition:enter="df-fade-in" x-cloak>
-
-        {{-- Amount pills --}}
-        <div class="df-amounts">
-            @foreach($amounts as $value => $label)
-                <button
-                    type="button"
-                    wire:click="selectAmount('{{ $value }}')"
-                    class="df-amt {{ $selectedAmount === $value ? 'is-active' : '' }}"
-                    aria-pressed="{{ $selectedAmount === $value ? 'true' : 'false' }}"
-                >{{ $value === 'custom' ? 'Custom' : '$'.number_format((float)$value) }}</button>
-            @endforeach
+    {{-- ── Card header ────────────────────────────────────────── --}}
+    <div class="donation-form-header">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:.65rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:var(--orange-light); flex-shrink:0;">
+                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                </svg>
+                <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--white);">Make a Donation</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; color:rgba(255,255,255,.45); background:rgba(255,255,255,.08); padding:.22rem .65rem; border-radius:var(--r-pill);">
+                <span x-show="step === 'amount'">Step 1 of 2</span>
+                <span x-show="step === 'details'" x-cloak>Step 2 of 2</span>
+            </span>
         </div>
+        <div style="margin-top:.9rem; height:2px; background:rgba(255,255,255,.12); border-radius:2px; overflow:hidden;">
+            <div style="height:100%; background:var(--orange); border-radius:2px; transition:width .4s ease;"
+                 :style="step === 'amount' ? 'width:50%' : 'width:100%'"></div>
+        </div>
+    </div>
 
-        {{-- Custom input --}}
-        @if($selectedAmount === 'custom')
-            <div class="df-custom">
-                <div class="df-custom-currency">
-                    <button type="button" wire:click="$set('currency','USD')"
+    <div class="donation-form-body">
+
+        {{-- ══ STEP: AMOUNT ══════════════════════════════════════════ --}}
+        <div x-show="step === 'amount'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+
+            <p style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Enter Your Amount</p>
+
+            {{-- Currency toggle --}}
+            <div class="df-custom-currency" style="margin-bottom:.85rem;">
+                <button type="button" wire:click="$set('currency','USD')"
                         class="df-curr {{ $currency === 'USD' ? 'is-active' : '' }}">USD</button>
-                    <button type="button" wire:click="$set('currency','UGX')"
+                <button type="button" wire:click="$set('currency','UGX')"
                         class="df-curr {{ $currency === 'UGX' ? 'is-active' : '' }}">UGX</button>
+            </div>
+
+            {{-- Open amount input --}}
+            <div class="df-field" style="margin-bottom:1.5rem;">
+                <div style="position:relative;">
+                    <span style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); font-family:var(--font-display); font-weight:700; font-size:1.2rem; color:var(--earth-muted); pointer-events:none; line-height:1;">
+                        {{ $currency === 'USD' ? '$' : 'USh' }}
+                    </span>
+                    <input type="number"
+                           wire:model.live.debounce.400ms="customAmount"
+                           class="df-input"
+                           style="padding-left:2.75rem; font-size:1.25rem; font-family:var(--font-display); font-weight:700; height:3.25rem;"
+                           placeholder="0.00"
+                           min="1" step="1">
                 </div>
-                <input type="number" wire:model.live.debounce.400ms="customAmount"
-                    class="df-input" min="1" step="1"
-                    placeholder="{{ $currency === 'USD' ? 'Amount in USD' : 'Amount in UGX' }}"
-                    autofocus>
+                @error('customAmount')
+                <span class="df-field-err">{{ $message }}</span>
+                @enderror
             </div>
-        @endif
 
-        {{-- Impact text --}}
-        <div class="df-impact">
-            <span class="df-impact-dot" aria-hidden="true">💛</span>
-            <span>{{ $this->impactText }}</span>
-        </div>
+            {{-- Payment method --}}
+            <div class="df-methods-wrap" style="margin-bottom:1.5rem;">
+                <span class="df-methods-label">Pay with</span>
+                <div class="df-methods">
 
-        {{-- Payment method --}}
-        <div class="df-methods-wrap">
-            <span class="df-methods-label">Pay with</span>
-            <div class="df-methods">
-                <button type="button" wire:click="$set('paymentMethod','paypal')"
-                    class="df-method {{ $paymentMethod === 'paypal' ? 'is-active' : '' }}">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 00-.556.479l-1.187 7.527h-.99l-.318 2.02a.56.56 0 00.554.647h3.882c.46 0 .85-.334.922-.788l.816-5.09a.932.932 0 01.923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.219-4.975z"/>
-                    </svg>
-                    PayPal
-                </button>
-                <button type="button" wire:click="$set('paymentMethod','mtn_momo')"
-                    class="df-method {{ $paymentMethod === 'mtn_momo' ? 'is-active' : '' }}">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <rect x="5" y="2" width="14" height="20" rx="2"/>
-                        <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
-                    </svg>
-                    MTN MoMo
-                </button>
-                <button type="button" wire:click="$set('paymentMethod','airtel_money')"
-                    class="df-method {{ $paymentMethod === 'airtel_money' ? 'is-active' : '' }}">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <rect x="5" y="2" width="14" height="20" rx="2"/>
-                        <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
-                    </svg>
-                    Airtel Money
-                </button>
-            </div>
-        </div>
+                    {{-- PayPal --}}
+                    <button type="button" wire:click="$set('paymentMethod','paypal')"
+                            class="df-method {{ $paymentMethod === 'paypal' ? 'is-active' : '' }}">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 00-.556.479l-1.187 7.527h-.99l-.318 2.02a.56.56 0 00.554.647h3.882c.46 0 .85-.334.922-.788l.816-5.09a.932.932 0 01.923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.219-4.975z"/>
+                        </svg>
+                        PayPal
+                    </button>
 
-        @if($errorMessage)
-            <p class="df-error" role="alert">⚠ {{ $errorMessage }}</p>
-        @endif
+                    {{-- MTN Mobile Money — SIM card icon --}}
+                    <button type="button" wire:click="$set('paymentMethod','mtn_momo')"
+                            class="df-method {{ $paymentMethod === 'mtn_momo' ? 'is-active' : '' }}">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="5" y="2" width="14" height="20" rx="2"/>
+                            <path d="M9 7h6M9 11h6M9 15h4"/>
+                            <circle cx="15.5" cy="15.5" r=".75" fill="currentColor" stroke="none"/>
+                        </svg>
+                        MTN MoMo
+                    </button>
 
-        <button type="button" wire:click="proceedToDetails" class="df-submit">
-            Continue
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-        </button>
+                    {{-- Airtel Money — wifi/signal icon --}}
+                    <button type="button" wire:click="$set('paymentMethod','airtel_money')"
+                            class="df-method {{ $paymentMethod === 'airtel_money' ? 'is-active' : '' }}">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M1.5 8.5a13 13 0 0121 0"/>
+                            <path d="M5 12a9 9 0 0114 0"/>
+                            <path d="M8.5 15.5a5 5 0 017 0"/>
+                            <circle cx="12" cy="19" r=".75" fill="currentColor" stroke="none"/>
+                        </svg>
+                        Airtel Money
+                    </button>
 
-    </div>
-
-    {{-- ══ STEP: DETAILS ══════════════════════════════════════════ --}}
-    <div x-show="step === 'details'" x-transition:enter="df-fade-in" x-cloak>
-
-        {{-- Summary bar --}}
-        <div class="df-summary">
-            <span class="df-summary-left">
-                <span class="df-summary-amt">
-                    {{ $currency }} {{ number_format($this->finalAmount) }}
-                </span>
-                <span class="df-summary-via">
-                    via {{ match($paymentMethod) { 'paypal' => 'PayPal', 'mtn_momo' => 'MTN MoMo', 'airtel_money' => 'Airtel Money', default => $paymentMethod } }}
-                </span>
-            </span>
-            <button type="button" wire:click="$set('step','amount')" class="df-change">← Change</button>
-        </div>
-
-        {{-- Anonymous --}}
-        <label class="df-check-row">
-            <input type="checkbox" wire:model.live="isAnonymous" class="df-checkbox">
-            <span>Donate anonymously</span>
-        </label>
-
-        @unless($isAnonymous)
-            <div class="df-field">
-                <label class="df-label" for="df-name">Full Name <span class="df-req">*</span></label>
-                <input id="df-name" type="text" wire:model="donorName"
-                    class="df-input @error('donorName') is-error @enderror"
-                    placeholder="Your full name" autocomplete="name">
-                @error('donorName')<span class="df-field-err">{{ $message }}</span>@enderror
-            </div>
-            <div class="df-field">
-                <label class="df-label" for="df-email">Email <span class="df-req">*</span></label>
-                <input id="df-email" type="email" wire:model="donorEmail"
-                    class="df-input @error('donorEmail') is-error @enderror"
-                    placeholder="you@email.com" autocomplete="email">
-                @error('donorEmail')<span class="df-field-err">{{ $message }}</span>@enderror
-            </div>
-        @endunless
-
-        @if(in_array($paymentMethod, ['mtn_momo', 'airtel_money']))
-            <div class="df-field">
-                <label class="df-label" for="df-phone">
-                    Mobile Number <span class="df-req">*</span>
-                    <span class="df-hint">(registered with {{ $paymentMethod === 'mtn_momo' ? 'MTN' : 'Airtel' }})</span>
-                </label>
-                <div class="df-phone">
-                    <span class="df-phone-code">+256</span>
-                    <input id="df-phone" type="tel" wire:model="donorPhone"
-                        class="df-input df-phone-input @error('donorPhone') is-error @enderror"
-                        placeholder="7XX XXX XXX" autocomplete="tel">
                 </div>
-                @error('donorPhone')<span class="df-field-err">{{ $message }}</span>@enderror
             </div>
-        @endif
 
-        @if($expanded)
-            <div class="df-field">
-                <label class="df-label" for="df-reason">
-                    Message <span class="df-hint">(optional)</span>
-                </label>
-                <textarea id="df-reason" wire:model="reason"
-                    class="df-input df-textarea"
-                    placeholder="Tell us what inspired your donation…"
-                    rows="3" maxlength="500"></textarea>
-            </div>
-        @endif
+            @if($errorMessage)
+                <div class="df-error" style="margin-bottom:1rem;">{{ $errorMessage }}</div>
+            @endif
 
-        @if($errorMessage)
-            <p class="df-error" role="alert">⚠ {{ $errorMessage }}</p>
-        @endif
-
-        <button type="button" wire:click="submitDonation"
-            wire:loading.attr="disabled" wire:loading.class="is-loading"
-            class="df-submit">
-            <span wire:loading.remove wire:target="submitDonation">
-                Donate {{ $currency }} {{ number_format($this->finalAmount) }}
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            <button type="button" wire:click="proceedToDetails" class="df-submit">
+                Continue to Details
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-            </span>
-            <span wire:loading wire:target="submitDonation" class="df-loading-label">
-                <svg class="df-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </button>
+
+            <p class="df-secure" style="justify-content:center; margin-top:.85rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
                 </svg>
-                Processing…
-            </span>
-        </button>
-
-        <p class="df-secure">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-            Secured &amp; encrypted. We never store payment details.
-        </p>
-
-    </div>
-
-    {{-- ══ STEP: PROCESSING ══════════════════════════════════════ --}}
-    <div x-show="step === 'processing'" x-transition:enter="df-fade-in" x-cloak class="df-state">
-        <svg class="df-spin df-spin--lg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-        </svg>
-        <p class="df-state-title">Redirecting to payment…</p>
-        <p class="df-state-sub">Please wait, do not close this window.</p>
-    </div>
-
-    {{-- ══ STEP: FAILED ══════════════════════════════════════════ --}}
-    <div x-show="step === 'failed'" x-transition:enter="df-fade-in" x-cloak class="df-state">
-        <div class="df-state-icon df-state-icon--fail">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+                Secured &amp; encrypted. We never store payment details.
+            </p>
         </div>
-        <p class="df-state-title">Something went wrong</p>
-        <p class="df-state-sub">{{ $errorMessage ?: "We couldn't process your donation. Please try again." }}</p>
-        <button type="button" wire:click="resetForm" class="df-submit" style="margin-top:1rem">
-            Try Again
-        </button>
-    </div>
 
+        {{-- ══ STEP: DETAILS ══════════════════════════════════════════ --}}
+        <div x-show="step === 'details'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+
+            <div class="df-summary" style="margin-bottom:1.25rem;">
+                <div class="df-summary-left">
+                    <span class="df-summary-via">Donation summary</span>
+                    <span class="df-summary-amt">{{ $currency }} {{ number_format($this->finalAmount) }}</span>
+                    <span class="df-summary-via">
+                        via {{ match($paymentMethod) {
+                            'paypal'       => 'PayPal',
+                            'mtn_momo'     => 'MTN MoMo',
+                            'airtel_money' => 'Airtel Money',
+                            default        => $paymentMethod,
+                        } }}
+                    </span>
+                </div>
+                <button type="button" wire:click="$set('step','amount')" class="df-change">Change</button>
+            </div>
+
+            <label class="df-check-row" style="margin-bottom:1.25rem; padding:.85rem 1rem; background:var(--cream-mid); border-radius:var(--r-md);">
+                <input type="checkbox" wire:model.live="isAnonymous" class="df-checkbox">
+                <div>
+                    <span style="font-weight:600; display:block;">Donate anonymously</span>
+                    <span style="font-size:.78rem; color:var(--earth-muted);">Your name won't be listed publicly</span>
+                </div>
+            </label>
+
+            @unless($isAnonymous)
+                <div class="df-field" style="margin-bottom:1rem;">
+                    <label class="df-label" for="donor-name">Full Name <span class="df-req">*</span></label>
+                    <input id="donor-name" type="text" wire:model="donorName" placeholder="Your full name"
+                           class="df-input @error('donorName') is-error @enderror">
+                    @error('donorName')<span class="df-field-err">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="df-field" style="margin-bottom:1rem;">
+                    <label class="df-label" for="donor-email">Email Address <span class="df-req">*</span></label>
+                    <input id="donor-email" type="email" wire:model="donorEmail" placeholder="you@example.com"
+                           class="df-input @error('donorEmail') is-error @enderror">
+                    @error('donorEmail')<span class="df-field-err">{{ $message }}</span>@enderror
+                </div>
+            @endunless
+
+            @if(in_array($paymentMethod, ['mtn_momo', 'airtel_money']))
+                <div class="df-field" style="margin-bottom:1rem;">
+                    <label class="df-label" for="donor-phone">
+                        Mobile Number <span class="df-req">*</span>
+                        <span class="df-hint">(registered with {{ $paymentMethod === 'mtn_momo' ? 'MTN' : 'Airtel' }})</span>
+                    </label>
+                    <div class="df-phone">
+                        <span class="df-phone-code">+256</span>
+                        <input id="donor-phone" type="tel" wire:model="donorPhone" placeholder="7XX XXX XXX"
+                               class="df-input df-phone-input @error('donorPhone') is-error @enderror">
+                    </div>
+                    @error('donorPhone')<span class="df-field-err">{{ $message }}</span>@enderror
+                </div>
+            @endif
+
+            @if($expanded)
+                <div class="df-field" style="margin-bottom:1rem;">
+                    <label class="df-label" for="reason">Message <span class="df-hint">(optional)</span></label>
+                    <textarea id="reason" wire:model="reason" placeholder="Tell us what inspired your donation..."
+                              rows="3" maxlength="500" class="df-input df-textarea"></textarea>
+                </div>
+            @endif
+
+            @if($errorMessage)
+                <div class="df-error" style="margin-bottom:1rem;">{{ $errorMessage }}</div>
+            @endif
+
+            <button type="button" wire:click="submitDonation" wire:loading.attr="disabled" class="df-submit">
+                <span wire:loading.remove class="df-loading-label">
+                    Complete Donation
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                    </svg>
+                </span>
+                <span wire:loading class="df-loading-label" style="display:none;">
+                    <svg class="df-spin" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:.25"/>
+                        <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" style="opacity:.75"/>
+                    </svg>
+                    Processing…
+                </span>
+            </button>
+
+            <p class="df-secure" style="justify-content:center; margin-top:.75rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                </svg>
+                Secured &amp; encrypted. We never store payment details.
+            </p>
+        </div>
+
+        {{-- ══ STEP: PROCESSING ══════════════════════════════════════ --}}
+        <div x-show="step === 'processing'" x-transition:enter="transition duration-300 ease-out" x-cloak
+             style="padding:3.5rem 0; text-align:center;">
+            <svg class="df-spin df-spin--lg" style="margin:0 auto 1.25rem; display:block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:.25"/>
+                <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" style="opacity:.75"/>
+            </svg>
+            <p class="df-state-title" style="text-align:center;">Redirecting to payment…</p>
+            <p class="df-state-sub" style="text-align:center; margin-top:.35rem;">Please wait, do not close this window.</p>
+        </div>
+
+        {{-- ══ STEP: FAILED ══════════════════════════════════════════ --}}
+        <div x-show="step === 'failed'" x-transition:enter="transition duration-300 ease-out" x-cloak
+             style="padding:2.5rem 0; text-align:center;">
+            <div class="df-state-icon df-state-icon--fail" style="margin:0 auto 1.25rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </div>
+            <p class="df-state-title" style="text-align:center;">Something went wrong</p>
+            <p class="df-state-sub" style="text-align:center; margin-top:.35rem; margin-bottom:1.5rem;">
+                {{ $errorMessage ?: "We couldn't process your donation. Please try again." }}
+            </p>
+            <button type="button" wire:click="resetForm" class="df-submit" style="width:auto; padding:.75rem 2rem;">
+                Try Again
+            </button>
+        </div>
+
+    </div>
 </div>
