@@ -17,10 +17,10 @@ use Filament\Tables\Table;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?string $recordTitleAttribute = 'Category';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+    protected static ?int $navigationSort = 5;
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
@@ -32,19 +32,12 @@ class CategoryResource extends Resource
         return CategoriesTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => ListCategories::route('/'),
+            'index'  => ListCategories::route('/'),
             'create' => CreateCategory::route('/create'),
-            'edit' => EditCategory::route('/{record}/edit'),
+            'edit'   => EditCategory::route('/{record}/edit'),
         ];
     }
 }

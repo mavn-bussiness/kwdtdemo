@@ -19,10 +19,10 @@ use Filament\Tables\Table;
 class ReportResource extends Resource
 {
     protected static ?string $model = Report::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?string $recordTitleAttribute = 'Report';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+    protected static ?int $navigationSort = 4;
+    protected static ?string $recordTitleAttribute = 'file_name';
 
     public static function form(Schema $schema): Schema
     {
@@ -39,20 +39,13 @@ class ReportResource extends Resource
         return ReportsTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => ListReports::route('/'),
+            'index'  => ListReports::route('/'),
             'create' => CreateReport::route('/create'),
-            'view' => ViewReport::route('/{record}'),
-            'edit' => EditReport::route('/{record}/edit'),
+            'view'   => ViewReport::route('/{record}'),
+            'edit'   => EditReport::route('/{record}/edit'),
         ];
     }
 }

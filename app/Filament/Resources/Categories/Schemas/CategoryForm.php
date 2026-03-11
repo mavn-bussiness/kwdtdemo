@@ -12,9 +12,16 @@ class CategoryForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->columnSpan(1),
+
                 TextInput::make('slug')
-                    ->required(),
-            ]);
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->helperText('Auto-generated from name. You may customise it.')
+                    ->columnSpan(1),
+            ])
+            ->columns(2);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Reports\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ReportInfolist
@@ -11,22 +12,41 @@ class ReportInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('content.title')
-                    ->label('Content'),
-                TextEntry::make('file_name'),
-                TextEntry::make('file_path'),
-                TextEntry::make('file_type'),
-                TextEntry::make('file_size_kb')
-                    ->numeric()
-                    ->placeholder('-'),
-                TextEntry::make('report_year')
-                    ->numeric(),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Report Details')
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('content.title')
+                            ->label('Content Entry'),
+
+                        TextEntry::make('report_year')
+                            ->label('Report Year'),
+
+                        TextEntry::make('file_name')
+                            ->label('File Name'),
+
+                        TextEntry::make('file_type')
+                            ->label('File Type'),
+
+                        TextEntry::make('file_size_kb')
+                            ->label('File Size')
+                            ->formatStateUsing(fn ($state) => $state ? $state . ' KB' : '—'),
+
+                        TextEntry::make('file_path')
+                            ->label('Download')
+                            ->formatStateUsing(fn ($state) => $state ? basename($state) : '—')
+                            ->url(fn ($record) => $record->file_path
+                                ? asset('storage/' . $record->file_path)
+                                : null)
+                            ->openUrlInNewTab(),
+                    ]),
+
+                Section::make('Timestamps')
+                    ->columns(2)
+                    ->collapsed()
+                    ->schema([
+                        TextEntry::make('created_at')->dateTime(),
+                        TextEntry::make('updated_at')->dateTime(),
+                    ]),
             ]);
     }
 }

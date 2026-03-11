@@ -20,9 +20,15 @@ class TeamMembersResource extends Resource
 {
     protected static ?string $model = TeamMember::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
-    protected static ?string $recordTitleAttribute = 'TeamMember';
+    protected static string|null|\UnitEnum $navigationGroup = 'Organisation';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Team Members';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
@@ -37,13 +43,6 @@ class TeamMembersResource extends Resource
     public static function table(Table $table): Table
     {
         return TeamMembersTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
