@@ -39,6 +39,9 @@
 }
 .news-hero-sub { font-size: 1.05rem; color: rgba(253,246,237,.72); max-width: 48ch; line-height: 1.65; }
 
+/* Slimmer hero variant for utility pages (privacy, terms, reports) */
+.news-hero--slim { height: 320px; }
+
 /* ── Category filter bar ─────────────────────────────────────── */
 .news-filter-bar {
     background: var(--white); border-bottom: 1px solid var(--cream-dark);

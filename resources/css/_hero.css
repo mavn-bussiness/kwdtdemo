@@ -4,9 +4,14 @@
 
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero {
-    position: relative; min-height: 72vh; max-height: 820px;
-    display: flex; flex-direction: column;
-    justify-content: flex-end; overflow: hidden;
+    position: relative;
+    height: calc(100vh - 36px); /* 36px = topbar height */
+    min-height: 560px;          /* floor so it never gets too short */
+    max-height: 1080px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
     margin-top: 0;
 }
 
@@ -68,9 +73,10 @@
 }
 .hero-headline {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.8vw, 2.6rem);
-    font-weight: 800; line-height: 1.15; color: var(--white);
+    font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+    font-weight: 800; line-height: 1.12; color: var(--white);
     margin-bottom: .85rem; animation: fadeUp .8s .1s var(--ease) both;
+    max-width: 22ch;
 }
 .hero-headline em { font-style: italic; color: var(--orange-light); display: block; }
 .hero-sub {
@@ -274,10 +280,11 @@
 
 .hero-content--slide {
     position: absolute;
-    bottom: 3.5rem;
-    left: 6vw;
-    /* Cap at ~50% width so the right side of the image stays visible */
-    max-width: min(600px, 52%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 6vw 4rem;
+    max-width: 100%;
 
     opacity: 0;
     pointer-events: none;
@@ -331,13 +338,27 @@
 
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 700px) {
+    .hero {
+        height: calc(100vh - 36px); /* topbar still shows on mobile */
+        min-height: 480px;
+    }
     .hero-content--slide {
-        left: 1rem;
-        right: 1rem;
-        bottom: 2.5rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 1.5rem 2.5rem;
     }
     .hero-slides-content {
-        padding: 0 1rem 2.5rem;
+        padding: 0 1.5rem 2.5rem;
         min-height: 280px;
+    }
+    .hero-headline { max-width: 100%; }
+}
+
+/* Hide topbar on mobile — hero becomes full 100vh */
+@media (max-width: 860px) {
+    .hero {
+        height: calc(100vh - 0px); /* topbar hidden on mobile via nav CSS */
+        min-height: 480px;
     }
 }

@@ -70,6 +70,8 @@
     background: #FFFFFF;
     border-bottom: 1px solid var(--cream-dark);
     box-shadow: 0 2px 16px rgba(43,26,14,.06);
+    /* Update the nav-h variable to reflect actual nav height (without topbar) */
+    --nav-h: 80px;
 }
 
 .nav-inner {

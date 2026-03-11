@@ -3,11 +3,17 @@
     metaDescription="Support KWDT's work empowering women in Uganda's fishing communities.">
 
     {{-- ── Page Hero ─────────────────────────────────────────── --}}
-    <div class="page-hero page-hero--short">
-        <div class="page-hero-content">
-            <span class="section-label" style="color:var(--orange-light)">Make an Impact</span>
-            <h1 class="page-title">Support Our Mission</h1>
-            <p class="page-intro">Every contribution makes a direct difference in the lives of women and communities across Uganda.</p>
+    <div class="news-hero">
+        <div class="news-hero-bg">
+            <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
+                 alt="KWDT community"
+                 loading="eager">
+        </div>
+        <div class="news-hero-overlay"></div>
+        <div class="news-hero-content">
+            <span class="news-hero-label">Make an Impact</span>
+            <h1 class="news-hero-title">Support Our Mission</h1>
+            <p class="news-hero-sub">Every contribution makes a direct difference in the lives of women and communities across Uganda.</p>
         </div>
     </div>
 
