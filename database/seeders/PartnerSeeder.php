@@ -106,6 +106,6 @@ class PartnerSeeder extends Seeder
             Partner::create($partner);
         }
 
-        $this->command->info('Successfully seeded ' . count($partners) . ' partners.');
+        $this->command->info('Successfully seeded '.count($partners).' partners.');
     }
 }
