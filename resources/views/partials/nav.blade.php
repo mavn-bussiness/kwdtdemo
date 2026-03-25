@@ -81,9 +81,9 @@
                     {{-- Orange monogram fallback --}}
                     <div class="nav-monogram" aria-hidden="true">
                         <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
-                            <circle cx="26" cy="26" r="26" fill="#E07818"/>
+                            <circle cx="26" cy="26" r="26" fill="var(--orange)"/>
                             <text x="26" y="33" text-anchor="middle"
-                                  font-family="Georgia,serif" font-size="22"
+                                  font-family="var(--font-display)" font-size="22"
                                   font-weight="900" fill="white">K</text>
                         </svg>
                     </div>

@@ -38,7 +38,6 @@ class HomepageCache
     {
         return Cache::remember('homepage.projects', now()->addHours(12), fn () =>
         Project::with('content')
-            ->ongoing()
             ->take(3)
             ->get()
         );

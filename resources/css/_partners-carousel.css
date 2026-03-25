@@ -7,7 +7,7 @@
 /* ── Section shell ──────────────────────────────────────────── */
 .partners-section {
     padding: 4rem 2rem;
-    background: var(--cream);
+    background: var(--white);
     border-top: 1px solid var(--cream-dark);
     border-bottom: 1px solid var(--cream-dark);
     position: relative;
@@ -29,11 +29,11 @@
 }
 .partners-section::before {
     left: 0;
-    background: linear-gradient(to right, var(--cream) 0%, transparent 100%);
+    background: linear-gradient(to right, var(--white) 0%, transparent 100%);
 }
 .partners-section::after {
     right: 0;
-    background: linear-gradient(to left, var(--cream) 0%, transparent 100%);
+    background: linear-gradient(to left, var(--white) 0%, transparent 100%);
 }
 
 /* ── Label ──────────────────────────────────────────────────── */

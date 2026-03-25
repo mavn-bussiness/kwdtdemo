@@ -1,35 +1,13 @@
-<x-layouts.app title="Ongoing Projects" metaDescription="Current initiatives by KWDT">
+<x-layouts.app title="Our Work" metaDescription="Our initiatives and impact in the community">
 
     <div class="page-hero page-hero--short">
         <div class="page-hero-content">
-            <span class="section-label">Projects</span>
-            <h1 class="page-title">Ongoing Projects</h1>
+            <span class="section-label">Impact</span>
+            <h1 class="page-title">Our Work</h1>
         </div>
     </div>
 
     <section class="section">
-        {{-- Optional: Status filter tabs --}}
-        @if(request()->has('status') || $projects->count() > 0)
-            <div class="filter-tabs">
-                <a href="{{ route('projects.index') }}"
-                   class="filter-tab {{ !request('status') ? 'active' : '' }}">
-                    All
-                </a>
-                <a href="{{ route('projects.index', ['status' => 'ongoing']) }}"
-                   class="filter-tab {{ request('status') == 'ongoing' ? 'active' : '' }}">
-                    Ongoing
-                </a>
-                <a href="{{ route('projects.index', ['status' => 'completed']) }}"
-                   class="filter-tab {{ request('status') == 'completed' ? 'active' : '' }}">
-                    Completed
-                </a>
-                <a href="{{ route('projects.index', ['status' => 'upcoming']) }}"
-                   class="filter-tab {{ request('status') == 'upcoming' ? 'active' : '' }}">
-                    Upcoming
-                </a>
-            </div>
-        @endif
-
         <div class="projects-grid">
             @forelse($projects as $project)
                 <x-project-card :project="$project" />

@@ -3,32 +3,34 @@
    Design tokens: variables, resets, base styles
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 /* ── Brand palette ──────────────────────────────────────────── */
 :root {
-    --orange:        #E07818;
-    --orange-dark:   #B85E0D;
-    --orange-deeper: #8C4408;
-    --orange-light:  #F0984A;
-    --orange-pale:   #FDF0E3;
+    --orange:        #F5820A;
+    --orange-dark:   #D06800;
+    --orange-deeper: #A85200;
+    --orange-light:  #FF9E30;
+    --orange-pale:   #FFF3E3;
 
-    --earth:         #2B1A0E;
-    --earth-mid:     #4A2E18;
-    --earth-light:   #7A5535;
-    --earth-muted:   #A0785A;
+    /* Neutral dark — all mapped to black */
+    --earth:         #000000;
+    --earth-mid:     #1A1A1A;
+    --earth-light:   #333333;
+    --earth-muted:   #555555;
 
-    --forest:        #1F4A2E;
-    --forest-mid:    #2E6B42;
+    /* Accent dark panels — black */
+    --forest:        #000000;
+    --forest-mid:    #111111;
 
-    --cream:         #FDF6ED;
-    --cream-mid:     #F5E8D4;
-    --cream-dark:    #E8D4B8;
-    --white:         #FFFCF7;
+    --cream:         #FFFFFF;
+    --cream-mid:     #F5F5F5;
+    --cream-dark:    #E8E8E8;
+    --white:         #FFFFFF;
 
-    /* Typography */
-    --font-display: 'Playfair Display', Georgia, serif;
-    --font-body:    'DM Sans', system-ui, sans-serif;
+    /* Typography — Poppins headings + Inter body */
+    --font-display: 'Poppins', system-ui, sans-serif;
+    --font-body:    'Inter', system-ui, sans-serif;
     --font-mono:    'DM Mono', monospace;
 
     /* Spacing */
@@ -58,7 +60,7 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
     font-family: var(--font-body);
-    background: var(--cream);
+    background: var(--white);
     color: var(--earth);
     line-height: 1.65;
     overflow-x: hidden;

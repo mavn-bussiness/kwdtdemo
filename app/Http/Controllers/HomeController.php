@@ -81,7 +81,6 @@ class HomeController extends Controller
         // ── Slot 4 — most recently updated ongoing project ────────────────────
         try {
             $project = Project::with('content')
-                ->ongoing()
                 ->latest('updated_at')
                 ->first();
 
@@ -91,9 +90,7 @@ class HomeController extends Controller
                     'title' => $project->content->title,
                     'url'   => route('projects.show', $project->content->slug),
                     'image' => $project->content->featured_image ?? null,
-                    'meta'  => $project->location
-                        ? $project->location . ' · ' . $project->statusLabel()
-                        : $project->statusLabel(),
+                    'meta'  => $project->location,
                 ];
             }
         } catch (\Exception $e) {

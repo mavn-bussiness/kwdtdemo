@@ -2,7 +2,7 @@
 
     {{-- ══════════════════════════════════════════════════════════
          HERO — Dynamic content-driven slideshow
-         Slides: 2 latest news articles + 1 featured ongoing project.
+         Slides: 2 latest news articles + 1 featured project.
          Falls back to static photography when no CMS content exists yet.
     ══════════════════════════════════════════════════════════ --}}
     <section class="hero">
@@ -171,7 +171,7 @@
 
         <div class="wave-top" aria-hidden="true">
             <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0,36 C360,72 1080,0 1440,36 L1440,72 L0,72 Z" fill="#E07818"/>
+                <path d="M0,36 C360,72 1080,0 1440,36 L1440,72 L0,72 Z" fill="var(--orange)"/>
             </svg>
         </div>
 
@@ -199,16 +199,16 @@
 
             {{-- Text --}}
             <div class="about-wave-content">
-                <span class="section-label reveal" style="color:rgba(255,255,255,0.7)">Who We Are</span>
+                <span class="section-label reveal" style="color:rgba(255,255,255,0.8)">Who We Are</span>
                 <h2 class="section-title reveal" style="color:#fff">
                     Rooted in Community,<br>Driven by <em style="color:var(--earth)">Purpose</em>
                 </h2>
-                <p class="reveal" style="color:rgba(255,255,255,0.88);line-height:1.8;margin-bottom:1rem">
+                <p class="reveal" style="color:rgba(255,255,255,0.95);line-height:1.8;margin-bottom:1rem">
                     <strong style="color:#fff">Katosi Women Development Trust (KWDT)</strong> is a registered non-profit
                     improving living standards of poor and rural fisher communities in Uganda by empowering
-                    them to engage in their own development processes.
+                    them to empower themselves.
                 </p>
-                <p class="reveal" style="color:rgba(255,255,255,0.75);line-height:1.8;margin-bottom:2rem;font-size:0.96rem">
+                <p class="reveal" style="color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:2rem;font-size:0.96rem">
                     Recognising women as critical agents of development, KWDT addresses the challenges
                     that hinder their participation — from gender-based violence to limited access to
                     healthcare, education, and economic opportunity.
@@ -336,11 +336,11 @@
     {{-- ══════════════════════════════════════════════════════════
          FEATURED PROJECTS
     ══════════════════════════════════════════════════════════ --}}
-    <section class="projects-section">
+    <section class="projects-section bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px]">
         <div class="section-header">
             <span class="section-label reveal">Our Work</span>
-            <h2 class="section-title reveal">Ongoing Projects</h2>
-            <p class="section-intro reveal">Real change in real communities — here's what we're working on right now.</p>
+            <h2 class="section-title reveal">Featured Projects</h2>
+            <p class="section-intro reveal">Tangible impact across Uganda's fishing communities — exploring our recent initiatives.</p>
         </div>
         <div class="projects-grid">
             @forelse($featuredProjects as $project)
@@ -352,12 +352,13 @@
                     ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg',  'status' => 'Ongoing', 'title' => 'CFS Gender Equality & Food Security Guidelines',   'desc' => 'Implementing FAO guidelines on gender equality in food security with women from 12 African countries.', 'loc' => 'Regional', 'bene' => null],
                 ] as $p)
                     <a href="{{ route('projects.index') }}" class="project-card reveal">
-                        <img class="project-card-bg" src="{{ $p['img'] }}" alt="{{ $p['title'] }}" loading="lazy">
-                        <div class="project-card-overlay"></div>
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-bg" src="{{ $p['img'] }}" alt="{{ $p['title'] }}" loading="lazy">
+                            <div class="project-card-overlay"></div>
+                        </div>
                         <div class="project-card-content">
-                            <span class="project-status">● {{ $p['status'] }}</span>
                             <h3>{{ $p['title'] }}</h3>
-                            <p>{{ $p['desc'] }}</p>
+                            <p>{{ Str::limit($p['desc'], 90) }}</p>
                             <div class="project-meta">
                                 <span>📍 {{ $p['loc'] }}</span>
                                 @if($p['bene']) <span>👥 {{ $p['bene'] }}</span> @endif
@@ -374,7 +375,7 @@
             @endforelse
         </div>
         <div style="margin-top:3rem;text-align:center" class="reveal">
-            <a href="{{ route('projects.index') }}" class="btn-outline-sand">View All Projects →</a>
+            <a href="{{ route('projects.index') }}" class="btn-outline">View All Projects →</a>
         </div>
     </section>
 
