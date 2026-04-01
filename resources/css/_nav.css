@@ -369,8 +369,64 @@
     }
 
     .nav-inner {
-        padding: 0 1.5rem;
+        padding: 0 var(--space-inner);
         height: 72px; /* Slightly shorter on mobile */
+        gap: 1rem;
+    }
+
+    .nav-logo-img-wrap {
+        width: 48px;
+        height: 48px;
+    }
+
+    .nav-logo-text .logo-name {
+        font-size: 0.8rem;
+        max-width: 130px;
+    }
+
+    .nav-actions {
+        gap: 0.5rem;
+    }
+
+    .nav-donate-btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    .nav-donate-btn svg {
+        display: none;
+    }
+
+    .mob-drawer-head {
+        padding: 1.5rem var(--space-inner);
+    }
+    .mob-drawer-body {
+        padding: 1.5rem var(--space-inner);
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-inner {
+        gap: 0.5rem;
+    }
+
+    .nav-logo-text .logo-name {
+        font-size: 0.72rem;
+        max-width: 110px;
+    }
+
+    .nav-donate-btn {
+        padding: 0.45rem 0.75rem !important;
+        font-size: 0.75rem !important;
+    }
+
+    .nav-search-btn {
+        display: none;
+    }
+
+    .nav-hamburger {
+        width: 38px;
+        height: 38px;
     }
 }
 
@@ -382,7 +438,7 @@
     bottom: 0;
     width: min(340px, 88vw);
     z-index: 300;
-    background: #000000;
+    background: var(--panel);
     display: flex;
     flex-direction: column;
     transform: translateX(110%);
@@ -426,6 +482,10 @@
     display: flex;
     align-items: center;
     gap: .65rem;
+}
+.mob-drawer-logo img {
+    height: 32px;
+    width: auto;
 }
 
 .mob-logo-acronym {
@@ -482,7 +542,7 @@
     font-size: 1.15rem;
     font-weight: 700;
     color: rgba(255,255,255,.88);
-    padding: .85rem 1.5rem;
+    padding: .85rem var(--space-inner);
     border: none;
     border-bottom: 1px solid rgba(255,255,255,.05);
     background: none;
@@ -527,7 +587,7 @@
 .mob-sub {
     display: flex;
     align-items: center;
-    padding: .6rem 1.5rem .6rem 2.25rem;
+    padding: .6rem var(--space-inner) .6rem calc(var(--space-inner) + 0.75rem);
     font-size: .9rem;
     font-weight: 500;
     color: rgba(255,255,255,.55);
@@ -540,7 +600,7 @@
 .mob-sub::before {
     content: '';
     position: absolute;
-    left: 1.5rem;
+    left: var(--space-inner);
     top: 50%;
     transform: translateY(-50%);
     width: 5px;
@@ -553,7 +613,7 @@
 
 .mob-sub:hover {
     color: var(--orange-light);
-    padding-left: 2.65rem;
+    padding-left: calc(var(--space-inner) + 1.15rem);
 }
 
 .mob-sub:hover::before {
@@ -565,7 +625,7 @@
 }
 
 .mob-drawer-foot {
-    padding: 1.25rem 1.5rem 2rem;
+    padding: 1.25rem var(--space-inner) 2rem;
     border-top: 1px solid rgba(255,255,255,.07);
     display: flex;
     flex-direction: column;

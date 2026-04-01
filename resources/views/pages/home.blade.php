@@ -158,7 +158,7 @@
     {{-- ══════════════════════════════════════════════════════════
          MISSION BAND
     ══════════════════════════════════════════════════════════ --}}
-    <div class="mission-band">
+    <div class="mission-band" style="background: var(--panel);">
         <p>"Empowered women and youth with healthy and productive livelihoods in a sustainable environment"</p>
         <div class="mission-divider"></div>
         <p>"Enabling women and female youth in rural communities to effectively engage in their social, economic and political development"</p>
@@ -201,7 +201,7 @@
             <div class="about-wave-content">
                 <span class="section-label reveal" style="color:rgba(255,255,255,0.8)">Who We Are</span>
                 <h2 class="section-title reveal" style="color:#fff">
-                    Rooted in Community,<br>Driven by <em style="color:var(--earth)">Purpose</em>
+                    Rooted in Community,<br>Driven by <em style="color:var(--orange-light)">Purpose</em>
                 </h2>
                 <p class="reveal" style="color:rgba(255,255,255,0.95);line-height:1.8;margin-bottom:1rem">
                     <strong style="color:#fff">Katosi Women Development Trust (KWDT)</strong> is a registered non-profit
@@ -267,7 +267,7 @@
 
         <div class="wave-bottom" aria-hidden="true">
             <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0,36 C360,0 1080,72 1440,36 L1440,0 L0,0 Z" fill="#E07818"/>
+                <path d="M0,36 C360,0 1080,72 1440,36 L1440,0 L0,0 Z" fill="var(--orange)"/>
             </svg>
         </div>
     </section>

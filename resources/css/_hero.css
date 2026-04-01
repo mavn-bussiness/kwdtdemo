@@ -32,14 +32,14 @@
 
 .hero-overlay {
     position: absolute; inset: 0; z-index: 1;
-    /* Clean dark base only at bottom-left where text sits — no heavy brown */
+    /* Warm sunset overlay with deep oranges/browns — no navy/purple */
     background:
         linear-gradient(to top,
-        rgba(0,0,0,.72) 0%,
-        rgba(0,0,0,.30) 35%,
+        rgba(43,22,0,.82) 0%,
+        rgba(43,22,0,.38) 35%,
         transparent 65%),
         linear-gradient(to right,
-        rgba(0,0,0,.40) 0%,
+        rgba(245,130,10,.25) 0%,
         transparent 55%);
 }
 
@@ -56,7 +56,7 @@
 
 .hero-content {
     position: relative; z-index: 2;
-    padding: 0 6vw 3.5rem; max-width: 860px;
+    padding: 0 var(--space-inner) 3.5rem; max-width: 860px;
 }
 .hero-tag {
     display: inline-flex; align-items: center; gap: .5rem;
@@ -85,9 +85,9 @@
 
 .hero-stats {
     position: relative; z-index: 2; display: flex;
-    background: rgba(0,0,0,.55);
+    background: rgba(43,22,0,.76);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-top: 3px solid var(--orange);
+    border-top: 3px solid var(--orange-light);
 }
 .stat-item {
     flex: 1; display: flex; flex-direction: column; align-items: center;
@@ -125,7 +125,7 @@
 
 /* ── Mission band ────────────────────────────────────────────── */
 .mission-band {
-    background: #000000; color: var(--white);
+    background: var(--panel); color: var(--white);
     display: flex; align-items: center; justify-content: center;
     gap: 4rem; padding: 3rem var(--space-md); flex-wrap: wrap; text-align: center;
 }
@@ -179,7 +179,7 @@
 }
 .collage-stat-badge {
     position: absolute; top: 12%; right: -20px;
-    background: #000000; color: var(--white);
+    background: var(--panel); color: var(--white);
     border-radius: var(--r-md); padding: 1rem 1.4rem;
     text-align: center; z-index: 4;
     box-shadow: 0 8px 28px rgba(0,0,0,.35); border-left: 4px solid var(--orange);
@@ -232,7 +232,7 @@
 .about-slide-cap {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 1.25rem 1rem .85rem;
-    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(43,22,0,.88) 0%, transparent 100%);
     font-size: .72rem; font-family: var(--font-mono); letter-spacing: .06em;
     color: rgba(253,246,237,.82); opacity: 0; transform: translateY(4px);
     transition: opacity .3s, transform .3s;
@@ -268,7 +268,7 @@
 .hero-slides-content {
     position: relative;
     z-index: 2;
-    padding: 0 6vw 3.5rem;
+    padding: 0 var(--space-inner) 3.5rem;
     /* Needs a defined height so stacked panels don't collapse */
     min-height: 320px;
     display: flex;
@@ -280,7 +280,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 6vw 4rem;
+    padding: 0 var(--space-inner) 4rem;
     max-width: 100%;
 
     opacity: 0;
@@ -318,9 +318,9 @@
     border-radius: var(--r-pill);
     font-weight: 600;
 }
-.hero-content-type--news    { background: rgba(224,120,24,.22); color: var(--orange-light); border: 1px solid rgba(224,120,24,.3); }
-.hero-content-type--event   { background: rgba(59,130,246,.18); color: #93c5fd;              border: 1px solid rgba(59,130,246,.25); }
-.hero-content-type--project { background: rgba(0,0,0,.55);   color: rgba(255,255,255,.85);              border: 1px solid rgba(255,255,255,.2); }
+.hero-content-type--news    { background: rgba(245,130,10,.22); color: var(--orange-light); border: 1px solid rgba(245,130,10,.3); }
+.hero-content-type--event   { background: rgba(255,208,107,.18); color: var(--gold-light);  border: 1px solid rgba(255,208,107,.25); }
+.hero-content-type--project { background: rgba(43,22,0,.72);   color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
 
 /* Meta line (date / location / status) */
 .hero-sub--meta {
@@ -336,26 +336,37 @@
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 700px) {
     .hero {
-        height: calc(100vh - 36px); /* topbar still shows on mobile */
+        height: 100vh;
         min-height: 480px;
     }
-    .hero-content--slide {
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 0 1.5rem 2.5rem;
-    }
     .hero-slides-content {
-        padding: 0 1.5rem 2.5rem;
-        min-height: 280px;
+        min-height: 380px;
     }
-    .hero-headline { max-width: 100%; }
+    .hero-headline {
+        font-size: 2rem;
+        max-width: 100%;
+    }
+    .hero-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost {
+        width: 100%;
+        justify-content: center;
+    }
+    .hero-content {
+        padding-bottom: 3.5rem;
+    }
+    .hero-content--slide {
+        padding-bottom: 4rem;
+    }
 }
 
 /* Hide topbar on mobile — hero becomes full 100vh */
 @media (max-width: 860px) {
     .hero {
-        height: calc(100vh - 0px); /* topbar hidden on mobile via nav CSS */
+        height: 100vh;
         min-height: 480px;
     }
 }
