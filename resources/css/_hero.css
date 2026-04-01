@@ -5,8 +5,8 @@
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero {
     position: relative;
-    height: calc(100vh - 36px); /* 36px = topbar height */
-    min-height: 560px;          /* floor so it never gets too short */
+    height: calc(100vh + 100px); /* 36px = topbar height */
+    min-height: 660px;          /* floor so it never gets too short */
     max-height: 1080px;
     display: flex;
     flex-direction: column;
@@ -33,14 +33,7 @@
 .hero-overlay {
     position: absolute; inset: 0; z-index: 1;
     /* Warm sunset overlay with deep oranges/browns — no navy/purple */
-    background:
-        linear-gradient(to top,
-        rgba(43,22,0,.82) 0%,
-        rgba(43,22,0,.38) 35%,
-        transparent 65%),
-        linear-gradient(to right,
-        rgba(245,130,10,.25) 0%,
-        transparent 55%);
+    background: rgba(43,22,0,.3);
 }
 
 .hero-slide-dots {

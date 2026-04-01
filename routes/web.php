@@ -8,8 +8,6 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Webhooks\AirtelWebhookController;
-use App\Http\Controllers\Webhooks\MtnWebhookController;
 use App\Http\Controllers\Webhooks\PaypalWebhookController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,20 +59,4 @@ Route::prefix('donate')->name('donate.')->group(function () {
     Route::get('/paypal/{donation}/capture', [PaypalWebhookController::class, 'capture'])->name('paypal.capture');
     // 3. PayPal server-to-server webhook
     Route::post('/webhook/paypal', [PaypalWebhookController::class, 'handle'])->name('webhook.paypal');
-
-    // ── MTN Mobile Money ──────────────────────────────────────────────────────
-    // 1. Triggers USSD push to donor's phone
-    Route::get('/mtn/{donation}', [MtnWebhookController::class, 'redirect'])->name('mtn');
-    // 2. Polling page — auto-refreshes until resolved
-    Route::get('/mtn/{donation}/status', [MtnWebhookController::class, 'status'])->name('mtn.status');
-    // 3. MTN server-to-server webhook
-    Route::post('/webhook/mtn', [MtnWebhookController::class, 'handle'])->name('webhook.mtn');
-
-    // ── Airtel Money ──────────────────────────────────────────────────────────
-    // 1. Triggers USSD push to donor's phone
-    Route::get('/airtel/{donation}', [AirtelWebhookController::class, 'redirect'])->name('airtel');
-    // 2. Polling page — auto-refreshes until resolved
-    Route::get('/airtel/{donation}/status', [AirtelWebhookController::class, 'status'])->name('airtel.status');
-    // 3. Airtel server-to-server webhook
-    Route::post('/webhook/airtel', [AirtelWebhookController::class, 'handle'])->name('webhook.airtel');
 });

@@ -28,12 +28,10 @@
 
             <p style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Enter Your Amount</p>
 
-            {{-- Currency toggle --}}
-            <div class="df-custom-currency" style="margin-bottom:.85rem;">
+            {{-- Currency toggle (USD only for now) --}}
+            <div class="df-custom-currency" style="margin-bottom:.85rem; display:none;">
                 <button type="button" wire:click="$set('currency','USD')"
                         class="df-curr {{ $currency === 'USD' ? 'is-active' : '' }}">USD</button>
-                <button type="button" wire:click="$set('currency','UGX')"
-                        class="df-curr {{ $currency === 'UGX' ? 'is-active' : '' }}">UGX</button>
             </div>
 
             {{-- Open amount input --}}
@@ -47,19 +45,17 @@
                            class="df-input"
                            style="padding-left:2.75rem; font-size:1.25rem; font-family:var(--font-display); font-weight:700; height:3.25rem;"
                            placeholder="0.00"
-                           min="1" step="1">
+                           min="1" step="0.01">
                 </div>
                 @error('customAmount')
                 <span class="df-field-err">{{ $message }}</span>
                 @enderror
             </div>
 
-            {{-- Payment method --}}
-            <div class="df-methods-wrap" style="margin-bottom:1.5rem;">
+            {{-- Payment method (PayPal only for now) --}}
+            <div class="df-methods-wrap" style="margin-bottom:1.5rem; display:none;">
                 <span class="df-methods-label">Pay with</span>
                 <div class="df-methods">
-
-                    {{-- PayPal --}}
                     <button type="button" wire:click="$set('paymentMethod','paypal')"
                             class="df-method {{ $paymentMethod === 'paypal' ? 'is-active' : '' }}">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -67,30 +63,6 @@
                         </svg>
                         PayPal
                     </button>
-
-                    {{-- MTN Mobile Money — SIM card icon --}}
-                    <button type="button" wire:click="$set('paymentMethod','mtn_momo')"
-                            class="df-method {{ $paymentMethod === 'mtn_momo' ? 'is-active' : '' }}">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="5" y="2" width="14" height="20" rx="2"/>
-                            <path d="M9 7h6M9 11h6M9 15h4"/>
-                            <circle cx="15.5" cy="15.5" r=".75" fill="currentColor" stroke="none"/>
-                        </svg>
-                        MTN MoMo
-                    </button>
-
-                    {{-- Airtel Money — wifi/signal icon --}}
-                    <button type="button" wire:click="$set('paymentMethod','airtel_money')"
-                            class="df-method {{ $paymentMethod === 'airtel_money' ? 'is-active' : '' }}">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M1.5 8.5a13 13 0 0121 0"/>
-                            <path d="M5 12a9 9 0 0114 0"/>
-                            <path d="M8.5 15.5a5 5 0 017 0"/>
-                            <circle cx="12" cy="19" r=".75" fill="currentColor" stroke="none"/>
-                        </svg>
-                        Airtel Money
-                    </button>
-
                 </div>
             </div>
 
@@ -119,14 +91,9 @@
             <div class="df-summary" style="margin-bottom:1.25rem;">
                 <div class="df-summary-left">
                     <span class="df-summary-via">Donation summary</span>
-                    <span class="df-summary-amt">{{ $currency }} {{ number_format($this->finalAmount) }}</span>
+                    <span class="df-summary-amt">{{ $currency }} {{ number_format($this->finalAmount, 2) }}</span>
                     <span class="df-summary-via">
-                        via {{ match($paymentMethod) {
-                            'paypal'       => 'PayPal',
-                            'mtn_momo'     => 'MTN MoMo',
-                            'airtel_money' => 'Airtel Money',
-                            default        => $paymentMethod,
-                        } }}
+                        via PayPal
                     </span>
                 </div>
                 <button type="button" wire:click="$set('step','amount')" class="df-change">Change</button>
@@ -156,20 +123,6 @@
                 </div>
             @endunless
 
-            @if(in_array($paymentMethod, ['mtn_momo', 'airtel_money']))
-                <div class="df-field" style="margin-bottom:1rem;">
-                    <label class="df-label" for="donor-phone">
-                        Mobile Number <span class="df-req">*</span>
-                        <span class="df-hint">(registered with {{ $paymentMethod === 'mtn_momo' ? 'MTN' : 'Airtel' }})</span>
-                    </label>
-                    <div class="df-phone">
-                        <span class="df-phone-code">+256</span>
-                        <input id="donor-phone" type="tel" wire:model="donorPhone" placeholder="7XX XXX XXX"
-                               class="df-input df-phone-input @error('donorPhone') is-error @enderror">
-                    </div>
-                    @error('donorPhone')<span class="df-field-err">{{ $message }}</span>@enderror
-                </div>
-            @endif
 
             @if($expanded)
                 <div class="df-field" style="margin-bottom:1rem;">

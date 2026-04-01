@@ -158,10 +158,8 @@
     {{-- ══════════════════════════════════════════════════════════
          MISSION BAND
     ══════════════════════════════════════════════════════════ --}}
-    <div class="mission-band" style="background: var(--panel);">
+    <div class="mission-band" style="background: var(--panel); border-top: 1px solid rgba(255,160,0,0.1); border-bottom: 1px solid rgba(255,160,0,0.1);">
         <p>"Empowered women and youth with healthy and productive livelihoods in a sustainable environment"</p>
-        <div class="mission-divider"></div>
-        <p>"Enabling women and female youth in rural communities to effectively engage in their social, economic and political development"</p>
     </div>
 
     {{-- ══════════════════════════════════════════════════════════
@@ -426,7 +424,7 @@
 
             {{-- Left arrow --}}
             <button class="news-arrow news-arrow--prev" id="newsPrev" aria-label="Previous story">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
@@ -446,7 +444,6 @@
                                         loading="lazy">
                                 </div>
                                 <div class="news-card-content">
-                                    <span class="news-card-category">{{ $post->category?->name ?? $post->type_label ?? 'STORY' }}</span>
                                     <h3 class="news-card-title">{{ $post->title }}</h3>
                                     <p class="news-card-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->body ?? ''), 180) }}</p>
                                     <a href="{{ route('blog.show', $post->slug) }}" class="news-card-readmore">Read More</a>
@@ -484,7 +481,6 @@
                                         <img src="{{ $news['img'] }}" alt="{{ $news['title'] }}" loading="lazy">
                                     </div>
                                     <div class="news-card-content">
-                                        <span class="news-card-category">{{ $news['category'] }}</span>
                                         <h3 class="news-card-title">{{ $news['title'] }}</h3>
                                         <p class="news-card-excerpt">{{ $news['excerpt'] }}</p>
                                         <a href="{{ route($news['url']) }}" class="news-card-readmore">Read More</a>
@@ -499,7 +495,7 @@
 
             {{-- Right arrow --}}
             <button class="news-arrow news-arrow--next" id="newsNext" aria-label="Next story">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
             </button>
@@ -787,8 +783,10 @@
                 let idx = 0, timer;
 
                 function buildDots() {
+                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                    const numDots = Math.max(1, total - vis + 1);
                     dotsWrap.innerHTML = '';
-                    for (let i = 0; i < total; i++) {
+                    for (let i = 0; i < numDots; i++) {
                         const d = document.createElement('button');
                         d.className = 'news-dot' + (i === 0 ? ' active' : '');
                         d.setAttribute('aria-label', 'Go to news ' + (i + 1));
@@ -798,8 +796,14 @@
                 }
 
                 function goTo(n) {
-                    idx = Math.max(0, Math.min(n, total - 1));
-                    track.style.transform = 'translateX(-' + (100 * idx) + '%)';
+                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                    const max = total - vis;
+                    idx = Math.max(0, Math.min(n, max));
+
+                    const gap = 24; // 1.5rem
+                    const cardWidth = track.querySelector('.news-card').offsetWidth;
+                    track.style.transform = 'translateX(-' + ((cardWidth + gap) * idx) + 'px)';
+
                     Array.from(dotsWrap.children).forEach(function (d, i) {
                         d.classList.toggle('active', i === idx);
                     });
@@ -808,19 +812,36 @@
                 function reset() {
                     clearInterval(timer);
                     timer = setInterval(function () {
-                        goTo((idx + 1) % total);
+                        const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                        const max = total - vis;
+                        goTo(idx + 1 > max ? 0 : idx + 1);
                     }, 6000);
                 }
 
+                window.addEventListener('resize', function() {
+                    buildDots();
+                    goTo(0);
+                });
+
                 buildDots();
-                if (prevBtn) prevBtn.addEventListener('click', function () { goTo(idx - 1 < 0 ? total - 1 : idx - 1); reset(); });
-                if (nextBtn) nextBtn.addEventListener('click', function () { goTo((idx + 1) % total); reset(); });
+                if (prevBtn) prevBtn.addEventListener('click', function () {
+                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                    const max = total - vis;
+                    goTo(idx - 1 < 0 ? max : idx - 1); reset();
+                });
+                if (nextBtn) nextBtn.addEventListener('click', function () {
+                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                    const max = total - vis;
+                    goTo(idx + 1 > max ? 0 : idx + 1); reset();
+                });
 
                 let tx = 0;
                 track.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
                 track.addEventListener('touchend', function (e) {
                     const d = tx - e.changedTouches[0].clientX;
-                    if (Math.abs(d) > 50) { goTo(d > 0 ? (idx + 1) % total : (idx - 1 + total) % total); reset(); }
+                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+                    const max = total - vis;
+                    if (Math.abs(d) > 50) { goTo(d > 0 ? (idx + 1 > max ? 0 : idx + 1) : (idx - 1 < 0 ? max : idx - 1)); reset(); }
                 });
 
                 reset();

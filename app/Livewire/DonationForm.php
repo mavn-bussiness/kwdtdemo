@@ -45,28 +45,17 @@ class DonationForm extends Component
     ];
 
     // ── Validation rules ──────────────────────────────────────────
-    protected function rules(): array
+    public function rules(): array
     {
-        $rules = [
-            'paymentMethod' => 'required|in:paypal,mtn_momo,airtel_money',
-            'currency' => 'required|in:USD,UGX',
+        return [
+            'paymentMethod' => 'required|in:paypal',
+            'currency' => 'required|in:USD',
             'isAnonymous' => 'boolean',
             'donorEmail' => 'nullable|email',
             'reason' => 'nullable|string|max:500',
+            'donorName' => 'required_if:isAnonymous,false|string|max:255',
+            'donorEmail' => 'required_if:isAnonymous,false|email|max:255',
         ];
-
-        // Phone required for Mobile Money
-        if (in_array($this->paymentMethod, ['mtn_momo', 'airtel_money'])) {
-            $rules['donorPhone'] = 'required|string|min:10|max:15';
-        }
-
-        // Name + email required if not anonymous
-        if (! $this->isAnonymous) {
-            $rules['donorName'] = 'required|string|max:255';
-            $rules['donorEmail'] = 'required|email|max:255';
-        }
-
-        return $rules;
     }
 
     // ── Computed: final donation amount ───────────────────────────
@@ -102,6 +91,11 @@ class DonationForm extends Component
     {
         $amount = $this->finalAmount;
 
+        if ($this->selectedAmount === 'custom' && empty($this->customAmount)) {
+             $this->errorMessage = 'Please enter a donation amount.';
+             return;
+        }
+
         if ($amount <= 0) {
             $this->errorMessage = 'Please enter a valid donation amount.';
 
@@ -109,7 +103,7 @@ class DonationForm extends Component
         }
 
         if ($amount < 1) {
-            $this->errorMessage = 'Minimum donation is $1 / UGX 3,700.';
+            $this->errorMessage = 'Minimum donation is $1.';
 
             return;
         }
@@ -129,7 +123,6 @@ class DonationForm extends Component
             $donation = Donation::create([
                 'donor_name' => $this->isAnonymous ? null : $this->donorName,
                 'donor_email' => $this->isAnonymous ? null : $this->donorEmail,
-                'donor_phone' => $this->donorPhone ?: null,
                 'reason' => $this->reason ?: null,
                 'amount_original' => $this->finalAmount,
                 'currency' => $this->currency,

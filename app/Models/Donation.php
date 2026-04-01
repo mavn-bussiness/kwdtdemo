@@ -32,7 +32,6 @@ class Donation extends Model
     {
         return [
             'amount_original' => 'decimal:2',
-            'amount_usd' => 'decimal:2',
             'is_anonymous' => 'boolean',
         ];
     }
@@ -87,16 +86,6 @@ class Donation extends Model
         return $query->where('payment_method', 'paypal');
     }
 
-    public function scopeViaMtnMomo(Builder $query): Builder
-    {
-        return $query->where('payment_method', 'mtn_momo');
-    }
-
-    public function scopeViaAirtel(Builder $query): Builder
-    {
-        return $query->where('payment_method', 'airtel_money');
-    }
-
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
@@ -114,19 +103,15 @@ class Donation extends Model
      */
     public function paymentMethodLabel(): string
     {
-        return match ($this->payment_method) {
-            'paypal' => 'PayPal',
-            'mtn_momo' => 'MTN Mobile Money',
-            'airtel_money' => 'Airtel Money',
-            default => ucfirst($this->payment_method),
-        };
+        return 'PayPal';
     }
 
     /**
      * Whether this donation was paid in UGX (local Mobile Money).
+     * @deprecated Only USD/PayPal supported now
      */
     public function isLocalCurrency(): bool
     {
-        return $this->currency === 'UGX';
+        return false;
     }
 }

@@ -60,7 +60,7 @@ class PayPalService
                     'amount' => [
                         'currency_code' => 'USD',
                         // PayPal requires a string with 2 decimal places
-                        'value' => number_format((float) $donation->amount_usd, 2, '.', ''),
+                        'value' => number_format((float) $donation->amount_original, 2, '.', ''),
                     ],
                     'description' => 'Donation to Katosi Women Development Trust',
                 ]],
@@ -84,7 +84,7 @@ class PayPalService
             'gateway' => 'paypal',
             'gateway_ref' => $data['id'],   // PayPal order ID
             'status' => 'pending',
-            'amount' => $donation->amount_usd,
+            'amount' => $donation->amount_original,
             'currency' => 'USD',
             'raw_response' => $data,
         ]);
