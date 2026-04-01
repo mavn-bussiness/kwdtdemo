@@ -40,4 +40,9 @@ return [
         'client_secret' => env('PAYPAL_CLIENT_SECRET'),
     ],
 
+    'google_analytics' => [
+        'embed_url' => env('GOOGLE_ANALYTICS_EMBED_URL'),
+        'measurement_id' => env('GOOGLE_ANALYTICS_MEASUREMENT_ID'),
+    ],
+
 ];

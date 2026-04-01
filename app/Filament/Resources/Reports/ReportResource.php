@@ -11,8 +11,8 @@ use App\Filament\Resources\Reports\Schemas\ReportInfolist;
 use App\Filament\Resources\Reports\Tables\ReportsTable;
 use App\Models\Report;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
