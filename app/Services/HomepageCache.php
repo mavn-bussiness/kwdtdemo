@@ -16,17 +16,16 @@ class HomepageCache
     public static function get(): array
     {
         return [
-            'blogs'        => static::blogs(),
-            'projects'     => static::projects(),
-            'partners'     => static::partners(),
+            'blogs' => static::blogs(),
+            'projects' => static::projects(),
+            'partners' => static::partners(),
             'testimonials' => static::testimonials(),
         ];
     }
 
     public static function blogs()
     {
-        return Cache::remember('homepage.blogs', now()->addHours(6), fn () =>
-        Content::published()
+        return Cache::remember('homepage.blogs', now()->addHours(6), fn () => Content::published()
             ->ofType('blog')
             ->latestPublished()
             ->take(3)
@@ -36,8 +35,7 @@ class HomepageCache
 
     public static function projects()
     {
-        return Cache::remember('homepage.projects', now()->addHours(12), fn () =>
-        Project::with('content')
+        return Cache::remember('homepage.projects', now()->addHours(12), fn () => Project::with('content')
             ->take(3)
             ->get()
         );
@@ -45,8 +43,7 @@ class HomepageCache
 
     public static function partners()
     {
-        return Cache::remember('homepage.partners', now()->addDay(), fn () =>
-        Partner::with('media')
+        return Cache::remember('homepage.partners', now()->addDay(), fn () => Partner::with('media')
             ->active()
             ->orderBy('order')
             ->get()
@@ -55,8 +52,7 @@ class HomepageCache
 
     public static function testimonials()
     {
-        return Cache::remember('homepage.testimonials', now()->addDay(), fn () =>
-        Testimonial::where('is_featured', true)
+        return Cache::remember('homepage.testimonials', now()->addDay(), fn () => Testimonial::where('is_featured', true)
             ->orderBy('order')
             ->take(3)
             ->get()

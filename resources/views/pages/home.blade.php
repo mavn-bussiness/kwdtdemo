@@ -334,96 +334,186 @@
     </div>
 
     {{-- ══════════════════════════════════════════════════════════
-         FEATURED PROJECTS
+         PROJECTS — Card grid
     ══════════════════════════════════════════════════════════ --}}
-    <section class="projects-section bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px]">
-        <div class="section-header">
-            <span class="section-label reveal">Our Work</span>
-            <h2 class="section-title reveal">Featured Projects</h2>
-            <p class="section-intro reveal">Tangible impact across Uganda's fishing communities — exploring our recent initiatives.</p>
-        </div>
-        <div class="projects-grid">
-            @forelse($featuredProjects as $project)
-                <x-project-card :project="$project" />
-            @empty
-                @foreach([
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',           'status' => 'Ongoing', 'title' => 'Clean Water Access at Katooke Landing Site', 'desc' => '718 people across 123 households now have access to 10,000 litres of safe water per day.', 'loc' => 'Buikwe District', 'bene' => '718 beneficiaries'],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg', 'status' => 'Ongoing', 'title' => 'Justice Forum on Fisheries & Human Rights',       'desc' => 'Creating platforms for fisherfolk to engage with duty bearers on rights and livelihoods.', 'loc' => 'Kalangala', 'bene' => null],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg',  'status' => 'Ongoing', 'title' => 'CFS Gender Equality & Food Security Guidelines',   'desc' => 'Implementing FAO guidelines on gender equality in food security with women from 12 African countries.', 'loc' => 'Regional', 'bene' => null],
-                ] as $p)
-                    <a href="{{ route('projects.index') }}" class="project-card reveal">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-bg" src="{{ $p['img'] }}" alt="{{ $p['title'] }}" loading="lazy">
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-content">
-                            <h3>{{ $p['title'] }}</h3>
-                            <p>{{ Str::limit($p['desc'], 90) }}</p>
-                            <div class="project-meta">
-                                <span>📍 {{ $p['loc'] }}</span>
-                                @if($p['bene']) <span>👥 {{ $p['bene'] }}</span> @endif
-                            </div>
-                            <span class="project-cta-link">
-                                View project
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </span>
-                        </div>
-                    </a>
-                @endforeach
-            @endforelse
-        </div>
-        <div style="margin-top:3rem;text-align:center" class="reveal">
-            <a href="{{ route('projects.index') }}" class="btn-outline">View All Projects →</a>
-        </div>
-    </section>
-
-    {{-- ══════════════════════════════════════════════════════════
-         LATEST BLOG
-    ══════════════════════════════════════════════════════════ --}}
-    <section class="blog-section">
-        <div class="blog-header">
+    <section class="projects-section">
+        <div class="projects-header">
             <div>
-                <span class="section-label reveal">Blog & News</span>
-                <h2 class="section-title reveal">Stories from the Field</h2>
+                <span class="section-label reveal">Our Work</span>
+                <h2 class="section-title reveal">Projects</h2>
             </div>
-            <a href="{{ route('blog.index') }}" class="see-all reveal">
-                All articles
+            <a href="{{ route('projects.index') }}" class="see-all reveal">
+                All Projects
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
             </a>
         </div>
-        <div class="blog-grid">
-            @forelse($latestBlogs as $post)
-                <x-blog-card :post="$post" />
+
+        <div class="projects-grid">
+            @forelse($featuredProjects as $project)
+                <a href="{{ route('projects.index') }}" class="project-card reveal">
+                    <div class="project-card-img">
+                        <img src="{{ $project->content->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG' }}" alt="{{ $project->content->title ?? 'Project' }}" loading="lazy">
+                        <div class="project-card-overlay"></div>
+                    </div>
+                    <div class="project-card-content">
+                        <span class="project-category">{{ $project->statusLabel() }}</span>
+                        <h3 class="project-title">{{ $project->content->title ?? 'Project' }}</h3>
+                        <div class="project-meta">
+                            <span class="project-location">📍 {{ $project->location ?? 'Uganda' }}</span>
+                            @if($project->beneficiaries_count)
+                                <span class="project-beneficiaries">👥 {{ number_format($project->beneficiaries_count) }} beneficiaries</span>
+                            @endif
+                        </div>
+                    </div>
+                </a>
             @empty
                 @foreach([
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg', 'category' => 'Theory of Change', 'title' => 'Our Theory of Change: Empowering Rural Women, Transforming Communities', 'excerpt' => 'How KWDT\'s integrated approach creates lasting change across Uganda\'s fishing communities.', 'date' => 'Aug 21, 2025'],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG',        'category' => 'Advocacy',        'title' => 'Reclaiming the Narrative: KWDT at the UN Headquarters',                         'excerpt' => 'A voice for rural communities in global water dialogues at the United Nations.',                          'date' => 'Jul 15, 2025'],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg', 'category' => 'Health',          'title' => 'KWDT Champions a #PeriodFriendlyWorld Through Community Solutions',              'excerpt' => 'Community-driven menstrual health solutions making a real difference.',                                   'date' => 'May 28, 2025'],
-                ] as $post)
-                    <a href="{{ route('blog.index') }}" class="blog-card reveal">
-                        <div class="blog-img">
-                            <img src="{{ $post['img'] }}" alt="{{ $post['title'] }}" loading="lazy">
+                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG', 'category' => 'WASH', 'title' => 'Clean Water Access at Katooke Landing Site', 'location' => 'Buikwe District', 'date' => 'Jul 28, 2025'],
+                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg', 'category' => 'HUMAN RIGHTS', 'title' => 'Justice Forum on Fisheries & Human Rights', 'location' => 'Kalangala', 'date' => 'Jun 03, 2025'],
+                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg', 'category' => 'REGIONAL', 'title' => 'CFS Gender Equality & Food Security Guidelines', 'location' => 'Regional Africa', 'date' => 'May 20, 2025'],
+                ] as $project)
+                    <a href="{{ route('projects.index') }}" class="project-card reveal">
+                        <div class="project-card-img">
+                            <img src="{{ $project['img'] }}" alt="{{ $project['title'] }}" loading="lazy">
+                            <div class="project-card-overlay"></div>
                         </div>
-                        <span class="blog-category">{{ $post['category'] }}</span>
-                        <h3>{{ $post['title'] }}</h3>
-                        <p>{{ $post['excerpt'] }}</p>
-                        <div class="blog-card-footer">
-                            <span class="blog-date" style="margin:0">{{ $post['date'] }}</span>
-                            <span class="blog-read-more">
-                                Read
-                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </span>
+                        <div class="project-card-content">
+                            <span class="project-category">{{ $project['category'] }}</span>
+                            <h3 class="project-title">{{ $project['title'] }}</h3>
+                            <div class="project-meta">
+                                <span class="project-location">📍 {{ $project['location'] }}</span>
+                                <span class="project-date">{{ $project['date'] }}</span>
+                            </div>
                         </div>
                     </a>
                 @endforeach
             @endforelse
         </div>
+
+        <div class="projects-cta reveal">
+            <a href="{{ route('projects.index') }}" class="btn-outline">View All Projects →</a>
+        </div>
+    </section>
+
+    {{-- ══════════════════════════════════════════════════════════
+         LATEST NEWS — Red Cross style: large image + overlapping
+         content card, big outside arrow buttons, dots below.
+    ══════════════════════════════════════════════════════════ --}}
+    <section class="news-section" aria-label="Latest News">
+
+        {{-- Section heading (inside max-width wrapper) --}}
+        <div class="news-header">
+            <div>
+                <span class="section-label reveal">Updates</span>
+                <h2 class="section-title reveal">Latest News</h2>
+            </div>
+            {{-- Desktop header buttons kept for accessibility; hidden on mobile via CSS
+                 since the outside arrows (.news-arrow) serve the same purpose --}}
+            <div class="news-nav" aria-hidden="true">
+                <a href="{{ route('blog.index') }}" class="see-all">
+                    All News
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        {{-- Outer wrapper holds arrows + clipping viewport --}}
+        <div class="news-slider-outer">
+
+            {{-- Left arrow --}}
+            <button class="news-arrow news-arrow--prev" id="newsPrev" aria-label="Previous story">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+
+            {{-- Scrolling viewport --}}
+            <div class="news-slider-wrap">
+                <div class="news-slider" id="newsSliderTrack">
+
+                    @forelse($latestBlogs as $post)
+                        {{-- ── Dynamic card from DB ── --}}
+                        <div class="news-card" role="group" aria-label="{{ $post->title }}">
+                            <div class="news-card-inner">
+                                <div class="news-card-img">
+                                    <img
+                                        src="{{ $post->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}"
+                                        alt="{{ $post->title }}"
+                                        loading="lazy">
+                                </div>
+                                <div class="news-card-content">
+                                    <span class="news-card-category">{{ $post->category?->name ?? $post->type_label ?? 'STORY' }}</span>
+                                    <h3 class="news-card-title">{{ $post->title }}</h3>
+                                    <p class="news-card-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->body ?? ''), 180) }}</p>
+                                    <a href="{{ route('blog.show', $post->slug) }}" class="news-card-readmore">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        {{-- ── Static fallback when DB is empty ── --}}
+                        @foreach([
+                            [
+                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
+                                'category' => 'UNION',
+                                'title'    => 'Katosi Women Fish Processors and Traders Union',
+                                'excerpt'  => 'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.',
+                                'url'      => 'blog.index',
+                            ],
+                            [
+                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG',
+                                'category' => 'ADVOCACY',
+                                'title'    => 'Reclaiming the Narrative: KWDT at the UN Headquarters',
+                                'excerpt'  => 'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.',
+                                'url'      => 'blog.index',
+                            ],
+                            [
+                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg',
+                                'category' => 'HEALTH',
+                                'title'    => 'KWDT Champions a #PeriodFriendlyWorld',
+                                'excerpt'  => 'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.',
+                                'url'      => 'blog.index',
+                            ],
+                        ] as $news)
+                            <div class="news-card" role="group" aria-label="{{ $news['title'] }}">
+                                <div class="news-card-inner">
+                                    <div class="news-card-img">
+                                        <img src="{{ $news['img'] }}" alt="{{ $news['title'] }}" loading="lazy">
+                                    </div>
+                                    <div class="news-card-content">
+                                        <span class="news-card-category">{{ $news['category'] }}</span>
+                                        <h3 class="news-card-title">{{ $news['title'] }}</h3>
+                                        <p class="news-card-excerpt">{{ $news['excerpt'] }}</p>
+                                        <a href="{{ route($news['url']) }}" class="news-card-readmore">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforelse
+
+                </div>{{-- /#newsSliderTrack --}}
+            </div>{{-- /.news-slider-wrap --}}
+
+            {{-- Right arrow --}}
+            <button class="news-arrow news-arrow--next" id="newsNext" aria-label="Next story">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
+        </div>{{-- /.news-slider-outer --}}
+
+        {{-- Navigation dots --}}
+        <div class="news-dots" id="newsSliderDots" role="tablist" aria-label="News slides"></div>
+
+        {{-- View all CTA --}}
+        <div class="news-footer-cta reveal">
+            <a href="{{ route('blog.index') }}" class="btn-outline">View All News →</a>
+        </div>
+
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
@@ -682,8 +772,57 @@
                     const d = tx - e.changedTouches[0].clientX;
                     if (Math.abs(d) > 40) { goTo(d > 0 ? idx + 1 : idx - 1); reset(); }
                 });
+            })();
 
-                window.addEventListener('resize', function () { goTo(idx); });
+            // ── News slider (full-width cards) ───────────────────────
+            (function () {
+                const track    = document.getElementById('newsSliderTrack');
+                const dotsWrap = document.getElementById('newsSliderDots');
+                const prevBtn  = document.getElementById('newsPrev');
+                const nextBtn  = document.getElementById('newsNext');
+                if (!track) return;
+
+                const slides = track.querySelectorAll('.news-card');
+                const total  = slides.length;
+                let idx = 0, timer;
+
+                function buildDots() {
+                    dotsWrap.innerHTML = '';
+                    for (let i = 0; i < total; i++) {
+                        const d = document.createElement('button');
+                        d.className = 'news-dot' + (i === 0 ? ' active' : '');
+                        d.setAttribute('aria-label', 'Go to news ' + (i + 1));
+                        d.addEventListener('click', function () { goTo(i); reset(); });
+                        dotsWrap.appendChild(d);
+                    }
+                }
+
+                function goTo(n) {
+                    idx = Math.max(0, Math.min(n, total - 1));
+                    track.style.transform = 'translateX(-' + (100 * idx) + '%)';
+                    Array.from(dotsWrap.children).forEach(function (d, i) {
+                        d.classList.toggle('active', i === idx);
+                    });
+                }
+
+                function reset() {
+                    clearInterval(timer);
+                    timer = setInterval(function () {
+                        goTo((idx + 1) % total);
+                    }, 6000);
+                }
+
+                buildDots();
+                if (prevBtn) prevBtn.addEventListener('click', function () { goTo(idx - 1 < 0 ? total - 1 : idx - 1); reset(); });
+                if (nextBtn) nextBtn.addEventListener('click', function () { goTo((idx + 1) % total); reset(); });
+
+                let tx = 0;
+                track.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
+                track.addEventListener('touchend', function (e) {
+                    const d = tx - e.changedTouches[0].clientX;
+                    if (Math.abs(d) > 50) { goTo(d > 0 ? (idx + 1) % total : (idx - 1 + total) % total); reset(); }
+                });
+
                 reset();
             })();
 

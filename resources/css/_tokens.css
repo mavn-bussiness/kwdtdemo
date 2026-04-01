@@ -5,28 +5,33 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-/* ── Brand palette ──────────────────────────────────────────── */
+/* ── Brand palette — Sunrise ───────────────────────────────── */
 :root {
+    /* Primary orange */
     --orange:        #F5820A;
     --orange-dark:   #D06800;
     --orange-deeper: #A85200;
     --orange-light:  #FF9E30;
     --orange-pale:   #FFF3E3;
 
-    /* Neutral dark — all mapped to black */
-    --earth:         #000000;
-    --earth-mid:     #1A1A1A;
-    --earth-light:   #333333;
-    --earth-muted:   #555555;
+    /* Warm neutrals — deep charcoal instead of black */
+    --earth:         #1C1C1C;
+    --earth-mid:     #2C2C2C;
+    --earth-light:   #3C3C3C;
+    --earth-muted:   #6C6C6C;
 
-    /* Accent dark panels — black */
-    --forest:        #000000;
-    --forest-mid:    #111111;
+    /* Warm cream surfaces */
+    --forest:        #FBF7F0;
+    --forest-mid:    #F5EFE5;
 
-    --cream:         #FFFFFF;
-    --cream-mid:     #F5F5F5;
-    --cream-dark:    #E8E8E8;
+    /* Cream gradient base */
+    --cream:         #FDF9F2;
+    --cream-mid:     #F8F2E8;
+    --cream-dark:    #F0E8DC;
     --white:         #FFFFFF;
+
+    /* Gold accent for stats and impact numbers */
+    --gold-accent:   #F0A500;
 
     /* Typography — Poppins headings + Inter body */
     --font-display: 'Poppins', system-ui, sans-serif;
