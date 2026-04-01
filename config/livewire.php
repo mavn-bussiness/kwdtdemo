@@ -2,7 +2,7 @@
 
 return [
 
-    'asset_url' => env('LIVEWIRE_ASSET_URL', 'https://kwdtdemo-610ca589b4f6.herokuapp.com'),
+    'asset_url' => env('LIVEWIRE_ASSET_URL', null),
     /*
     |---------------------------------------------------------------------------
     | Component Locations
@@ -180,7 +180,7 @@ return [
     |
     */
 
-    'inject_assets' => true,
+    'inject_assets' => false,
 
     /*
     |---------------------------------------------------------------------------
