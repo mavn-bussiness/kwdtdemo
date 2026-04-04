@@ -134,11 +134,11 @@
             @endif
 
             {{-- Tags cloud --}}
-            @if($tags->isNotEmpty())
+            @if($categories->isNotEmpty())
                 <div class="sidebar-widget">
                     <h3 class="sidebar-widget-title">Tags</h3>
                     <div class="sidebar-tag-cloud">
-                        @foreach($tags as $tag)
+                        @foreach($categories as $tag)
                             <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
                                class="sidebar-tag {{ request('tag') === $tag->slug ? 'active' : '' }}">
                                 {{ $tag->name }}
