@@ -332,182 +332,127 @@
     </div>
 
     {{-- ══════════════════════════════════════════════════════════
-         PROJECTS — Card grid
+         PROJECTS — Red Cross style: 3-col image-top cards
     ══════════════════════════════════════════════════════════ --}}
-    <section class="projects-section">
-        <div class="projects-header">
+    <section class="hp-projects-section">
+        <div class="hp-section-head">
             <div>
                 <span class="section-label reveal">Our Work</span>
-                <h2 class="section-title reveal">Projects</h2>
+                <h2 class="hp-section-title reveal">Featured Projects</h2>
             </div>
-            <a href="{{ route('projects.index') }}" class="see-all reveal">
+            <a href="{{ route('projects.index') }}" class="hp-see-all reveal">
                 All Projects
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
         </div>
 
-        <div class="projects-grid">
+        <div class="hp-projects-grid">
             @forelse($featuredProjects as $project)
-                <a href="{{ route('projects.index') }}" class="project-card reveal">
-                    <div class="project-card-img">
-                        <img src="{{ $project->content->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG' }}" alt="{{ $project->content->title ?? 'Project' }}" loading="lazy">
-                        <div class="project-card-overlay"></div>
+                @php
+                    $url   = $project->content?->slug ? route('projects.show', $project->content->slug) : route('projects.index');
+                    $img   = $project->content?->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG';
+                    $title = $project->content?->title ?? 'Project';
+                    $cat   = $project->statusLabel();
+                    $loc   = $project->location ?? 'Uganda';
+                @endphp
+                <a href="{{ $url }}" class="hp-project-card reveal">
+                    <div class="hp-project-img">
+                        <img src="{{ $img }}" alt="{{ $title }}" loading="lazy">
+                        <span class="hp-project-tag">{{ $cat }}</span>
                     </div>
-                    <div class="project-card-content">
-                        <span class="project-category">{{ $project->statusLabel() }}</span>
-                        <h3 class="project-title">{{ $project->content->title ?? 'Project' }}</h3>
-                        <div class="project-meta">
-                            <span class="project-location">📍 {{ $project->location ?? 'Uganda' }}</span>
-                            @if($project->beneficiaries_count)
-                                <span class="project-beneficiaries">👥 {{ number_format($project->beneficiaries_count) }} beneficiaries</span>
-                            @endif
-                        </div>
+                    <div class="hp-project-body">
+                        <h3 class="hp-project-title">{{ $title }}</h3>
+                        <p class="hp-project-loc">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            {{ $loc }}
+                        </p>
+                        <span class="hp-card-arrow">Read more →</span>
                     </div>
                 </a>
             @empty
                 @foreach([
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG', 'category' => 'WASH', 'title' => 'Clean Water Access at Katooke Landing Site', 'location' => 'Buikwe District', 'date' => 'Jul 28, 2025'],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg', 'category' => 'HUMAN RIGHTS', 'title' => 'Justice Forum on Fisheries & Human Rights', 'location' => 'Kalangala', 'date' => 'Jun 03, 2025'],
-                    ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg', 'category' => 'REGIONAL', 'title' => 'CFS Gender Equality & Food Security Guidelines', 'location' => 'Regional Africa', 'date' => 'May 20, 2025'],
-                ] as $project)
-                    <a href="{{ route('projects.index') }}" class="project-card reveal">
-                        <div class="project-card-img">
-                            <img src="{{ $project['img'] }}" alt="{{ $project['title'] }}" loading="lazy">
-                            <div class="project-card-overlay"></div>
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG','tag'=>'WASH','title'=>'Clean Water Access at Katooke Landing Site','loc'=>'Buikwe District'],
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg','tag'=>'Human Rights','title'=>'Justice Forum on Fisheries & Human Rights','loc'=>'Kalangala'],
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg','tag'=>'Regional','title'=>'CFS Gender Equality & Food Security Guidelines','loc'=>'Regional Africa'],
+                ] as $p)
+                    <a href="{{ route('projects.index') }}" class="hp-project-card reveal">
+                        <div class="hp-project-img">
+                            <img src="{{ $p['img'] }}" alt="{{ $p['title'] }}" loading="lazy">
+                            <span class="hp-project-tag">{{ $p['tag'] }}</span>
                         </div>
-                        <div class="project-card-content">
-                            <span class="project-category">{{ $project['category'] }}</span>
-                            <h3 class="project-title">{{ $project['title'] }}</h3>
-                            <div class="project-meta">
-                                <span class="project-location">📍 {{ $project['location'] }}</span>
-                                <span class="project-date">{{ $project['date'] }}</span>
-                            </div>
+                        <div class="hp-project-body">
+                            <h3 class="hp-project-title">{{ $p['title'] }}</h3>
+                            <p class="hp-project-loc">
+                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                {{ $p['loc'] }}
+                            </p>
+                            <span class="hp-card-arrow">Read more →</span>
                         </div>
                     </a>
                 @endforeach
             @endforelse
         </div>
-
-        <div class="projects-cta reveal">
-            <a href="{{ route('projects.index') }}" class="btn-outline">View All Projects →</a>
-        </div>
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
-         LATEST NEWS — Red Cross style: large image + overlapping
-         content card, big outside arrow buttons, dots below.
+         LATEST NEWS — Red Cross style: stacked horizontal cards
+         Large image left, text right, bold orange left-border accent
     ══════════════════════════════════════════════════════════ --}}
-    <section class="news-section" aria-label="Latest News">
+    <section class="hp-news-section" aria-label="Latest News">
 
-        {{-- Section heading (inside max-width wrapper) --}}
-        <div class="news-header">
+        <div class="hp-section-head">
             <div>
                 <span class="section-label reveal">Updates</span>
-                <h2 class="section-title reveal">Latest News</h2>
+                <h2 class="hp-section-title reveal">Latest News</h2>
             </div>
-            {{-- Desktop header buttons kept for accessibility; hidden on mobile via CSS
-                 since the outside arrows (.news-arrow) serve the same purpose --}}
-            <div class="news-nav" aria-hidden="true">
-                <a href="{{ route('blog.index') }}" class="see-all">
-                    All News
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                </a>
-            </div>
+            <a href="{{ route('blog.index') }}" class="hp-see-all reveal">
+                All News
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
         </div>
 
-        {{-- Outer wrapper holds arrows + clipping viewport --}}
-        <div class="news-slider-outer">
-
-            {{-- Left arrow --}}
-            <button class="news-arrow news-arrow--prev" id="newsPrev" aria-label="Previous story">
-                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </button>
-
-            {{-- Scrolling viewport --}}
-            <div class="news-slider-wrap">
-                <div class="news-slider" id="newsSliderTrack">
-
-                    @forelse($latestBlogs as $post)
-                        {{-- ── Dynamic card from DB ── --}}
-                        <div class="news-card" role="group" aria-label="{{ $post->title }}">
-                            <div class="news-card-inner">
-                                <div class="news-card-img">
-                                    <img
-                                        src="{{ $post->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}"
-                                        alt="{{ $post->title }}"
-                                        loading="lazy">
-                                </div>
-                                <div class="news-card-content">
-                                    <h3 class="news-card-title">{{ $post->title }}</h3>
-                                    <p class="news-card-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->body ?? ''), 180) }}</p>
-                                    <a href="{{ route('blog.show', $post->slug) }}" class="news-card-readmore">Read More</a>
-                                </div>
-                            </div>
+        <div class="hp-news-list">
+            @forelse($latestBlogs as $post)
+                <article class="hp-news-item reveal">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-img-wrap">
+                        <img src="{{ $post->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
+                    </a>
+                    <div class="hp-news-body">
+                        <div class="hp-news-meta">
+                            <span class="hp-news-tag">{{ $post->categories->first()?->name ?? 'News' }}</span>
+                            @if($post->published_at)
+                                <span class="hp-news-date">{{ $post->published_at->format('d M Y') }}</span>
+                            @endif
                         </div>
-                    @empty
-                        {{-- ── Static fallback when DB is empty ── --}}
-                        @foreach([
-                            [
-                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
-                                'category' => 'UNION',
-                                'title'    => 'Katosi Women Fish Processors and Traders Union',
-                                'excerpt'  => 'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.',
-                                'url'      => 'blog.index',
-                            ],
-                            [
-                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG',
-                                'category' => 'ADVOCACY',
-                                'title'    => 'Reclaiming the Narrative: KWDT at the UN Headquarters',
-                                'excerpt'  => 'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.',
-                                'url'      => 'blog.index',
-                            ],
-                            [
-                                'img'      => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg',
-                                'category' => 'HEALTH',
-                                'title'    => 'KWDT Champions a #PeriodFriendlyWorld',
-                                'excerpt'  => 'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.',
-                                'url'      => 'blog.index',
-                            ],
-                        ] as $news)
-                            <div class="news-card" role="group" aria-label="{{ $news['title'] }}">
-                                <div class="news-card-inner">
-                                    <div class="news-card-img">
-                                        <img src="{{ $news['img'] }}" alt="{{ $news['title'] }}" loading="lazy">
-                                    </div>
-                                    <div class="news-card-content">
-                                        <h3 class="news-card-title">{{ $news['title'] }}</h3>
-                                        <p class="news-card-excerpt">{{ $news['excerpt'] }}</p>
-                                        <a href="{{ route($news['url']) }}" class="news-card-readmore">Read More</a>
-                                    </div>
-                                </div>
+                        <h3 class="hp-news-title">
+                            <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
+                        </h3>
+                        <p class="hp-news-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->body ?? ''), 160) }}</p>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="hp-card-arrow">Read more →</a>
+                    </div>
+                </article>
+            @empty
+                @foreach([
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
+                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
+                ] as $n)
+                    <article class="hp-news-item reveal">
+                        <a href="{{ route('blog.index') }}" class="hp-news-img-wrap">
+                            <img src="{{ $n['img'] }}" alt="{{ $n['title'] }}" loading="lazy">
+                        </a>
+                        <div class="hp-news-body">
+                            <div class="hp-news-meta">
+                                <span class="hp-news-tag">{{ $n['tag'] }}</span>
+                                <span class="hp-news-date">{{ $n['date'] }}</span>
                             </div>
-                        @endforeach
-                    @endforelse
-
-                </div>{{-- /#newsSliderTrack --}}
-            </div>{{-- /.news-slider-wrap --}}
-
-            {{-- Right arrow --}}
-            <button class="news-arrow news-arrow--next" id="newsNext" aria-label="Next story">
-                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-            </button>
-
-        </div>{{-- /.news-slider-outer --}}
-
-        {{-- Navigation dots --}}
-        <div class="news-dots" id="newsSliderDots" role="tablist" aria-label="News slides"></div>
-
-        {{-- View all CTA --}}
-        <div class="news-footer-cta reveal">
-            <a href="{{ route('blog.index') }}" class="btn-outline">View All News →</a>
+                            <h3 class="hp-news-title"><a href="{{ route('blog.index') }}">{{ $n['title'] }}</a></h3>
+                            <p class="hp-news-excerpt">{{ $n['excerpt'] }}</p>
+                            <a href="{{ route('blog.index') }}" class="hp-card-arrow">Read more →</a>
+                        </div>
+                    </article>
+                @endforeach
+            @endforelse
         </div>
 
     </section>
@@ -770,82 +715,7 @@
                 });
             })();
 
-            // ── News slider (full-width cards) ───────────────────────
-            (function () {
-                const track    = document.getElementById('newsSliderTrack');
-                const dotsWrap = document.getElementById('newsSliderDots');
-                const prevBtn  = document.getElementById('newsPrev');
-                const nextBtn  = document.getElementById('newsNext');
-                if (!track) return;
-
-                const slides = track.querySelectorAll('.news-card');
-                const total  = slides.length;
-                let idx = 0, timer;
-
-                function buildDots() {
-                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                    const numDots = Math.max(1, total - vis + 1);
-                    dotsWrap.innerHTML = '';
-                    for (let i = 0; i < numDots; i++) {
-                        const d = document.createElement('button');
-                        d.className = 'news-dot' + (i === 0 ? ' active' : '');
-                        d.setAttribute('aria-label', 'Go to news ' + (i + 1));
-                        d.addEventListener('click', function () { goTo(i); reset(); });
-                        dotsWrap.appendChild(d);
-                    }
-                }
-
-                function goTo(n) {
-                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                    const max = total - vis;
-                    idx = Math.max(0, Math.min(n, max));
-
-                    const gap = 24; // 1.5rem
-                    const cardWidth = track.querySelector('.news-card').offsetWidth;
-                    track.style.transform = 'translateX(-' + ((cardWidth + gap) * idx) + 'px)';
-
-                    Array.from(dotsWrap.children).forEach(function (d, i) {
-                        d.classList.toggle('active', i === idx);
-                    });
-                }
-
-                function reset() {
-                    clearInterval(timer);
-                    timer = setInterval(function () {
-                        const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                        const max = total - vis;
-                        goTo(idx + 1 > max ? 0 : idx + 1);
-                    }, 6000);
-                }
-
-                window.addEventListener('resize', function() {
-                    buildDots();
-                    goTo(0);
-                });
-
-                buildDots();
-                if (prevBtn) prevBtn.addEventListener('click', function () {
-                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                    const max = total - vis;
-                    goTo(idx - 1 < 0 ? max : idx - 1); reset();
-                });
-                if (nextBtn) nextBtn.addEventListener('click', function () {
-                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                    const max = total - vis;
-                    goTo(idx + 1 > max ? 0 : idx + 1); reset();
-                });
-
-                let tx = 0;
-                track.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
-                track.addEventListener('touchend', function (e) {
-                    const d = tx - e.changedTouches[0].clientX;
-                    const vis = window.innerWidth <= 700 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-                    const max = total - vis;
-                    if (Math.abs(d) > 50) { goTo(d > 0 ? (idx + 1 > max ? 0 : idx + 1) : (idx - 1 < 0 ? max : idx - 1)); reset(); }
-                });
-
-                reset();
-            })();
+            // news slider removed — now static stacked layout
 
             // ── Scroll reveal ────────────────────────────────────────
             (function () {
