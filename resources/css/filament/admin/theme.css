@@ -1,0 +1,106 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* ── KWDT "Sunrise" brand tokens ─────────────────────────────── */
+:root {
+    --kwdt-orange:        #F5820A;
+    --kwdt-orange-dark:   #D06800;
+    --kwdt-orange-light:  #FF9E30;
+    --kwdt-orange-pale:   #FFF3E3;
+    --kwdt-gold:          #F0A500;
+    --kwdt-earth:         #3D2100;
+    --kwdt-earth-mid:     #5C3600;
+    --kwdt-earth-light:   #8C5D00;
+    --kwdt-panel:         #2B1600;
+    --kwdt-panel-mid:     #3D1F00;
+    --kwdt-cream:         #FFFAF4;
+    --kwdt-cream-mid:     #FFF3E3;
+    --kwdt-cream-dark:    #F0DFC0;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+.fi-sidebar {
+    background-color: var(--kwdt-panel) !important;
+    border-right: 1px solid rgba(245, 130, 10, 0.15) !important;
+}
+
+.fi-sidebar-nav-groups {
+    padding-top: 0.5rem;
+}
+
+/* Nav items */
+.fi-sidebar-item-button {
+    color: #F0DFC0 !important;
+    border-radius: 8px !important;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+.fi-sidebar-item-button:hover {
+    background-color: rgba(245, 130, 10, 0.15) !important;
+    color: #FF9E30 !important;
+}
+.fi-sidebar-item-button.fi-active {
+    background-color: rgba(245, 130, 10, 0.22) !important;
+    color: #F5820A !important;
+    font-weight: 600;
+}
+
+/* Sidebar group labels */
+.fi-sidebar-group-label {
+    color: #8C5D00 !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────── */
+.fi-topbar {
+    background-color: var(--kwdt-cream) !important;
+    border-bottom: 1px solid var(--kwdt-cream-dark) !important;
+}
+
+/* ── Page background ─────────────────────────────────────────── */
+.fi-main {
+    background-color: var(--kwdt-cream) !important;
+}
+
+/* ── Widget / section cards ──────────────────────────────────── */
+.fi-wi-stats-overview-stat,
+.fi-section,
+.fi-wi-chart {
+    border: 1px solid var(--kwdt-cream-dark) !important;
+    border-radius: 12px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* Stats card accent bar */
+.fi-wi-stats-overview-stat-description-icon {
+    color: var(--kwdt-orange) !important;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.fi-btn-primary {
+    background-color: var(--kwdt-orange) !important;
+    border-color: var(--kwdt-orange) !important;
+}
+.fi-btn-primary:hover {
+    background-color: var(--kwdt-orange-dark) !important;
+}
+
+/* ── Table header ────────────────────────────────────────────── */
+.fi-ta-header-cell {
+    background-color: var(--kwdt-cream-mid) !important;
+    color: var(--kwdt-earth-mid) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+}
+
+/* ── Badge tweaks ────────────────────────────────────────────── */
+.fi-badge {
+    font-weight: 600 !important;
+    border-radius: 999px !important;
+}
+
+/* ── Brand logo area ─────────────────────────────────────────── */
+.fi-logo {
+    padding: 1rem 1.25rem 0.75rem !important;
+}

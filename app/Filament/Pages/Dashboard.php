@@ -2,24 +2,28 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\KwdtContentActivityChart;
+use App\Filament\Widgets\KwdtDonationsTrendChart;
 use App\Filament\Widgets\KwdtGoogleAnalytics;
-use App\Filament\Widgets\KwdtStatsOverview;
 use App\Filament\Widgets\KwdtRecentDonations;
+use App\Filament\Widgets\KwdtStatsOverview;
+use App\Filament\Widgets\KwdtSubscriberGrowthChart;
 use App\Filament\Widgets\KwdtUpcomingEvents;
 use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
     protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-home';
-
     protected static ?string $title = 'Dashboard';
-
-    protected static ?int $navigationSort = -1; // Always first in nav
+    protected static ?int $navigationSort = -1;
 
     public function getWidgets(): array
     {
         return [
             KwdtStatsOverview::class,
+            KwdtDonationsTrendChart::class,
+            KwdtContentActivityChart::class,
+            KwdtSubscriberGrowthChart::class,
             KwdtGoogleAnalytics::class,
             KwdtRecentDonations::class,
             KwdtUpcomingEvents::class,

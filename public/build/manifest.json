@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-lZ5OSvWq.css",
+    "file": "assets/app-CTRqGipj.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -8,8 +8,17 @@
       "app.css"
     ]
   },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-DvAO10AT.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true,
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ]
+  },
   "resources/css/kwdt.css": {
-    "file": "assets/kwdt-Dh9LWeV2.css",
+    "file": "assets/kwdt-ibuB4P-L.css",
     "src": "resources/css/kwdt.css",
     "isEntry": true,
     "name": "kwdt",

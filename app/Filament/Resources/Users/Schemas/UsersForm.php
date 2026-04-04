@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class UsersForm
@@ -25,7 +24,9 @@ class UsersForm
 
                 TextInput::make('password')
                     ->password()
-                    ->required()
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn (string $operation) => $operation === 'create')
                     ->columnSpan(2),
 
                 Select::make('role')
@@ -35,10 +36,6 @@ class UsersForm
                         'super_admin' => 'Super Admin',
                     ])
                     ->required(),
-
-                Toggle::make('email_verified')
-                    ->label('Email Verified')
-                    ->default(false),
             ]);
     }
 }
