@@ -1,15 +1,12 @@
 <x-layouts.app :title="$project->content->title" :metaDescription="$project->content->excerpt">
 
-    {{-- Title bar above image --}}
-    <div class="show-title-bar">
-        <div class="show-title-inner">
-            <a href="{{ route('projects.index') }}" class="show-back-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-                Back to projects
+    <div class="inner-page-header">
+        <div class="inner-page-header-inner">
+            <a href="{{ route('projects.index') }}" class="inner-back-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                All Projects
             </a>
-            <h1 class="show-title">{{ $project->content->title }}</h1>
+            <h1 class="inner-page-title">{{ $project->content->title }}</h1>
         </div>
     </div>
 

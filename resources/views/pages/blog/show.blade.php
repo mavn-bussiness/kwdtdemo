@@ -1,13 +1,12 @@
 <x-layouts.app :title="$post->title" :metaDescription="$post->excerpt">
 
-    {{-- ── Post title header (above image, like Red Cross) ─── --}}
-    <div class="show-title-bar">
-        <div class="show-title-inner">
-            <a href="{{ route('blog.index') }}" class="show-back-link">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-                Back to Blog
+    <div class="inner-page-header">
+        <div class="inner-page-header-inner">
+            <a href="{{ route('blog.index') }}" class="inner-back-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Blog &amp; News
             </a>
-            <h1 class="show-title">{{ $post->title }}</h1>
+            <h1 class="inner-page-title">{{ $post->title }}</h1>
         </div>
     </div>
 

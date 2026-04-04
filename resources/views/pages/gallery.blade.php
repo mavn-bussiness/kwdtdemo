@@ -2,18 +2,11 @@
     title="Gallery"
     metaDescription="Photos from KWDT's work across Uganda's fishing and rural communities.">
 
-    {{-- ── Hero with background image (matching contact/news pattern) ── --}}
-    <div class="news-hero">
-        <div class="news-hero-bg">
-            <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
-                 alt="KWDT community"
-                 loading="eager">
-        </div>
-        <div class="news-hero-overlay"></div>
-        <div class="news-hero-content">
-            <span class="news-hero-label">Resources</span>
-            <h1 class="news-hero-title">Gallery</h1>
-            <p class="news-hero-sub">Moments from our work across Uganda's fishing and rural communities.</p>
+    <div class="inner-page-header">
+        <div class="inner-page-header-inner">
+            <span class="inner-back-link">Resources</span>
+            <h1 class="inner-page-title">Photo Gallery</h1>
+            <p class="inner-page-sub">Moments from our work across Uganda's fishing and rural communities.</p>
         </div>
     </div>
 

@@ -137,17 +137,11 @@
     </style>
 
     {{-- ── Hero ────────────────────────────────────────────────── --}}
-    <div class="news-hero">
-        <div class="news-hero-bg">
-            <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
-                 alt="KWDT team at work"
-                 loading="eager">
-        </div>
-        <div class="news-hero-overlay"></div>
-        <div class="news-hero-content">
-            <span class="news-hero-label">Work With Us</span>
-            <h1 class="news-hero-title">Careers at KWDT</h1>
-            <p class="news-hero-sub">Join a team dedicated to transforming lives in Uganda's fishing communities.</p>
+    <div class="inner-page-header">
+        <div class="inner-page-header-inner">
+            <span class="inner-back-link">Work With Us</span>
+            <h1 class="inner-page-title">Careers at KWDT</h1>
+            <p class="inner-page-sub">Join a team dedicated to transforming lives in Uganda's fishing communities.</p>
         </div>
     </div>
 
