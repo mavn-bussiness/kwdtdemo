@@ -9,7 +9,6 @@ use App\Observers\ContentObserver;
 use App\Observers\PartnerObserver;
 use App\Observers\TestimonialObserver;
 use Carbon\CarbonImmutable;
-use Filament\Panel;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -56,13 +55,5 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
-    }
-    public function panel(Panel $panel): Panel
-    {
-        return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
-            ->login();
     }
 }
