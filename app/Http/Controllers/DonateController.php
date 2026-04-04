@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donation;
 
-class DonateController
+class DonateController extends Controller
 {
     public function index()
     {
@@ -17,10 +17,6 @@ class DonateController
      */
     public function gateway(Donation $donation)
     {
-        if ($donation->payment_method !== 'paypal') {
-            return redirect(route('donate'))->with('error', 'Only PayPal is currently supported.');
-        }
-
         return redirect(route('donate.paypal', $donation));
     }
 }

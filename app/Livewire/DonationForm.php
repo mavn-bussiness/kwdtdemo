@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Donation;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -23,8 +24,6 @@ class DonationForm extends Component
     public string $donorName = '';
 
     public string $donorEmail = '';
-
-    public string $donorPhone = '';
 
     public string $reason = '';
 
@@ -51,7 +50,6 @@ class DonationForm extends Component
             'paymentMethod' => 'required|in:paypal',
             'currency' => 'required|in:USD',
             'isAnonymous' => 'boolean',
-            'donorEmail' => 'nullable|email',
             'reason' => 'nullable|string|max:500',
             'donorName' => 'required_if:isAnonymous,false|string|max:255',
             'donorEmail' => 'required_if:isAnonymous,false|email|max:255',
@@ -92,8 +90,9 @@ class DonationForm extends Component
         $amount = $this->finalAmount;
 
         if ($this->selectedAmount === 'custom' && empty($this->customAmount)) {
-             $this->errorMessage = 'Please enter a donation amount.';
-             return;
+            $this->errorMessage = 'Please enter a donation amount.';
+
+            return;
         }
 
         if ($amount <= 0) {
@@ -157,14 +156,14 @@ class DonationForm extends Component
     {
         $this->reset([
             'selectedAmount', 'customAmount', 'donorName',
-            'donorEmail', 'donorPhone', 'reason', 'isAnonymous',
+            'donorEmail', 'reason', 'isAnonymous',
         ]);
         $this->selectedAmount = '25';
         $this->step = 'amount';
         $this->errorMessage = '';
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.donation-form');
     }

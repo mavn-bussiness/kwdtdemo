@@ -33,9 +33,6 @@ class BlogController extends Controller
             ->orderByDesc('content_count')
             ->get();
 
-        // ── Tags (reuse categories — swap for Tag model if you add one later) ─
-        $tags = $categories;
-
         // ── Main paginated post list ──────────────────────────────────────────
         $query = Content::published()->ofType('blog')
             ->latestPublished()
@@ -66,7 +63,6 @@ class BlogController extends Controller
             'featured',
             'posts',
             'categories',
-            'tags',
             'recent',
         ));
     }
@@ -102,14 +98,11 @@ class BlogController extends Controller
             fn ($q) => $q->published()->ofType('blog')
         )->get();
 
-        $tags = $categories;
-
         return view('pages.blog.show', compact(
             'post',
             'related',
             'recent',
             'categories',
-            'tags',
         ));
     }
 }

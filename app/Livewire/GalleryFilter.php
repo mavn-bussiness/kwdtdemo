@@ -26,7 +26,7 @@ class GalleryFilter extends Component
 
     public function render(): View
     {
-        $cacheKey = 'gallery_filter_'.$this->filter.'_page_'.$this->getPage();
+        $cacheKey = 'gallery_filter_'.$this->filter.'_page_'.$this->getPage().'_per_'.$this->perPage;
 
         $images = cache()->remember($cacheKey, now()->addMinutes(10), function () {
             $query = Media::where('file_type', 'like', 'image/%')
