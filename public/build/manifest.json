@@ -8,15 +8,6 @@
       "app.css"
     ]
   },
-  "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-DvAO10AT.css",
-    "src": "resources/css/filament/admin/theme.css",
-    "isEntry": true,
-    "name": "theme",
-    "names": [
-      "theme.css"
-    ]
-  },
   "resources/css/kwdt.css": {
     "file": "assets/kwdt-ibuB4P-L.css",
     "src": "resources/css/kwdt.css",
