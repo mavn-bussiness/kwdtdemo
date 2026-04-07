@@ -1,5 +1,27 @@
 <div class="donation-form-card donate-form-wrap"
-     x-data="{}">
+     x-data="{
+         get step() { return $wire.step },
+         popup: null,
+         openPayPal(url) {
+             const mobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+             if (mobile) {
+                 window.location.href = url;
+                 return;
+             }
+             const w = 500, h = 650;
+             const left = (screen.width / 2) - (w / 2);
+             const top  = (screen.height / 2) - (h / 2);
+             this.popup = window.open(url, 'paypal_checkout',
+                 'width=' + w + ',height=' + h + ',top=' + top + ',left=' + left + ',scrollbars=yes');
+             if (!this.popup) {
+                 // Popup blocked — fall back to redirect
+                 window.location.href = url;
+             }
+         }
+     }"
+     x-on:open-paypal.window="openPayPal($event.detail.url)"
+     x-on:paypal-success.window="$wire.paymentSuccess()"
+     x-on:paypal-failed.window="$wire.paymentFailed()">
 
     {{-- ── Card header ────────────────────────────────────────── --}}
     <div class="donation-form-header">
@@ -11,30 +33,23 @@
                 <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--white);">Make a Donation</span>
             </div>
             <span style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; color:rgba(255,255,255,.45); background:rgba(255,255,255,.08); padding:.22rem .65rem; border-radius:var(--r-pill);">
-                <span x-show="$wire.step === 'amount'">Step 1 of 2</span>
-                <span x-show="$wire.step === 'details'" x-cloak>Step 2 of 2</span>
+                <span x-show="step === 'amount'">Step 1 of 2</span>
+                <span x-show="step === 'details'" x-cloak>Step 2 of 2</span>
             </span>
         </div>
         <div style="margin-top:.9rem; height:2px; background:rgba(255,255,255,.12); border-radius:2px; overflow:hidden;">
             <div style="height:100%; background:var(--orange); border-radius:2px; transition:width .4s ease;"
-                 :style="$wire.step === 'amount' ? 'width:50%' : 'width:100%'"></div>
+                 :style="step === 'amount' ? 'width:50%' : 'width:100%'"></div>
         </div>
     </div>
 
     <div class="donation-form-body">
 
         {{-- ══ STEP: AMOUNT ══════════════════════════════════════════ --}}
-        <div x-show="$wire.step === 'amount'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+        <div x-show="step === 'amount'" x-transition:enter="transition duration-300 ease-out" x-cloak>
 
             <p style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Enter Your Amount</p>
 
-            {{-- Currency toggle (USD only for now) --}}
-            <div class="df-custom-currency" style="margin-bottom:.85rem; display:none;">
-                <button type="button" wire:click="$set('currency','USD')"
-                        class="df-curr {{ $currency === 'USD' ? 'is-active' : '' }}">USD</button>
-            </div>
-
-            {{-- Open amount input --}}
             <div class="df-field" style="margin-bottom:1.5rem;">
                 <div style="position:relative;">
                     <span style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); font-family:var(--font-display); font-weight:700; font-size:1.2rem; color:var(--earth-muted); pointer-events:none; line-height:1;">
@@ -50,20 +65,6 @@
                 @error('customAmount')
                 <span class="df-field-err">{{ $message }}</span>
                 @enderror
-            </div>
-
-            {{-- Payment method (PayPal only for now) --}}
-            <div class="df-methods-wrap" style="margin-bottom:1.5rem; display:none;">
-                <span class="df-methods-label">Pay with</span>
-                <div class="df-methods">
-                    <button type="button" wire:click="$set('paymentMethod','paypal')"
-                            class="df-method {{ $paymentMethod === 'paypal' ? 'is-active' : '' }}">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 00-.556.479l-1.187 7.527h-.99l-.318 2.02a.56.56 0 00.554.647h3.882c.46 0 .85-.334.922-.788l.816-5.09a.932.932 0 01.923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.219-4.975z"/>
-                        </svg>
-                        PayPal
-                    </button>
-                </div>
             </div>
 
             @if($errorMessage)
@@ -86,15 +87,13 @@
         </div>
 
         {{-- ══ STEP: DETAILS ══════════════════════════════════════════ --}}
-        <div x-show="$wire.step === 'details'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+        <div x-show="step === 'details'" x-transition:enter="transition duration-300 ease-out" x-cloak>
 
             <div class="df-summary" style="margin-bottom:1.25rem;">
                 <div class="df-summary-left">
                     <span class="df-summary-via">Donation summary</span>
                     <span class="df-summary-amt">{{ $currency }} {{ number_format($this->finalAmount, 2) }}</span>
-                    <span class="df-summary-via">
-                        via PayPal
-                    </span>
+                    <span class="df-summary-via">via PayPal</span>
                 </div>
                 <button type="button" wire:click="$set('step','amount')" class="df-change">Change</button>
             </div>
@@ -122,7 +121,6 @@
                     @error('donorEmail')<span class="df-field-err">{{ $message }}</span>@enderror
                 </div>
             @endunless
-
 
             @if($expanded)
                 <div class="df-field" style="margin-bottom:1rem;">
@@ -161,18 +159,34 @@
         </div>
 
         {{-- ══ STEP: PROCESSING ══════════════════════════════════════ --}}
-        <div x-show="$wire.step === 'processing'" x-transition:enter="transition duration-300 ease-out" x-cloak
+        <div x-show="step === 'processing'" x-transition:enter="transition duration-300 ease-out" x-cloak
              style="padding:3.5rem 0; text-align:center;">
             <svg class="df-spin df-spin--lg" style="margin:0 auto 1.25rem; display:block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:.25"/>
                 <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" style="opacity:.75"/>
             </svg>
-            <p class="df-state-title" style="text-align:center;">Redirecting to payment…</p>
-            <p class="df-state-sub" style="text-align:center; margin-top:.35rem;">Please wait, do not close this window.</p>
+            <p class="df-state-title" style="text-align:center;">Complete your payment</p>
+            <p class="df-state-sub" style="text-align:center; margin-top:.35rem;">A PayPal window has opened. Complete your payment there.</p>
+            <p class="df-state-sub" style="text-align:center; margin-top:.5rem; font-size:.78rem; opacity:.7;">Didn't see it? <button type="button" style="background:none;border:none;color:var(--orange);cursor:pointer;font-size:.78rem;text-decoration:underline;" x-on:click="popup && popup.focus()">Click here to bring it back.</button></p>
+        </div>
+
+        {{-- ══ STEP: SUCCESS ══════════════════════════════════════════ --}}
+        <div x-show="step === 'success'" x-transition:enter="transition duration-300 ease-out" x-cloak
+             style="padding:2.5rem 0; text-align:center;">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#22c55e" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            <p class="df-state-title" style="text-align:center;">Thank you!</p>
+            <p class="df-state-sub" style="text-align:center; margin-top:.35rem; margin-bottom:1.5rem;">Your donation has been received. We'll send a confirmation to your email.</p>
+            <button type="button" wire:click="resetForm" class="df-submit" style="width:auto; padding:.75rem 2rem;">
+                Donate Again
+            </button>
         </div>
 
         {{-- ══ STEP: FAILED ══════════════════════════════════════════ --}}
-        <div x-show="$wire.step === 'failed'" x-transition:enter="transition duration-300 ease-out" x-cloak
+        <div x-show="step === 'failed'" x-transition:enter="transition duration-300 ease-out" x-cloak
              style="padding:2.5rem 0; text-align:center;">
             <div class="df-state-icon df-state-icon--fail" style="margin:0 auto 1.25rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

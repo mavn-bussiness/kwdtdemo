@@ -53,10 +53,12 @@ Route::prefix('donate')->name('donate.')->group(function () {
     Route::get('/pending', fn () => view('pages.donate-pending'))->name('pending');
 
     // ── PayPal ────────────────────────────────────────────────────────────────
-    // 1. Donor is sent here → creates PayPal order → redirects to PayPal
+    // 1. Donor is sent here → creates PayPal order → redirects to PayPal (legacy, kept for direct links)
     Route::get('/paypal/{donation}', [PaypalWebhookController::class, 'redirect'])->name('paypal');
     // 2. PayPal sends donor back after approval
     Route::get('/paypal/{donation}/capture', [PaypalWebhookController::class, 'capture'])->name('paypal.capture');
-    // 3. PayPal server-to-server webhook
+    // 3. Donor cancelled on PayPal
+    Route::get('/paypal/{donation}/cancel', [PaypalWebhookController::class, 'cancel'])->name('paypal.cancel');
+    // 4. PayPal server-to-server webhook
     Route::post('/webhook/paypal', [PaypalWebhookController::class, 'handle'])->name('webhook.paypal');
 });

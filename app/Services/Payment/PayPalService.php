@@ -68,11 +68,11 @@ class PayPalService
                 'payment_source' => [
                     'paypal' => [
                         'experience_context' => [
-                            'return_url' => route('donate.paypal.capture', $donation),
-                            'cancel_url' => route('donate.failed'),
-                            'brand_name' => 'KWDT – Katosi Women Development Trust',
-                            'landing_page' => 'LOGIN',
-                            'user_action' => 'PAY_NOW',
+                            'return_url'          => route('donate.paypal.capture', $donation),
+                            'cancel_url'          => route('donate.paypal.cancel', $donation),
+                            'brand_name'          => 'KWDT – Katosi Women Development Trust',
+                            'landing_page'        => 'LOGIN',
+                            'user_action'         => 'PAY_NOW',
                             'shipping_preference' => 'NO_SHIPPING',
                         ],
                     ],
@@ -120,19 +120,18 @@ class PayPalService
 
         $status = match ($data['status'] ?? '') {
             'COMPLETED' => 'success',
-            'PENDING' => 'pending',
-            default => 'failed',
+            'PENDING'   => 'pending',
+            default     => 'failed',
         };
 
-        // Update the transaction record
         $donation->transactions()
             ->where('gateway_ref', $paypalOrderId)
             ->update([
-                'status' => $status,
+                'status'       => $status,
+                'paid_at'      => $status === 'success' ? now() : null,
                 'raw_response' => $data,
             ]);
 
-        // Update the donation itself
         $donation->update(['status' => $status]);
 
         return ['status' => $status, 'data' => $data];
