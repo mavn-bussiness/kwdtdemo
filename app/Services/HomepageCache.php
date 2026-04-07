@@ -25,7 +25,7 @@ class HomepageCache
 
     public static function blogs()
     {
-        return Cache::remember('homepage.blogs', now()->addHours(6), fn () => Content::published()
+        return static::remember('homepage.blogs', 6 * 60, fn () => Content::published()
             ->ofType('blog')
             ->latestPublished()
             ->take(3)
@@ -35,7 +35,7 @@ class HomepageCache
 
     public static function projects()
     {
-        return Cache::remember('homepage.projects', now()->addHours(12), fn () => Project::with('content')
+        return static::remember('homepage.projects', 12 * 60, fn () => Project::with('content')
             ->take(3)
             ->get()
         );
@@ -43,7 +43,7 @@ class HomepageCache
 
     public static function partners()
     {
-        return Cache::remember('homepage.partners', now()->addDay(), fn () => Partner::with('media')
+        return static::remember('homepage.partners', 24 * 60, fn () => Partner::with('media')
             ->active()
             ->orderBy('order')
             ->get()
@@ -52,11 +52,24 @@ class HomepageCache
 
     public static function testimonials()
     {
-        return Cache::remember('homepage.testimonials', now()->addDay(), fn () => Testimonial::where('is_featured', true)
+        return static::remember('homepage.testimonials', 24 * 60, fn () => Testimonial::where('is_featured', true)
             ->orderBy('order')
             ->take(3)
             ->get()
         );
+    }
+
+    /**
+     * Cache::remember with a fallback — if the cache driver is unavailable
+     * (e.g. Redis not yet provisioned) it runs the query directly instead of crashing.
+     */
+    private static function remember(string $key, int $minutes, \Closure $callback)
+    {
+        try {
+            return Cache::remember($key, now()->addMinutes($minutes), $callback);
+        } catch (\Exception) {
+            return $callback();
+        }
     }
 
     /**
@@ -65,9 +78,13 @@ class HomepageCache
      */
     public static function flush(): void
     {
-        Cache::forget('homepage.blogs');
-        Cache::forget('homepage.projects');
-        Cache::forget('homepage.partners');
-        Cache::forget('homepage.testimonials');
+        try {
+            Cache::forget('homepage.blogs');
+            Cache::forget('homepage.projects');
+            Cache::forget('homepage.partners');
+            Cache::forget('homepage.testimonials');
+        } catch (\Exception) {
+            // Cache unavailable — nothing to flush
+        }
     }
 }
