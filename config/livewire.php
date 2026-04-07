@@ -2,7 +2,6 @@
 
 return [
 
-    'asset_url' => env('LIVEWIRE_ASSET_URL', null),
     /*
     |---------------------------------------------------------------------------
     | Component Locations
@@ -180,7 +179,7 @@ return [
     |
     */
 
-    'inject_assets' => false,
+    'inject_assets' => true,
 
     /*
     |---------------------------------------------------------------------------

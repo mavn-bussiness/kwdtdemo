@@ -1,84 +1,228 @@
-/* KWDT "Sunrise" brand — Filament admin theme
-   No vendor imports — safe for Heroku/CI builds where vendor/ is absent during npm build
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ============================================================
+   KWDT Admin — Filament v5 Theme  "Sunrise Orange"
+   Primary: #F5820A  |  Dark panel: #2B1600  |  Cream: #FFFAF4
+   ============================================================ */
 
-/* ── Sidebar ─────────────────────────────────────────────────── */
+/* ── Sidebar ─────────────────────────────────────────────── */
 .fi-sidebar {
     background-color: #2B1600 !important;
-    border-right: 1px solid rgba(245, 130, 10, 0.15) !important;
+    border-right: 1px solid rgba(245,130,10,0.2) !important;
 }
-
+.fi-sidebar-header {
+    background-color: #1E0F00 !important;
+    border-bottom: 1px solid rgba(245,130,10,0.15) !important;
+    padding: 1.25rem 1rem !important;
+}
+.fi-logo img {
+    height: 4rem !important;
+    width: auto !important;
+}
+.fi-sidebar-nav {
+    padding: 0.75rem 0.5rem !important;
+}
+.fi-sidebar-group-label {
+    color: rgba(245,130,10,0.55) !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    padding: 1rem 0.75rem 0.35rem !important;
+}
 .fi-sidebar-item-button {
-    color: #F0DFC0 !important;
+    color: rgba(240,223,192,0.85) !important;
     border-radius: 8px !important;
-    transition: background 0.18s ease, color 0.18s ease;
+    margin: 1px 0 !important;
+    transition: background 0.18s, color 0.18s !important;
 }
 .fi-sidebar-item-button:hover {
-    background-color: rgba(245, 130, 10, 0.15) !important;
+    background-color: rgba(245,130,10,0.18) !important;
     color: #FF9E30 !important;
 }
+.fi-sidebar-item-button[aria-current="page"],
 .fi-sidebar-item-button.fi-active {
-    background-color: rgba(245, 130, 10, 0.22) !important;
+    background-color: rgba(245,130,10,0.25) !important;
     color: #F5820A !important;
-    font-weight: 600;
+    font-weight: 600 !important;
+    border-left: 3px solid #F5820A !important;
+}
+.fi-sidebar-item-icon {
+    color: inherit !important;
 }
 
-.fi-sidebar-group-label {
-    color: #8C5D00 !important;
-    font-size: 0.65rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-}
-
-/* ── Top bar ─────────────────────────────────────────────────── */
+/* ── Topbar ──────────────────────────────────────────────── */
 .fi-topbar {
+    background-color: #ffffff !important;
+    border-bottom: 2px solid #F5820A !important;
+    box-shadow: 0 1px 8px rgba(245,130,10,0.08) !important;
+}
+.fi-topbar-breadcrumbs {
+    color: #5C3600 !important;
+}
+.fi-breadcrumb-item {
+    color: #8C5D00 !important;
+}
+.fi-breadcrumb-item:last-child {
+    color: #F5820A !important;
+    font-weight: 600 !important;
+}
+
+/* ── Page / main background ──────────────────────────────── */
+.fi-main,
+.fi-body {
     background-color: #FFFAF4 !important;
+}
+.fi-page-header {
     border-bottom: 1px solid #F0DFC0 !important;
 }
-
-/* ── Page background ─────────────────────────────────────────── */
-.fi-main {
-    background-color: #FFFAF4 !important;
+.fi-page-header-heading {
+    color: #3D2100 !important;
+    font-weight: 800 !important;
 }
 
-/* ── Cards / sections / chart widgets ───────────────────────── */
-.fi-wi-stats-overview-stat,
-.fi-section,
-.fi-wi-chart {
+/* ── Stats overview ──────────────────────────────────────── */
+.fi-wi-stats-overview {
+    gap: 1rem !important;
+}
+.fi-wi-stats-overview-stat {
+    background-color: #ffffff !important;
     border: 1px solid #F0DFC0 !important;
     border-radius: 12px !important;
-    background-color: #FFFFFF !important;
+    border-top: 3px solid #F5820A !important;
+    box-shadow: 0 2px 12px rgba(245,130,10,0.06) !important;
 }
-
+.fi-wi-stats-overview-stat-label {
+    color: #8C5D00 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+}
+.fi-wi-stats-overview-stat-value {
+    color: #3D2100 !important;
+    font-weight: 900 !important;
+    font-size: 1.75rem !important;
+}
+.fi-wi-stats-overview-stat-description {
+    color: #8C5D00 !important;
+}
 .fi-wi-stats-overview-stat-description-icon {
     color: #F5820A !important;
 }
 
-/* ── Buttons ─────────────────────────────────────────────────── */
-.fi-btn-primary {
-    background-color: #F5820A !important;
-    border-color: #F5820A !important;
+/* ── Cards / sections / widgets ─────────────────────────── */
+.fi-section,
+.fi-wi-chart,
+.fi-wi-table-widget,
+.fi-card {
+    background-color: #ffffff !important;
+    border: 1px solid #F0DFC0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 12px rgba(245,130,10,0.05) !important;
 }
-.fi-btn-primary:hover {
-    background-color: #D06800 !important;
+.fi-section-header {
+    border-bottom: 1px solid #F0DFC0 !important;
+}
+.fi-section-header-heading {
+    color: #3D2100 !important;
+    font-weight: 700 !important;
 }
 
-/* ── Table header ────────────────────────────────────────────── */
+/* ── Buttons ─────────────────────────────────────────────── */
+.fi-btn-primary,
+.fi-btn[data-color="primary"] {
+    background-color: #F5820A !important;
+    border-color: #F5820A !important;
+    color: #ffffff !important;
+}
+.fi-btn-primary:hover,
+.fi-btn[data-color="primary"]:hover {
+    background-color: #D06800 !important;
+    border-color: #D06800 !important;
+}
+.fi-btn-outlined[data-color="primary"] {
+    color: #F5820A !important;
+    border-color: #F5820A !important;
+}
+.fi-btn-outlined[data-color="primary"]:hover {
+    background-color: rgba(245,130,10,0.08) !important;
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
 .fi-ta-header-cell {
     background-color: #FFF3E3 !important;
     color: #5C3600 !important;
     font-size: 0.7rem !important;
-    letter-spacing: 0.06em !important;
+    letter-spacing: 0.07em !important;
     text-transform: uppercase !important;
+    border-bottom: 2px solid #F5820A !important;
+}
+.fi-ta-row:hover td {
+    background-color: #FFF8F0 !important;
+}
+.fi-ta-filters-indicator {
+    background-color: rgba(245,130,10,0.12) !important;
+    color: #F5820A !important;
 }
 
-/* ── Badges ──────────────────────────────────────────────────── */
+/* ── Badges ──────────────────────────────────────────────── */
 .fi-badge {
     font-weight: 600 !important;
     border-radius: 999px !important;
 }
+.fi-badge[data-color="primary"] {
+    background-color: rgba(245,130,10,0.15) !important;
+    color: #D06800 !important;
+}
 
-/* ── Brand logo ──────────────────────────────────────────────── */
-.fi-logo {
-    padding: 1rem 1.25rem 0.75rem !important;
+/* ── Form inputs ─────────────────────────────────────────── */
+.fi-input:focus,
+.fi-select:focus,
+.fi-textarea:focus {
+    border-color: #F5820A !important;
+    box-shadow: 0 0 0 3px rgba(245,130,10,0.15) !important;
+    outline: none !important;
+}
+.fi-fo-field-wrp-label {
+    color: #5C3600 !important;
+    font-weight: 600 !important;
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.fi-tabs-tab[aria-selected="true"] {
+    color: #F5820A !important;
+    border-bottom-color: #F5820A !important;
+}
+.fi-tabs-tab:hover {
+    color: #D06800 !important;
+}
+
+/* ── Pagination ──────────────────────────────────────────── */
+.fi-pagination-item[aria-current="page"] button {
+    background-color: #F5820A !important;
+    color: #ffffff !important;
+    border-color: #F5820A !important;
+}
+
+/* ── Notifications ───────────────────────────────────────── */
+.fi-no-notification[data-color="success"] {
+    border-left-color: #16a34a !important;
+}
+.fi-no-notification[data-color="danger"] {
+    border-left-color: #dc2626 !important;
+}
+.fi-no-notification[data-color="primary"] {
+    border-left-color: #F5820A !important;
+}
+
+/* ── Dropdown menus ──────────────────────────────────────── */
+.fi-dropdown-panel {
+    border: 1px solid #F0DFC0 !important;
+    box-shadow: 0 8px 24px rgba(245,130,10,0.1) !important;
+}
+.fi-dropdown-list-item-button:hover {
+    background-color: #FFF3E3 !important;
+    color: #F5820A !important;
+}
+
+/* ── User avatar menu ────────────────────────────────────── */
+.fi-user-avatar {
+    border: 2px solid #F5820A !important;
 }

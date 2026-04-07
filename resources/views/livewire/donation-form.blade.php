@@ -1,5 +1,5 @@
 <div class="donation-form-card donate-form-wrap"
-     x-data="{ step: @entangle('step') }">
+     x-data="{}">
 
     {{-- ── Card header ────────────────────────────────────────── --}}
     <div class="donation-form-header">
@@ -11,20 +11,20 @@
                 <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--white);">Make a Donation</span>
             </div>
             <span style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; color:rgba(255,255,255,.45); background:rgba(255,255,255,.08); padding:.22rem .65rem; border-radius:var(--r-pill);">
-                <span x-show="step === 'amount'">Step 1 of 2</span>
-                <span x-show="step === 'details'" x-cloak>Step 2 of 2</span>
+                <span x-show="$wire.step === 'amount'">Step 1 of 2</span>
+                <span x-show="$wire.step === 'details'" x-cloak>Step 2 of 2</span>
             </span>
         </div>
         <div style="margin-top:.9rem; height:2px; background:rgba(255,255,255,.12); border-radius:2px; overflow:hidden;">
             <div style="height:100%; background:var(--orange); border-radius:2px; transition:width .4s ease;"
-                 :style="step === 'amount' ? 'width:50%' : 'width:100%'"></div>
+                 :style="$wire.step === 'amount' ? 'width:50%' : 'width:100%'"></div>
         </div>
     </div>
 
     <div class="donation-form-body">
 
         {{-- ══ STEP: AMOUNT ══════════════════════════════════════════ --}}
-        <div x-show="step === 'amount'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+        <div x-show="$wire.step === 'amount'" x-transition:enter="transition duration-300 ease-out" x-cloak>
 
             <p style="font-family:var(--font-mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Enter Your Amount</p>
 
@@ -86,7 +86,7 @@
         </div>
 
         {{-- ══ STEP: DETAILS ══════════════════════════════════════════ --}}
-        <div x-show="step === 'details'" x-transition:enter="transition duration-300 ease-out" x-cloak>
+        <div x-show="$wire.step === 'details'" x-transition:enter="transition duration-300 ease-out" x-cloak>
 
             <div class="df-summary" style="margin-bottom:1.25rem;">
                 <div class="df-summary-left">
@@ -161,7 +161,7 @@
         </div>
 
         {{-- ══ STEP: PROCESSING ══════════════════════════════════════ --}}
-        <div x-show="step === 'processing'" x-transition:enter="transition duration-300 ease-out" x-cloak
+        <div x-show="$wire.step === 'processing'" x-transition:enter="transition duration-300 ease-out" x-cloak
              style="padding:3.5rem 0; text-align:center;">
             <svg class="df-spin df-spin--lg" style="margin:0 auto 1.25rem; display:block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:.25"/>
@@ -172,7 +172,7 @@
         </div>
 
         {{-- ══ STEP: FAILED ══════════════════════════════════════════ --}}
-        <div x-show="step === 'failed'" x-transition:enter="transition duration-300 ease-out" x-cloak
+        <div x-show="$wire.step === 'failed'" x-transition:enter="transition duration-300 ease-out" x-cloak
              style="padding:2.5rem 0; text-align:center;">
             <div class="df-state-icon df-state-icon--fail" style="margin:0 auto 1.25rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

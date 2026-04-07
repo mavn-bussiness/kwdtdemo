@@ -4,7 +4,6 @@ namespace App\Filament\Pages;
 
 use App\Filament\Widgets\KwdtContentActivityChart;
 use App\Filament\Widgets\KwdtDonationsTrendChart;
-use App\Filament\Widgets\KwdtGoogleAnalytics;
 use App\Filament\Widgets\KwdtRecentDonations;
 use App\Filament\Widgets\KwdtStatsOverview;
 use App\Filament\Widgets\KwdtSubscriberGrowthChart;
@@ -24,7 +23,6 @@ class Dashboard extends BaseDashboard
             KwdtDonationsTrendChart::class,
             KwdtContentActivityChart::class,
             KwdtSubscriberGrowthChart::class,
-            KwdtGoogleAnalytics::class,
             KwdtRecentDonations::class,
             KwdtUpcomingEvents::class,
         ];

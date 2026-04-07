@@ -34,8 +34,8 @@ class PayPalService
             ? 'https://api-m.paypal.com'
             : 'https://api-m.sandbox.paypal.com';
 
-        $this->clientId = config('services.paypal.client_id');
-        $this->clientSecret = config('services.paypal.client_secret');
+        $this->clientId = config('services.paypal.client_id') ?? '';
+        $this->clientSecret = config('services.paypal.client_secret') ?? '';
     }
 
     // -------------------------------------------------------------------------
@@ -52,6 +52,7 @@ class PayPalService
         $token = $this->getAccessToken();
 
         $response = \Http::withToken($token)
+            ->withoutVerifying()
             ->withHeaders(['PayPal-Request-Id' => (string) Str::uuid()])
             ->post("{$this->baseUrl}/v2/checkout/orders", [
                 'intent' => 'CAPTURE',
@@ -64,12 +65,17 @@ class PayPalService
                     ],
                     'description' => 'Donation to Katosi Women Development Trust',
                 ]],
-                'application_context' => [
-                    'return_url' => route('donate.paypal.capture', $donation),
-                    'cancel_url' => route('donate.failed'),
-                    'brand_name' => 'KWDT – Katosi Women Development Trust',
-                    'landing_page' => 'LOGIN',
-                    'user_action' => 'PAY_NOW',
+                'payment_source' => [
+                    'paypal' => [
+                        'experience_context' => [
+                            'return_url' => route('donate.paypal.capture', $donation),
+                            'cancel_url' => route('donate.failed'),
+                            'brand_name' => 'KWDT – Katosi Women Development Trust',
+                            'landing_page' => 'LOGIN',
+                            'user_action' => 'PAY_NOW',
+                            'shipping_preference' => 'NO_SHIPPING',
+                        ],
+                    ],
                 ],
             ]);
 
@@ -106,6 +112,7 @@ class PayPalService
         $token = $this->getAccessToken();
 
         $response = \Http::withToken($token)
+            ->withoutVerifying()
             ->withHeaders(['PayPal-Request-Id' => (string) Str::uuid()])
             ->post("{$this->baseUrl}/v2/checkout/orders/{$paypalOrderId}/capture");
 
@@ -141,8 +148,13 @@ class PayPalService
      */
     private function getAccessToken(): string
     {
+        if (empty($this->clientId) || empty($this->clientSecret)) {
+            throw new RuntimeException('PayPal credentials are not configured. Please set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET in your .env file.');
+        }
+
         $response = \Http::asForm()
             ->withBasicAuth($this->clientId, $this->clientSecret)
+            ->withoutVerifying()
             ->post("{$this->baseUrl}/v1/oauth2/token", [
                 'grant_type' => 'client_credentials',
             ]);

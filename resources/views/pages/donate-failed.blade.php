@@ -16,6 +16,12 @@
         <h1>Something went wrong</h1>
         <p>We were unable to process your donation. Please try again or contact us for help.</p>
 
+        @if(session('error') && app()->isLocal())
+            <p class="mt-2 text-sm" style="color:var(--clay); background:rgba(200,90,42,.08); padding:.75rem 1rem; border-radius:.5rem; max-width:480px">
+                {{ session('error') }}
+            </p>
+        @endif
+
         <div class="flex items-center gap-3 justify-center flex-wrap mt-2">
             <a href="{{ route('donate') }}" class="btn-primary">
                 Retry Donation

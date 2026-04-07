@@ -28,7 +28,7 @@ class PaypalWebhookController extends Controller
             report($e);
 
             return redirect()->route('donate.failed')
-                ->with('error', 'Could not connect to PayPal. Please try again.');
+                ->with('error', app()->isLocal() ? $e->getMessage() : 'Could not connect to PayPal. Please try again.');
         }
     }
 
