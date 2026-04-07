@@ -58,28 +58,30 @@ class PayPalService
                 'intent' => 'CAPTURE',
                 'purchase_units' => [[
                     'reference_id' => (string) $donation->id,
+                    'payee'        => [
+                        'email_address' => config('services.paypal.merchant_email'),
+                    ],
                     'amount' => [
                         'currency_code' => 'USD',
-                        // PayPal requires a string with 2 decimal places
                         'value' => number_format((float) $donation->amount_original, 2, '.', ''),
                     ],
                     'description' => 'Donation to Katosi Women Development Trust',
                 ]],
-                'payment_source' => [
-                    'paypal' => [
-                        'experience_context' => [
-                            'return_url'          => route('donate.paypal.capture', $donation),
-                            'cancel_url'          => route('donate.paypal.cancel', $donation),
-                            'brand_name'          => 'KWDT – Katosi Women Development Trust',
-                            'landing_page'        => 'LOGIN',
-                            'user_action'         => 'PAY_NOW',
-                            'shipping_preference' => 'NO_SHIPPING',
-                        ],
-                    ],
+                'application_context' => [
+                    'return_url'          => route('donate.paypal.capture', $donation),
+                    'cancel_url'          => route('donate.paypal.cancel', $donation),
+                    'brand_name'          => 'KWDT - Katosi Women Development Trust',
+                    'landing_page'        => 'LOGIN',
+                    'user_action'         => 'PAY_NOW',
+                    'shipping_preference' => 'NO_SHIPPING',
                 ],
             ]);
 
         if (! $response->successful()) {
+            \Log::error('PayPal order creation failed', [
+                'status' => $response->status(),
+                'body'   => $response->json(),
+            ]);
             throw new RuntimeException('PayPal order creation failed: '.$response->body());
         }
 

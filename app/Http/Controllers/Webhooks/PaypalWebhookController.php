@@ -185,26 +185,33 @@ class PaypalWebhookController extends Controller
 
     private function popupClose(string $status): \Illuminate\Http\Response
     {
-        $event = match ($status) {
-            'success'   => 'paypal-success',
-            'cancelled' => 'paypal-failed',
-            default     => 'paypal-failed',
-        };
+        $event       = $status === 'success' ? 'paypal-success' : 'paypal-failed';
+        $fallbackUrl = $status === 'success' ? '/donate/success' : '/donate/failed';
 
-        return response(<<<HTML
-            <!DOCTYPE html><html><head><title>Processing…</title></head>
-            <body>
-            <script>
-                if (window.opener) {
-                    window.opener.dispatchEvent(new CustomEvent('{$event}'));
-                    window.close();
-                } else {
-                    window.location.href = '{$status}' === 'success'
-                        ? '/donate/success'
-                        : '/donate/failed';
+        $html = <<<HTML
+        <!DOCTYPE html>
+        <html>
+        <head><title>Processing...</title></head>
+        <body>
+        <p style="font-family:sans-serif;text-align:center;padding:2rem;">Processing your payment...</p>
+        <script>
+            (function() {
+                try {
+                    if (window.opener && !window.opener.closed) {
+                        window.opener.dispatchEvent(new CustomEvent('{$event}'));
+                        setTimeout(function() { window.close(); }, 300);
+                    } else {
+                        window.location.href = '{$fallbackUrl}';
+                    }
+                } catch(e) {
+                    window.location.href = '{$fallbackUrl}';
                 }
-            <\/script>
-            </body></html>
-        HTML);
+            })();
+        </script>
+        </body>
+        </html>
+        HTML;
+
+        return response($html);
     }
 }
