@@ -11,7 +11,6 @@ use App\Filament\Resources\Partners\Schemas\PartnersInfolist;
 use App\Filament\Resources\Partners\Tables\PartnersTable;
 use App\Models\Partner;
 use BackedEnum;
-use Filament\Infolists\Components;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -21,9 +20,15 @@ class PartnersResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
 
-    protected static ?string $recordTitleAttribute = 'Partner';
+    protected static string|null|\UnitEnum $navigationGroup = 'Organisation';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Partners';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

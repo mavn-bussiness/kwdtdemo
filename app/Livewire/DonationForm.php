@@ -14,25 +14,33 @@ class DonationForm extends Component
     public bool $expanded = false;
 
     // ── Form state ────────────────────────────────────────────────
-    public string $selectedAmount = '25';
+    public string $selectedAmount = 'custom';
+
     public string $customAmount = '';
+
     public string $currency = 'USD';
+
     public string $paymentMethod = 'paypal';
+
     public string $donorName = '';
+
     public string $donorEmail = '';
+
     public string $reason = '';
+
     public bool $isAnonymous = false;
 
     // ── UI state ──────────────────────────────────────────────────
     public string $step = 'amount';
+
     public string $errorMessage = '';
 
     // ── Suggested amounts ─────────────────────────────────────────
     public array $amounts = [
-        '10'     => '$10 — Menstrual health supplies for 2 girls for a month',
-        '25'     => '$25 — Clean water for one family for a month',
-        '50'     => '$50 — Women\'s group skills training session',
-        '100'    => '$100 — Micro-business startup support for one woman',
+        '10' => '$10 — Menstrual health supplies for 2 girls for a month',
+        '25' => '$25 — Clean water for one family for a month',
+        '50' => '$50 — Women\'s group skills training session',
+        '100' => '$100 — Micro-business startup support for one woman',
         'custom' => 'Custom amount',
     ];
 
@@ -41,11 +49,11 @@ class DonationForm extends Component
     {
         return [
             'paymentMethod' => 'required|in:paypal',
-            'currency'      => 'required|in:USD',
-            'isAnonymous'   => 'boolean',
-            'reason'        => 'nullable|string|max:500',
-            'donorName'     => 'required_if:isAnonymous,false|string|max:255',
-            'donorEmail'    => 'required_if:isAnonymous,false|email|max:255',
+            'currency' => 'required|in:USD',
+            'isAnonymous' => 'boolean',
+            'reason' => 'nullable|string|max:500',
+            'donorName' => 'required_if:isAnonymous,false|string|max:255',
+            'donorEmail' => 'required_if:isAnonymous,false|email|max:255',
         ];
     }
 
@@ -55,6 +63,7 @@ class DonationForm extends Component
         if ($this->selectedAmount === 'custom') {
             return (float) str_replace(',', '', $this->customAmount);
         }
+
         return (float) $this->selectedAmount;
     }
 
@@ -79,14 +88,17 @@ class DonationForm extends Component
 
         if ($this->selectedAmount === 'custom' && empty($this->customAmount)) {
             $this->errorMessage = 'Please enter a donation amount.';
+
             return;
         }
         if ($amount <= 0) {
             $this->errorMessage = 'Please enter a valid donation amount.';
+
             return;
         }
         if ($amount < 1) {
             $this->errorMessage = 'Minimum donation is $1.';
+
             return;
         }
 
@@ -101,14 +113,14 @@ class DonationForm extends Component
 
         try {
             $donation = Donation::create([
-                'donor_name'     => $this->isAnonymous ? null : $this->donorName,
-                'donor_email'    => $this->isAnonymous ? null : $this->donorEmail,
-                'reason'         => $this->reason ?: null,
-                'amount_original'=> $this->finalAmount,
-                'currency'       => $this->currency,
+                'donor_name' => $this->isAnonymous ? null : $this->donorName,
+                'donor_email' => $this->isAnonymous ? null : $this->donorEmail,
+                'reason' => $this->reason ?: null,
+                'amount_original' => $this->finalAmount,
+                'currency' => $this->currency,
                 'payment_method' => $this->paymentMethod,
-                'is_anonymous'   => $this->isAnonymous,
-                'status'         => 'pending',
+                'is_anonymous' => $this->isAnonymous,
+                'status' => 'pending',
             ]);
 
             $approvalUrl = app(PayPalService::class)->createOrder($donation);
@@ -139,7 +151,7 @@ class DonationForm extends Component
             'selectedAmount', 'customAmount', 'donorName',
             'donorEmail', 'reason', 'isAnonymous',
         ]);
-        $this->selectedAmount = '25';
+        $this->selectedAmount = 'custom';
         $this->step = 'amount';
         $this->errorMessage = '';
     }

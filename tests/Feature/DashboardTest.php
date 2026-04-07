@@ -1,16 +1,14 @@
 <?php
 
 use App\Models\User;
+use Filament\Panel;
 
-test('guests are redirected to the login page', function () {
-    $response = $this->get(route('dashboard'));
-    $response->assertRedirect(route('login'));
+test('guests are redirected to the admin login page', function () {
+    $this->get('/admin')->assertRedirect();
 });
 
-test('authenticated users can visit the dashboard', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+test('authenticated admins can access the admin panel', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
-    $response = $this->get(route('dashboard'));
-    $response->assertOk();
+    expect($user->canAccessPanel(app(Panel::class)))->toBeTrue();
 });

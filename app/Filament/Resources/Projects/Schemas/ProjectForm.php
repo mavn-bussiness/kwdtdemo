@@ -2,9 +2,15 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use App\Models\Category;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class ProjectForm
@@ -13,26 +19,103 @@ class ProjectForm
     {
         return $schema
             ->components([
-                TextInput::make('content_id')
+                // ── Content fields ────────────────────────────────────────────
+                TextInput::make('title')
                     ->required()
-                    ->numeric(),
-                DatePicker::make('start_date')
-                    ->required(),
-                DatePicker::make('end_date'),
-                TextInput::make('location')
-                    ->default(null),
+                    ->live(onBlur: true)
+                    ->columnSpan(1),
+
+                TextInput::make('slug')
+                    ->required()
+                    ->unique('content', 'slug', ignoreRecord: true)
+                    ->helperText('Auto-generated from title. You may customise it.')
+                    ->columnSpan(1),
+
+                Select::make('categories')
+                    ->label('Categories')
+                    ->options(fn () => Category::orderBy('name')->pluck('name', 'id'))
+                    ->multiple()
+                    ->searchable()
+                    ->helperText('Thematic categories this project belongs to.')
+                    ->columnSpan(1),
+
+                Radio::make('publish_status')
+                    ->label('Status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived',
+                    ])
+                    ->default('draft')
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        if ($state === 'published') {
+                            $set('published_at', now()->toDateTimeString());
+                        }
+                    })
+                    ->inline()
+                    ->columnSpan(1),
+
+                DateTimePicker::make('published_at')
+                    ->label('Published At')
+                    ->nullable()
+                    ->columnSpan(1),
+
+                FileUpload::make('featured_image')
+                    ->label('Featured Image')
+                    ->image()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->directory('content/images')
+                    ->visibility('public')
+                    ->columnSpanFull(),
+
+                RichEditor::make('excerpt')
+                    ->columnSpanFull(),
+
+                RichEditor::make('body')
+                    ->label('Content Body')
+                    ->required()
+                    ->columnSpanFull(),
+
+                // ── Project-specific fields ───────────────────────────────────
                 Select::make('status')
+                    ->label('Project Status')
                     ->options(['planned' => 'Planned', 'ongoing' => 'Ongoing', 'completed' => 'Completed'])
                     ->default('planned')
-                    ->required(),
-                TextInput::make('beneficiaries_count')
-                    ->numeric()
-                    ->default(null),
+                    ->required()
+                    ->columnSpan(1),
+
+                DatePicker::make('start_date')
+                    ->required()
+                    ->columnSpan(1),
+
+                DatePicker::make('end_date')
+                    ->after('start_date')
+                    ->columnSpan(1),
+
+                TextInput::make('location')
+                    ->placeholder('e.g. Mukono District')
+                    ->columnSpan(1),
+
                 TextInput::make('funder')
-                    ->default(null),
-                TextInput::make('budget_usd')
+                    ->placeholder('e.g. GIZ, EU Delegation')
+                    ->columnSpan(1),
+
+                TextInput::make('beneficiaries_count')
+                    ->label('Beneficiaries Count')
                     ->numeric()
-                    ->default(null),
-            ]);
+                    ->minValue(0)
+                    ->columnSpan(1),
+
+                TextInput::make('budget_usd')
+                    ->label('Budget (USD)')
+                    ->numeric()
+                    ->prefix('$')
+                    ->minValue(0)
+                    ->columnSpan(1),
+            ])
+            ->columns(2);
     }
 }

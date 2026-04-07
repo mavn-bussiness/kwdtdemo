@@ -6,6 +6,7 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Webhooks\PaypalWebhookController;
@@ -39,6 +40,11 @@ Route::get('/careers', [CareerController::class,  'index'])->name('careers');
 Route::get('/contact', fn () => view('pages.contact'))->name('contact');
 Route::get('/privacy-policy', fn () => view('pages.privacy'))->name('privacy');
 Route::get('/terms-of-service', fn () => view('pages.terms'))->name('terms');
+
+// ── Newsletter ────────────────────────────────────────────────────────────────────────────────
+
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->name('newsletter.unsubscribe');
 
 // ── Donation ──────────────────────────────────────────────────────────────────
 

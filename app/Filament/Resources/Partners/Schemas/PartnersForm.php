@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Partners\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -16,20 +17,39 @@ class PartnersForm
             ->components([
                 TextInput::make('name')
                     ->required()
-                    ->columnSpan(2),
+                    ->columnSpanFull(),
+
                 TextInput::make('website')
                     ->url()
-                    ->default(null),
-                TextInput::make('logo_url')
-                    ->url()
-                    ->default(null),
-                Textarea::make('description')
-                    ->columnSpanFull(),
-                Toggle::make('is_active')
-                    ->default(true),
+                    ->prefix('https://')
+                    ->placeholder('www.example.org')
+                    ->columnSpan(1),
+
                 TextInput::make('order')
+                    ->label('Display Order')
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->helperText('Lower = shown first')
+                    ->columnSpan(1),
+
+                Textarea::make('description')
+                    ->rows(3)
+                    ->columnSpanFull(),
+
+                Toggle::make('is_active')
+                    ->label('Visible on website')
+                    ->default(true)
+                    ->columnSpan(1),
+
+                // Logo upload — stored in storage/app/public/partners/logos
+                FileUpload::make('logo_url')
+                    ->label('Partner Logo')
+                    ->image()
+                    ->imageResizeMode('contain')
+                    ->directory('partners/logos')
+                    ->visibility('public')
+                    ->helperText('PNG or SVG with transparent background recommended.')
+                    ->columnSpanFull(),
             ]);
     }
 }

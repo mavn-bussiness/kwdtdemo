@@ -15,16 +15,21 @@ class KwdtStatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        // Donations this month vs. last month
-        $totalRevenue = Donation::where('status', 'success')->sum('amount_usd') ?? 0;
-        $donationsThisMonth = Donation::where('status', 'success')
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
-            ->count();
-        $donationsLastMonth = Donation::where('status', 'success')
-            ->whereMonth('created_at', now()->subMonth()->month)
-            ->whereYear('created_at', now()->subMonth()->year)
-            ->count();
+        // Single query for all donation stats
+        $donationStats = Donation::where('status', 'success')
+            ->selectRaw('
+                SUM(amount_usd) as total_revenue,
+                SUM(CASE WHEN YEAR(created_at) = ? AND MONTH(created_at) = ? THEN 1 ELSE 0 END) as this_month,
+                SUM(CASE WHEN YEAR(created_at) = ? AND MONTH(created_at) = ? THEN 1 ELSE 0 END) as last_month
+            ', [
+                now()->year, now()->month,
+                now()->subMonth()->year, now()->subMonth()->month,
+            ])
+            ->first();
+
+        $totalRevenue = $donationStats->total_revenue ?? 0;
+        $donationsThisMonth = (int) ($donationStats->this_month ?? 0);
+        $donationsLastMonth = (int) ($donationStats->last_month ?? 0);
         $donationTrend = $donationsLastMonth > 0
             ? round((($donationsThisMonth - $donationsLastMonth) / $donationsLastMonth) * 100)
             : 0;

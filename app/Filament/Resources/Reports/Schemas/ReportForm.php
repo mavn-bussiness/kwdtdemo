@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Reports\Schemas;
 
-use App\Models\Content;
+use App\Models\Category;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Set;
@@ -16,15 +18,50 @@ class ReportForm
     {
         return $schema
             ->components([
-                // Row 1: Link to content + Year
-                Select::make('content_id')
-                    ->label('Content Entry')
-                    ->relationship('content', 'title')
-                    ->searchable()
-                    ->preload()
+                // ── Content fields ────────────────────────────────────────────
+                TextInput::make('title')
                     ->required()
+                    ->live(onBlur: true)
                     ->columnSpan(1),
 
+                TextInput::make('slug')
+                    ->required()
+                    ->unique('content', 'slug', ignoreRecord: true)
+                    ->helperText('Auto-generated from title. You may customise it.')
+                    ->columnSpan(1),
+
+                Select::make('categories')
+                    ->label('Categories')
+                    ->options(fn () => Category::orderBy('name')->pluck('name', 'id'))
+                    ->multiple()
+                    ->searchable()
+                    ->helperText('Thematic categories this report belongs to.')
+                    ->columnSpan(1),
+
+                Radio::make('publish_status')
+                    ->label('Publish Status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived',
+                    ])
+                    ->default('draft')
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        if ($state === 'published') {
+                            $set('published_at', now()->toDateTimeString());
+                        }
+                    })
+                    ->inline()
+                    ->columnSpan(1),
+
+                DateTimePicker::make('published_at')
+                    ->label('Published At')
+                    ->nullable()
+                    ->columnSpan(1),
+
+                // ── Report-specific fields ────────────────────────────────────
                 TextInput::make('report_year')
                     ->label('Report Year')
                     ->required()
@@ -34,7 +71,6 @@ class ReportForm
                     ->default((int) date('Y'))
                     ->columnSpan(1),
 
-                // Row 2: File upload — autofill name, path, type, size
                 FileUpload::make('file_path')
                     ->label('Report File (PDF / DOCX)')
                     ->required()
@@ -47,8 +83,6 @@ class ReportForm
                     ->visibility('public')
                     ->downloadable()
                     ->afterStateUpdated(function (Set $set, mixed $state) {
-                        // On edit, state may be a stored path string — only extract
-                        // metadata when it's a fresh TemporaryUploadedFile
                         if (! $state instanceof TemporaryUploadedFile) {
                             return;
                         }
@@ -58,7 +92,6 @@ class ReportForm
                     })
                     ->columnSpanFull(),
 
-                // Row 3: Auto-filled metadata (read-only feel, but editable)
                 TextInput::make('file_name')
                     ->label('File Name')
                     ->required()

@@ -14,6 +14,7 @@ class DonationsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->with('latestTransaction'))
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
@@ -33,7 +34,7 @@ class DonationsTable
                 TextColumn::make('amount_original')
                     ->label('Amount')
                     ->sortable()
-                    ->formatStateUsing(fn ($state, $record) => $record->currency . ' ' . number_format($state, 2)),
+                    ->formatStateUsing(fn ($state, $record) => $record->currency.' '.number_format($state, 2)),
 
                 TextColumn::make('amount_usd')
                     ->label('USD Equiv.')
@@ -45,10 +46,10 @@ class DonationsTable
                     ->label('Method')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'paypal'       => 'info',
-                        'mtn_momo'     => 'warning',
+                        'paypal' => 'info',
+                        'mtn_momo' => 'warning',
                         'airtel_money' => 'danger',
-                        default        => 'gray',
+                        default => 'gray',
                     }),
 
                 TextColumn::make('status')
@@ -56,8 +57,8 @@ class DonationsTable
                     ->color(fn (string $state): string => match ($state) {
                         'success' => 'success',
                         'pending' => 'warning',
-                        'failed'  => 'danger',
-                        default   => 'gray',
+                        'failed' => 'danger',
+                        default => 'gray',
                     }),
 
                 TextColumn::make('created_at')
@@ -71,14 +72,14 @@ class DonationsTable
                     ->options([
                         'pending' => 'Pending',
                         'success' => 'Success',
-                        'failed'  => 'Failed',
+                        'failed' => 'Failed',
                     ]),
 
                 SelectFilter::make('payment_method')
                     ->label('Method')
                     ->options([
-                        'paypal'       => 'PayPal',
-                        'mtn_momo'     => 'MTN MoMo',
+                        'paypal' => 'PayPal',
+                        'mtn_momo' => 'MTN MoMo',
                         'airtel_money' => 'Airtel Money',
                     ]),
             ])

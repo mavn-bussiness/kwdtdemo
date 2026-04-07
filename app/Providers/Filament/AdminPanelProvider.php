@@ -2,12 +2,14 @@
 
 namespace App\Providers\Filament;
 
-use App\Http\Middleware\AutoLoginInDev;
 use App\Filament\Pages\Dashboard;
+use App\Http\Middleware\AutoLoginInDev;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -30,20 +32,29 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandName('KWDT Admin')
             ->brandLogo(asset('images/kwdt-logo.webp'))
-            ->brandLogoHeight('4rem')
+            ->brandLogoHeight('3.5rem')
             ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => Color::hex('#F5820A'),
-                'gray' => Color::hex('#8C5D00'),
-                'info' => Color::hex('#F0A500'),
-                'success' => Color::hex('#16a34a'),
-                'warning' => Color::hex('#FF9E30'),
-                'danger' => Color::hex('#dc2626'),
+                'gray' => Color::Slate,
+                'info' => Color::Sky,
+                'success' => Color::Emerald,
+                'warning' => Color::Amber,
+                'danger' => Color::Rose,
+            ])
+            ->defaultThemeMode(ThemeMode::Light)
+            ->navigationGroups([
+                NavigationGroup::make('Content'),
+                NavigationGroup::make('Organisation'),
+                NavigationGroup::make('Finance'),
+                NavigationGroup::make('Community'),
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.filemtime(public_path('css/filament-admin.css')).'">'
             )
+            ->maxContentWidth('full')
+            ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

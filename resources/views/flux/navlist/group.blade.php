@@ -16,8 +16,8 @@
         class="group/disclosure-button mb-[2px] flex h-10 w-full items-center rounded-lg text-zinc-500 hover:bg-zinc-800/5 hover:text-zinc-800 lg:h-8 dark:text-white/80 dark:hover:bg-white/[7%] dark:hover:text-white"
     >
         <div class="ps-3 pe-4">
-            <flux:icon.chevron-down class="hidden size-3! group-data-open/disclosure-button:block" />
-            <flux:icon.chevron-right class="block size-3! group-data-open/disclosure-button:hidden" />
+            <svg x-show="open" class="size-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+            <svg x-show="!open" class="size-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
         </div>
 
         <span class="text-sm font-medium leading-none">{{ $heading }}</span>

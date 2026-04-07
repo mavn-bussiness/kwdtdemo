@@ -57,6 +57,7 @@
                     </span>
                     <input type="number"
                            wire:model.live.debounce.400ms="customAmount"
+                           wire:focus="$set('selectedAmount','custom')"
                            class="df-input"
                            style="padding-left:2.75rem; font-size:1.25rem; font-family:var(--font-display); font-weight:700; height:3.25rem;"
                            placeholder="0.00"

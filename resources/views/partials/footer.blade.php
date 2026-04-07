@@ -179,6 +179,12 @@
 
     </div>{{-- /.footer-top --}}
 
+    {{-- ── Newsletter signup ────────────────────────────────────── --}}
+    <div class="footer-newsletter" id="newsletter">
+        <p class="footer-newsletter-label">Stay updated — join our newsletter</p>
+        @livewire('newslettersignup', ['compact' => true])
+    </div>
+
     {{-- ── Bottom bar ─────────────────────────────────────────── --}}
     <div class="footer-bottom">
 

@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\PaymentTransaction;
-use Filament\Actions\BulkActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
@@ -13,14 +12,14 @@ class KwdtRecentDonations extends TableWidget
 {
     protected static ?int $sort = 3;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected static ?string $heading = 'Recent Donations';
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn (): Builder => PaymentTransaction::query()->latest('paid_at'))
+            ->query(fn (): Builder => PaymentTransaction::query()->with('donation')->latest('paid_at'))
             ->columns([
                 TextColumn::make('gateway_ref')
                     ->label('Transaction ID')
@@ -37,11 +36,11 @@ class KwdtRecentDonations extends TableWidget
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'success'   => 'success',
-                        'pending'   => 'warning',
-                        'failed'    => 'danger',
+                        'success' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
                         'cancelled' => 'gray',
-                        default     => 'gray',
+                        default => 'gray',
                     }),
 
                 TextColumn::make('paid_at')

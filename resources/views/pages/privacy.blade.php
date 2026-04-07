@@ -18,9 +18,9 @@
 
     <section class="section prose">
         @php
-            use App\Models\Content;$text = Content::where('type', 'privacy')->value('content')
-                    ?? config('kwdt.privacy')
-                    ?? 'Privacy policy is not available at this time.';
+            $text = \App\Models\Content::where('type', 'privacy')->value('body')
+                ?? config('kwdt.privacy')
+                ?? 'Privacy policy is not available at this time.';
         @endphp
 
         {!! $text !!}

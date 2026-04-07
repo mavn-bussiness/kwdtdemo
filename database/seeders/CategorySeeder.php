@@ -29,14 +29,6 @@ class CategorySeeder extends Seeder
                 'name' => 'Women Empowerment',
                 'slug' => 'women-empowerment',
             ],
-            [
-                'name' => 'Events',
-                'slug' => 'events',
-            ],
-            [
-                'name' => 'News',
-                'slug' => 'news',
-            ],
         ];
 
         foreach ($categories as $category) {

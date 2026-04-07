@@ -12,15 +12,29 @@ class NewsletterSubscriberForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(2)
             ->components([
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Email Address')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->columnSpanFull(),
+
                 Toggle::make('is_active')
-                    ->required(),
-                DateTimePicker::make('subscribed_at'),
-                DateTimePicker::make('unsubscribed_at'),
+                    ->label('Active Subscriber')
+                    ->helperText('Uncheck to manually unsubscribe this address.')
+                    ->columnSpanFull(),
+
+                DateTimePicker::make('subscribed_at')
+                    ->label('Subscribed At')
+                    ->placeholder('—')
+                    ->columnSpan(1),
+
+                DateTimePicker::make('unsubscribed_at')
+                    ->label('Unsubscribed At')
+                    ->placeholder('—')
+                    ->columnSpan(1),
             ]);
     }
 }

@@ -1,42 +1,41 @@
 <?php
 
-if (config('database.default') === 'null') {
-    // database driver unavailable, skip these view sanity checks
-    return;
-}
-
-it('renders the blog index view without hitting the database', function () {
-    // render view with empty collections and verify static content
-    $view = view('pages.blog.index', [
-        'categories' => collect(),
-        'posts' => collect(),
-        'featured' => null,
-    ]);
-
-    $view->assertSee('Blog & News');
-    $view->assertSee('Stories from the Field');
+it('renders the home page successfully', function () {
+    $this->get(route('home'))->assertOk();
 });
 
-it('can render the blog show template with a dummy post', function () {
-    $dummy = (object) [
-        'title' => 'Dummy',
-        'excerpt' => 'excerpt',
-        'featured_image' => null,
-        'categories' => collect(),
-        'author' => (object) ['name' => 'Author'],
-        'published_at' => now(),
-        'body' => '<p>body</p>',
-        'media' => collect(),
-    ];
-    $related = collect();
-
-    $view = view('pages.blog.show', ['post' => $dummy, 'related' => $related]);
-    $view->assertSee('Dummy');
-    $view->assertSee('Back to Blog');
+it('renders the blog index page successfully', function () {
+    $this->get(route('blog.index'))->assertOk();
 });
 
-it('renders the donate success and failure blades directly', function () {
-    view('pages.donate-success')->assertSee('Thank you for your donation');
-    view('pages.donate-failed')->assertSee('Something went wrong');
+it('renders the projects index page successfully', function () {
+    $this->get(route('projects.index'))->assertOk();
 });
 
+it('renders the about page successfully', function () {
+    $this->get(route('about.index'))->assertOk();
+});
+
+it('renders the contact page successfully', function () {
+    $this->get(route('contact'))->assertOk();
+});
+
+it('renders the donate page successfully', function () {
+    $this->get(route('donate'))->assertOk();
+});
+
+it('renders the donate success page successfully', function () {
+    $this->get(route('donate.success'))->assertOk();
+});
+
+it('renders the donate failed page successfully', function () {
+    $this->get(route('donate.failed'))->assertOk();
+});
+
+it('renders the reports page successfully', function () {
+    $this->get(route('reports'))->assertOk();
+});
+
+it('renders the privacy policy page successfully', function () {
+    $this->get(route('privacy'))->assertOk();
+});

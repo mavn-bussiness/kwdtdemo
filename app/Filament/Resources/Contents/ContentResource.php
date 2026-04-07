@@ -20,9 +20,15 @@ class ContentResource extends Resource
 {
     protected static ?string $model = Content::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentDuplicate;
 
-    protected static ?string $recordTitleAttribute = 'Content';
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Posts & Pages';
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {

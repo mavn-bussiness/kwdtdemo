@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class NewsletterSubscriber extends Model
 {
@@ -12,6 +13,7 @@ class NewsletterSubscriber extends Model
 
     protected $fillable = [
         'email',
+        'unsubscribe_token',
         'is_active',
         'subscribed_at',
         'unsubscribed_at',
@@ -55,15 +57,18 @@ class NewsletterSubscriber extends Model
         ]);
     }
 
-    /**
-     * Re-subscribe a previously unsubscribed email.
-     */
     public function resubscribe(): void
     {
         $this->update([
             'is_active' => true,
             'subscribed_at' => now(),
             'unsubscribed_at' => null,
+            'unsubscribe_token' => Str::random(64),
         ]);
+    }
+
+    public static function generateToken(): string
+    {
+        return Str::random(64);
     }
 }

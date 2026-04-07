@@ -17,7 +17,7 @@
 
     <section class="section prose">
         @php
-            $text = \App\Models\Content::where('type', 'terms')->value('content')
+            $text = \App\Models\Content::where('type', 'terms')->value('body')
                     ?? config('kwdt.terms')
                     ?? 'Terms of service not provided.';
         @endphp

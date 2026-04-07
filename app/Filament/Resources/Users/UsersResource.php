@@ -20,9 +20,15 @@ class UsersResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserCircle;
 
-    protected static ?string $recordTitleAttribute = 'User';
+    protected static string|null|\UnitEnum $navigationGroup = 'Community';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Admin Users';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

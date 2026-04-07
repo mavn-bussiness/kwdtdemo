@@ -22,7 +22,13 @@ class AwardResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTrophy;
 
-    protected static ?string $recordTitleAttribute = 'Awards';
+    protected static string|null|\UnitEnum $navigationGroup = 'Organisation';
+
+    protected static ?int $navigationSort = 4;
+
+    protected static ?string $navigationLabel = 'Awards';
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {

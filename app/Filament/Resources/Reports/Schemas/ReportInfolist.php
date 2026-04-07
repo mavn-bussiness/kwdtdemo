@@ -16,10 +16,26 @@ class ReportInfolist
                     ->columns(2)
                     ->schema([
                         TextEntry::make('content.title')
-                            ->label('Content Entry'),
+                            ->label('Title')
+                            ->columnSpanFull(),
+
+                        TextEntry::make('content.status')
+                            ->label('Publish Status')
+                            ->badge()
+                            ->color(fn (string $state): string => match ($state) {
+                                'published' => 'success',
+                                'draft' => 'warning',
+                                'archived' => 'gray',
+                                default => 'gray',
+                            }),
 
                         TextEntry::make('report_year')
                             ->label('Report Year'),
+
+                        TextEntry::make('content.categories.name')
+                            ->label('Categories')
+                            ->badge()
+                            ->separator(','),
 
                         TextEntry::make('file_name')
                             ->label('File Name'),
@@ -29,14 +45,12 @@ class ReportInfolist
 
                         TextEntry::make('file_size_kb')
                             ->label('File Size')
-                            ->formatStateUsing(fn ($state) => $state ? $state . ' KB' : '—'),
+                            ->formatStateUsing(fn ($state) => $state ? $state.' KB' : '—'),
 
                         TextEntry::make('file_path')
                             ->label('Download')
                             ->formatStateUsing(fn ($state) => $state ? basename($state) : '—')
-                            ->url(fn ($record) => $record->file_path
-                                ? asset('storage/' . $record->file_path)
-                                : null)
+                            ->url(fn ($record) => $record->file_path ? asset('storage/'.$record->file_path) : null)
                             ->openUrlInNewTab(),
                     ]),
 

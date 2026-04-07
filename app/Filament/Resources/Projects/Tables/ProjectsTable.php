@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ProjectsTable
@@ -15,38 +16,54 @@ class ProjectsTable
     {
         return $table
             ->columns([
-                TextColumn::make('content_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('start_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('end_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('location')
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->badge(),
-                TextColumn::make('beneficiaries_count')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('funder')
-                    ->searchable(),
-                TextColumn::make('budget_usd')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('content.title')
+                    ->label('Project Title')
+                    ->searchable()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->wrap(),
+
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'planned' => 'info',
+                        'ongoing' => 'warning',
+                        'completed' => 'success',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('start_date')
+                    ->date('d M Y')
+                    ->sortable(),
+
+                TextColumn::make('end_date')
+                    ->date('d M Y')
+                    ->placeholder('Ongoing')
+                    ->sortable(),
+
+                TextColumn::make('location')
+                    ->placeholder('—')
+                    ->searchable(),
+
+                TextColumn::make('funder')
+                    ->placeholder('—')
+                    ->searchable(),
+
+                TextColumn::make('beneficiaries_count')
+                    ->label('Beneficiaries')
+                    ->numeric()
+                    ->placeholder('—')
+                    ->sortable(),
+
+                TextColumn::make('budget_usd')
+                    ->label('Budget (USD)')
+                    ->money('USD')
+                    ->placeholder('—')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options(['planned' => 'Planned', 'ongoing' => 'Ongoing', 'completed' => 'Completed']),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -56,6 +73,7 @@ class ProjectsTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('start_date', 'desc');
     }
 }
