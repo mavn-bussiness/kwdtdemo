@@ -1,10 +1,9 @@
-name: deploy
+name: Deploy to cPanel
 
 on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   deploy:
@@ -18,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: '8.5'
           tools: composer:v2
 
       - name: Setup Node
@@ -26,15 +25,15 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install PHP Dependencies
+      - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-      - name: Install Node Dependencies & Build Assets
+      - name: Install Node dependencies & build assets
         run: |
           npm ci
           npm run build
 
-      - name: Setup SSH Key
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.CPANEL_SSH_KEY }}" > ~/.ssh/deploy_key
@@ -50,9 +49,11 @@ jobs:
             --exclude='tests' \
             --exclude='.env' \
             --exclude='.env.example' \
+            --exclude='.env.production' \
             --exclude='storage/logs' \
             --exclude='storage/framework/sessions' \
             --exclude='storage/framework/cache' \
+            --exclude='storage/framework/views' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             ./ "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:${{ secrets.CPANEL_REMOTE_PATH }}"
 
@@ -60,9 +61,24 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=no \
-            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" \
-            "cd ${{ secrets.CPANEL_REMOTE_PATH }} && \
-             php artisan migrate --force && \
-             php artisan storage:link && \
-             php artisan optimize && \
-             php artisan queue:restart"
+            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" << 'EOF'
+            cd ${{ secrets.CPANEL_REMOTE_PATH }}
+
+            # Link storage
+            php artisan storage:link --force
+
+            # Run migrations
+            php artisan migrate --force
+
+            # Seed database (only on first deploy — skips if already seeded)
+            php artisan db:seed --force
+
+            # Clear & rebuild caches
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Restart queue workers if running
+            php artisan queue:restart
+          EOF
