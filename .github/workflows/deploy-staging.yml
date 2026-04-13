@@ -1,14 +1,14 @@
-name: Deploy to cPanel
+name: Deploy to Staging (dev.katosi.org)
 
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: Production
+    environment: Staging
 
     steps:
       - name: Checkout code
@@ -36,9 +36,9 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.CPANEL_SSH_KEY }}" > ~/.ssh/deploy_key
+          echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.CPANEL_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.STAGING_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy via rsync
         run: |
@@ -55,17 +55,16 @@ jobs:
             --exclude='storage/framework/cache' \
             --exclude='storage/framework/views' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            ./ "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:${{ secrets.CPANEL_REMOTE_PATH }}"
+            ./ "${{ secrets.STAGING_USERNAME }}@${{ secrets.STAGING_HOST }}:${{ secrets.STAGING_REMOTE_PATH }}"
 
       - name: Run post-deploy commands
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=no \
-            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" \
-            "cd ${{ secrets.CPANEL_REMOTE_PATH }} && \
+            "${{ secrets.STAGING_USERNAME }}@${{ secrets.STAGING_HOST }}" \
+            "cd ${{ secrets.STAGING_REMOTE_PATH }} && \
             php artisan storage:link --force && \
             php artisan migrate --force && \
-            php artisan db:seed --force && \
             chmod -R 775 storage bootstrap/cache && \
             php artisan optimize:clear && \
             php artisan config:cache && \
