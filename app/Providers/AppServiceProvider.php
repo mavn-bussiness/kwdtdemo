@@ -10,6 +10,7 @@ use App\Observers\PartnerObserver;
 use App\Observers\TestimonialObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +47,8 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureDefaults(): void
     {
+        Builder::defaultStringLength(191);
+
         Date::use(CarbonImmutable::class);
 
         DB::prohibitDestructiveCommands(
