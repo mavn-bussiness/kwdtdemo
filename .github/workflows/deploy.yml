@@ -1,9 +1,12 @@
 name: Deploy to cPanel
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    # Disabled — using cPanel Git deployment via .cpanel.yml instead
+    # Uncomment the push trigger below to re-enable GitHub Actions deployment
+    # push:
+    #   branches:
+    #     - main
 
 jobs:
   deploy:
