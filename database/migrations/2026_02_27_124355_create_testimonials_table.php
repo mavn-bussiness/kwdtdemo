@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('community')->nullable();        // e.g. "Katosi Landing Site, Mukono"
             $table->text('quote');
-            $table->string('photo_url', 500)->nullable();
+            $table->text('photo_url')->nullable();
             $table->boolean('is_featured')->default(false); // true = shows on homepage
             $table->unsignedTinyInteger('order')->default(0); // controls display order
             $table->timestamps();

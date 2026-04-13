@@ -14,7 +14,7 @@ return new class extends Migration
             $table->integer('year');
             $table->string('awarding_organization')->nullable();
             $table->text('description')->nullable();
-            $table->string('image_url')->nullable();
+            $table->text('image_url')->nullable();
             $table->integer('order')->default(0);
             $table->timestamps();
         });

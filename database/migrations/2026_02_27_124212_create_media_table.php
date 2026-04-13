@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('mediable');
 
-            $table->string('file_path', 500);
+            $table->text('file_path');
             $table->string('file_type', 50);               // e.g. 'image/jpeg', 'image/png', 'application/pdf'
             $table->string('file_name');                   // original uploaded filename
             $table->string('alt_text')->nullable();        // for accessibility & SEO on images
