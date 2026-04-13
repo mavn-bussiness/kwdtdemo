@@ -381,9 +381,7 @@ livewire(ListUsers::class)
     ->assertNotified();
 
 </code-snippet>
-
 ### Correct Namespaces
-
 - Form fields (`TextInput`, `Select`, etc.): `Filament\Forms\Components\`
 - Infolist entries (`TextEntry`, `IconEntry`, etc.): `Filament\Infolists\Components\`
 - Layout components (`Grid`, `Section`, `Fieldset`, `Tabs`, `Wizard`, etc.): `Filament\Schemas\Components\`
