@@ -215,7 +215,7 @@
     color: var(--white); cursor: pointer; display: flex; align-items: center;
     justify-content: center; transition: background .2s, transform .2s;
 }
-.slider-arrow-btn:hover { background: var(--earth); transform: scale(1.08); }
+.slider-arrow-btn:hover { background: var(--orange-dark); transform: scale(1.08); }
 
 .about-slider-viewport { overflow: hidden; border-radius: var(--r-lg); }
 .about-slider-track { display: flex; transition: transform .65s var(--ease); will-change: transform; }
