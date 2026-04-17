@@ -65,31 +65,42 @@
 
 .fi-sidebar-nav { padding: 0.5rem !important; }
 
+/* Group label */
 .fi-sidebar-group-label {
     color: var(--sidebar-group) !important;
     font-size: 0.60rem !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
-    padding: 1.25rem 0.75rem 0.4rem !important;
 }
 
-.fi-sidebar-item-button {
-    color: var(--sidebar-text) !important;
+.fi-sidebar-group-btn {
+    color: var(--sidebar-group) !important;
+    padding: 1rem 0.75rem 0.35rem !important;
+}
+
+/* Nav item link */
+.fi-sidebar-item-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.625rem !important;
     border-radius: 6px !important;
-    margin: 1px 0 !important;
     padding: 0.55rem 0.75rem !important;
-    transition: background 0.15s, color 0.15s !important;
+    margin: 1px 0 !important;
     font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: var(--sidebar-text) !important;
+    text-decoration: none !important;
+    transition: background 0.15s, color 0.15s !important;
 }
 
-.fi-sidebar-item-button:hover {
+.fi-sidebar-item-btn:hover {
     background-color: rgba(255,255,255,0.06) !important;
     color: var(--sidebar-text-hover) !important;
 }
 
-.fi-sidebar-item-button[aria-current="page"],
-.fi-sidebar-item-button.fi-active {
+/* Active item */
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn {
     background-color: var(--sidebar-active-bg) !important;
     color: var(--kwdt-orange-light) !important;
     font-weight: 600 !important;
@@ -97,13 +108,28 @@
     padding-left: calc(0.75rem - 3px) !important;
 }
 
-.fi-sidebar-item-button[aria-current="page"] .fi-sidebar-item-icon,
-.fi-sidebar-item-button.fi-active .fi-sidebar-item-icon {
-    color: var(--kwdt-orange) !important;
-    opacity: 1;
+/* Icons */
+.fi-sidebar-item-icon {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    flex-shrink: 0 !important;
+    color: inherit !important;
+    opacity: 0.75;
 }
 
-.fi-sidebar-item-icon { color: inherit !important; opacity: 0.75; }
+.fi-sidebar-item.fi-active .fi-sidebar-item-icon {
+    color: var(--kwdt-orange) !important;
+    opacity: 1 !important;
+}
+
+/* Label text */
+.fi-sidebar-item-label {
+    color: inherit !important;
+    flex: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
 
 .fi-sidebar ::-webkit-scrollbar { width: 4px; }
 .fi-sidebar ::-webkit-scrollbar-track { background: transparent; }
