@@ -525,9 +525,6 @@
         </div>
 
     </section>
-
-         PARTNERS — Auto-scrolling carousel
-    ══════════════════════════════════════════════════════════ --}}
     <section class="partners-section">
         <div class="pattern-dots" aria-hidden="true"></div>
 
