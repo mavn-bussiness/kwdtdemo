@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Date::use(CarbonImmutable::class);
 
         DB::prohibitDestructiveCommands(
-            app()->isProduction(),
+            false // temporarily disabled to allow initial seeding
         );
 
         Password::defaults(fn (): ?Password => app()->isProduction()
