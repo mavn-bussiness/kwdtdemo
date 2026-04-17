@@ -1,24 +1,24 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Cy6ZazVL.css",
+    "file": "assets/app-B2FMUzAC.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
     "name": "app",
     "names": [
       "app.css"
-    ],
-    "src": "resources/css/app.css",
-    "isEntry": true
+    ]
   },
   "resources/css/kwdt.css": {
-    "file": "assets/kwdt-CgOI8CFZ.css",
+    "file": "assets/kwdt-8tvMrUhN.css",
+    "src": "resources/css/kwdt.css",
+    "isEntry": true,
     "name": "kwdt",
     "names": [
       "kwdt.css"
-    ],
-    "src": "resources/css/kwdt.css",
-    "isEntry": true
+    ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-34mOoJaZ.js",
+    "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
