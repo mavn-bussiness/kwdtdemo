@@ -14,6 +14,9 @@
 
 @if(file_exists(public_path('build/manifest.json')))
     @vite(['resources/css/app.css', 'resources/css/kwdt.css', 'resources/js/app.js'])
+@else
+    <link rel="stylesheet" href="{{ asset('css/kwdt.css') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endif
 @php
     $measurementId = config('services.google_analytics.measurement_id');
