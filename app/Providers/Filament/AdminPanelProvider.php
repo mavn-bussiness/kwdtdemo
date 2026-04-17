@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->loginPage(\App\Filament\Pages\Auth\Login::class)
+            ->login(\App\Filament\Pages\Auth\Login::class)
             ->brandName('KWDT Admin')
             ->brandLogo(asset('images/kwdt-logo.webp'))
             ->brandLogoHeight('3.5rem')
