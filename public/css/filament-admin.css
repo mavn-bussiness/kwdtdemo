@@ -6,11 +6,11 @@
 
 /* ── Design Tokens ───────────────────────────────────────── */
 :root {
-    --kwdt-orange:        #F5820A;
-    --kwdt-orange-dark:   #D06800;
-    --kwdt-orange-light:  #FF9E30;
-    --kwdt-orange-muted:  rgba(245, 130, 10, 0.12);
-    --kwdt-orange-border: rgba(245, 130, 10, 0.25);
+    --kwdt-orange:        #FF6B00;
+    --kwdt-orange-dark:   #CC5500;
+    --kwdt-orange-light:  #FF8C33;
+    --kwdt-orange-muted:  rgba(255, 107, 0, 0.12);
+    --kwdt-orange-border: rgba(255, 107, 0, 0.25);
 
     /* Sidebar */
     --sidebar-bg:         #1A1A2E;
