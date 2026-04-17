@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
                 $table->string('title')->nullable();           // job title e.g. "Executive Director"
             $table->text('bio')->nullable();
-            $table->string('photo_url', 500)->nullable();
+            $table->text('photo_url')->nullable();
             $table->string('email')->nullable();
             $table->unsignedTinyInteger('order')->default(0); // controls display order on the page
             $table->boolean('is_active')->default(true);   // hide without deleting

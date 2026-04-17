@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
             $table->text('excerpt')->nullable();           // short summary shown in cards & meta description
             $table->longText('body')->nullable();          // full rich-text content
-            $table->string('featured_image', 500)->nullable();
+            $table->text('featured_image')->nullable();
             $table->foreignId('author_id')
                 ->constrained('users')
                 ->restrictOnDelete();                    // prevent deleting a user who has authored content

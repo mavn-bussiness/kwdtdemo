@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo_url', 500)->nullable();
-            $table->string('website', 500)->nullable();
+            $table->text('logo_url')->nullable();
+            $table->text('website')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);   // hide old partners without deleting them
             $table->unsignedTinyInteger('order')->default(0); // controls logo display order
