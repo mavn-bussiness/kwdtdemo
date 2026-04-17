@@ -13,16 +13,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
             // Create or get default admin user
-            User::firstOrCreate(
+            User::updateOrCreate(
                 ['email' => 'admin@kwdt.org'],
                 [
                     'name' => 'KWDT Admin',
                     'password' => bcrypt('password'),
+                    'role' => 'super_admin',
                 ]
             );
 
         // Call seeders in order
         $this->call([
+            AdminUserSeeder::class,
             AwardSeeder::class,
             ThematicAreaSeeder::class,
             ProjectSeeder::class,

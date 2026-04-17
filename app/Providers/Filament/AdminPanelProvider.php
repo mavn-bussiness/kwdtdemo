@@ -51,7 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.filemtime(public_path('css/filament-admin.css')).'">'
+                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.(file_exists(public_path('css/filament-admin.css')) ? filemtime(public_path('css/filament-admin.css')) : config('app.version', '1')).'">'
             )
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
