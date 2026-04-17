@@ -36,11 +36,11 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => Color::hex('#FF6B00'),
-                'gray' => Color::Slate,
-                'info' => Color::Sky,
+                'gray'    => Color::Zinc,
+                'info'    => Color::Sky,
                 'success' => Color::Emerald,
                 'warning' => Color::Amber,
-                'danger' => Color::Rose,
+                'danger'  => Color::Rose,
             ])
             ->defaultThemeMode(ThemeMode::Light)
             ->navigationGroups([

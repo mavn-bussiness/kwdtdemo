@@ -18,7 +18,8 @@ class Dashboard extends BaseDashboard
     }
 
     protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-home';
-    protected static ?string $title = 'Dashboard';
+    protected static ?string $title = 'Katosi Women Development Trust';
+    protected static ?string $subheading = 'Organisation Overview & Performance';
     protected static ?int $navigationSort = -1;
 
     public function getWidgets(): array
