@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/katoatze/kwdtdemo
+    - export DEPLOYPATH=/home/katoatze/public_html
     - /bin/cp -R . $DEPLOYPATH
     - cd $DEPLOYPATH
     - /usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
