@@ -711,7 +711,37 @@
                 });
             })();
 
-            // news slider removed — now static stacked layout
+            // ── News slider ──────────────────────────────────────
+            (function () {
+                const track    = document.getElementById('newsSliderTrack');
+                const dotsWrap = document.getElementById('newsSliderDots');
+                const prev     = document.getElementById('newsSliderPrev');
+                const next     = document.getElementById('newsSliderNext');
+                if (!track) return;
+                const slides = track.querySelectorAll('.hp-news-slide');
+                let idx = 0;
+
+                slides.forEach(function (_, i) {
+                    const d = document.createElement('button');
+                    d.className = 'hp-news-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    d.addEventListener('click', function () { goTo(i); });
+                    dotsWrap.appendChild(d);
+                });
+
+                function goTo(n) {
+                    idx = (n + slides.length) % slides.length;
+                    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+                    Array.from(dotsWrap.children).forEach(function (d, i) {
+                        d.classList.toggle('active', i === idx);
+                    });
+                }
+
+                prev.addEventListener('click', function () { goTo(idx - 1); });
+                next.addEventListener('click', function () { goTo(idx + 1); });
+
+                setInterval(function () { goTo(idx + 1); }, 6000);
+            })();
 
             // ── Scroll reveal ────────────────────────────────────────
             (function () {
