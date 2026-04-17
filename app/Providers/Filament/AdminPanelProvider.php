@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->loginPage(\App\Filament\Pages\Auth\Login::class)
             ->brandName('KWDT Admin')
             ->brandLogo(asset('images/kwdt-logo.webp'))
             ->brandLogoHeight('3.5rem')
@@ -51,7 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.(file_exists(public_path('css/filament-admin.css')) ? filemtime(public_path('css/filament-admin.css')) : config('app.version', '1')).'">'
+                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.config('app.version', '1').'">'
             )
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
@@ -76,7 +76,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->authGuard('web');
+            ]);
     }
 }
