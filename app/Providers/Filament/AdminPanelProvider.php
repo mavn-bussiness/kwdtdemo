@@ -30,9 +30,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('KWDT Admin')
+            ->brandName('Katosi Women\nDevelopment Trust')
             ->brandLogo(asset('images/kwdt-logo.webp'))
-            ->brandLogoHeight('3.5rem')
+            ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => Color::hex('#FF6B00'),

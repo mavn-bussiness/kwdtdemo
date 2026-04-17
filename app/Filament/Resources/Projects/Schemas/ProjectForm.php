@@ -65,6 +65,7 @@ class ProjectForm
                 FileUpload::make('featured_image')
                     ->label('Featured Image')
                     ->image()
+                    ->disk('public')
                     ->imageResizeMode('cover')
                     ->imageCropAspectRatio('16:9')
                     ->directory('content/images')

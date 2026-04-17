@@ -33,6 +33,7 @@ class TestimonialForm
                 FileUpload::make('photo_url')
                     ->label('Photo')
                     ->image()
+                    ->disk('public')
                     ->imageResizeMode('cover')
                     ->imageCropAspectRatio('1:1')
                     ->directory('testimonials/photos')

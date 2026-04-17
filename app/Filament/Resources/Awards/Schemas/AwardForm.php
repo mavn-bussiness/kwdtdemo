@@ -38,6 +38,7 @@ class AwardForm
                 FileUpload::make('image_url')
                     ->label('Award Image / Certificate')
                     ->image()
+                    ->disk('public')
                     ->directory('awards/images')
                     ->visibility('public')
                     ->columnSpan(1),

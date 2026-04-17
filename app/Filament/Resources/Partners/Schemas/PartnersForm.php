@@ -45,6 +45,7 @@ class PartnersForm
                 FileUpload::make('logo_url')
                     ->label('Partner Logo')
                     ->image()
+                    ->disk('public')
                     ->imageResizeMode('contain')
                     ->directory('partners/logos')
                     ->visibility('public')
