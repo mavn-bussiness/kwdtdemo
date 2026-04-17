@@ -119,10 +119,7 @@
     font-family: 'Source Sans 3', var(--font-body);
     font-size: 0.9rem; /* Slightly larger */
     font-weight: 600;
-    color: var(--orange-dark);
-    letter-spacing: 0.02em;
-    line-height: 1.3;
-    max-width: 160px;
+    color: var(--orange);
 }
 
 /* Remove KWDT acronym from nav */
@@ -147,15 +144,7 @@
     font-family: 'Source Sans 3', var(--font-body);
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--orange-dark) !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    height: 80px; /* Match taller nav */
-    padding: 0 0.95rem;
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
-    transition: color .18s, border-color .18s;
+    color: var(--orange) !important;
 }
 
 .nav-item > a:hover,
@@ -242,7 +231,7 @@
     font-family: 'Source Sans 3', var(--font-body);
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--orange-dark) !important;
+    color: var(--earth) !important;
     border-left: 3px solid transparent;
     transition: all .15s;
     white-space: nowrap;
@@ -337,7 +326,7 @@
     width: 22px;
     height: 2px;
     border-radius: 2px;
-    background: var(--orange-dark) !important;
+    background: var(--orange);
     transform-origin: center;
     transition: transform .3s var(--ease), opacity .2s;
 }

@@ -8,32 +8,32 @@
 [x-cloak] { display: none !important; }
 :root {
     /* ── Orange (primary) ──────────────────────────────────── */
-    --orange:        #F5820A;
-    --orange-dark:   #D06800;
-    --orange-deeper: #A85200;
-    --orange-light:  #FF9E30;
-    --orange-pale:   #FFF3E3;
+    --orange:        #FF6B00;
+    --orange-dark:   #CC5500;
+    --orange-deeper: #A84400;
+    --orange-light:  #FF8C33;
+    --orange-pale:   #FFF0E6;
 
     /* ── Gold accent — stats, impact numbers ───────────────── */
-    --gold:          #F0A500;
-    --gold-light:    #FFD06B;
+    --gold:          #FF8C00;
+    --gold-light:    #FFB347;
 
-    /* ── Text — deep earth-brown replaces charcoal ──────────── */
-    --earth:         #3D2100;   /* deep brown for headings        */
-    --earth-mid:     #5C3600;   /* secondary body copy            */
-    --earth-light:   #8C5D00;   /* captions, meta                 */
-    --earth-muted:   #B08E60;   /* placeholders, disabled         */
+    /* ── Text — clean dark neutrals, no brown ───────────────── */
+    --earth:         #1A1A1A;   /* headings                       */
+    --earth-mid:     #333333;   /* body copy                      */
+    --earth-light:   #555555;   /* captions, meta                 */
+    --earth-muted:   #888888;   /* placeholders, disabled         */
 
-    /* ── Dark panels — deep warm brown replaces navy/black ──── */
-    --panel:         #2B1600;   /* primary dark panel bg (warm)   */
-    --panel-mid:     #3D1F00;   /* card surfaces inside panels    */
-    --panel-border:  rgba(255,160,0,.12); /* warm inner borders   */
+    /* ── Dark panels — deep charcoal, no brown ──────────────── */
+    --panel:         #1A1A1A;   /* primary dark panel bg          */
+    --panel-mid:     #2A2A2A;   /* card surfaces inside panels    */
+    --panel-border:  rgba(255,107,0,.15); /* orange-tinted borders */
 
-    /* ── Cream surfaces — warm white family ────────────────── */
-    --cream:         #FFFAF4;   /* page / body background       */
-    --cream-mid:     #FFF3E3;   /* alternate section fills      */
-    --cream-dark:    #F0DFC0;   /* dividers, card borders       */
-    --white:         #FFFFFF;   /* pure white cards, nav        */
+    /* ── Light surfaces — clean whites ─────────────────────── */
+    --cream:         #F9F9F9;   /* page / body background         */
+    --cream-mid:     #F2F2F2;   /* alternate section fills        */
+    --cream-dark:    #E0E0E0;   /* dividers, card borders         */
+    --white:         #FFFFFF;   /* pure white cards, nav          */
 
     /* ── Typography ─────────────────────────────────────────── */
     --font-display: 'Poppins', system-ui, sans-serif;

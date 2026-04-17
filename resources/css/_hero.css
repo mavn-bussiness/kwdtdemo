@@ -33,7 +33,7 @@
 .hero-overlay {
     position: absolute; inset: 0; z-index: 1;
     /* Warm sunset overlay with deep oranges/browns — no navy/purple */
-    background: rgba(43,22,0,.3);
+    background: rgba(0,0,0,.35);
 }
 
 .hero-slide-dots {
@@ -78,7 +78,7 @@
 
 .hero-stats {
     position: relative; z-index: 2; display: flex;
-    background: rgba(43,22,0,.76);
+    background: rgba(0,0,0,.72);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-top: 3px solid var(--orange-light);
 }
@@ -225,7 +225,7 @@
 .about-slide-cap {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 1.25rem 1rem .85rem;
-    background: linear-gradient(to top, rgba(43,22,0,.88) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,.88) 0%, transparent 100%);
     font-size: .72rem; font-family: var(--font-mono); letter-spacing: .06em;
     color: rgba(253,246,237,.82); opacity: 0; transform: translateY(4px);
     transition: opacity .3s, transform .3s;
@@ -311,9 +311,9 @@
     border-radius: var(--r-pill);
     font-weight: 600;
 }
-.hero-content-type--news    { background: rgba(245,130,10,.22); color: var(--orange-light); border: 1px solid rgba(245,130,10,.3); }
+.hero-content-type--news    { background: rgba(255,107,0,.22); color: var(--orange-light); border: 1px solid rgba(255,107,0,.3); }
 .hero-content-type--event   { background: rgba(255,208,107,.18); color: var(--gold-light);  border: 1px solid rgba(255,208,107,.25); }
-.hero-content-type--project { background: rgba(43,22,0,.72);   color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
+.hero-content-type--project { background: rgba(0,0,0,.72);   color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
 
 /* Meta line (date / location / status) */
 .hero-sub--meta {
