@@ -10,13 +10,13 @@
     --kwdt-orange-light:  #FF8C33;
     --kwdt-orange-muted:  rgba(255,107,0,0.10);
 
-    --sidebar-bg:         #1E2530;
-    --sidebar-header-bg:  #171D27;
-    --sidebar-border:     rgba(255,255,255,0.06);
-    --sidebar-text:       rgba(203,213,225,0.80);
-    --sidebar-text-hover: #F1F5F9;
-    --sidebar-active-bg:  rgba(255,107,0,0.15);
-    --sidebar-group:      rgba(148,163,184,0.40);
+    --sidebar-bg:         #FFFFFF;
+    --sidebar-header-bg:  #FFFFFF;
+    --sidebar-border:     #E5E7EB;
+    --sidebar-text:       #374151;
+    --sidebar-text-hover: #111827;
+    --sidebar-active-bg:  rgba(255,107,0,0.08);
+    --sidebar-group:      #9CA3AF;
 
     --bg-page:            #F8FAFC;
     --bg-card:            #FFFFFF;
@@ -95,7 +95,7 @@
 }
 
 .fi-sidebar-item-btn:hover {
-    background-color: rgba(255,255,255,0.06) !important;
+    background-color: #F9FAFB !important;
     color: var(--sidebar-text-hover) !important;
 }
 
@@ -133,7 +133,12 @@
 
 .fi-sidebar ::-webkit-scrollbar { width: 4px; }
 .fi-sidebar ::-webkit-scrollbar-track { background: transparent; }
-.fi-sidebar ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 4px; }
+.fi-sidebar ::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 4px; }
+
+/* Force override Filament's blue/teal description icon colors */
+.fi-wi-stats-overview-stat-description-icon svg,
+.fi-wi-stats-overview-stat-description svg { color: var(--kwdt-orange) !important; fill: var(--kwdt-orange) !important; }
+.fi-wi-stats-overview-stat-description { color: var(--text-muted) !important; }
 
 /* ── Topbar ──────────────────────────────────────────────── */
 .fi-topbar {
