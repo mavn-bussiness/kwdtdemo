@@ -1,0 +1,26 @@
+{
+    "phases": {
+        "extensions": {
+            "cmds": [
+                "install-php-extensions pdo ctype curl dom fileinfo filter hash mbstring openssl pcre pdo session tokenizer xml pdo_mysql redis intl zip exif"
+            ]
+        },
+        "build": {
+            "cmds": [
+                "npm ci --prefer-offline",
+                "npm run build",
+                "composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader"
+            ]
+        },
+        "deploy": {
+            "cmds": [
+                "php artisan storage:link --force",
+                "php artisan migrate --force",
+                "php artisan db:seed --force",
+                "php artisan config:cache",
+                "php artisan route:cache",
+                "php artisan view:cache"
+            ]
+        }
+    }
+}
