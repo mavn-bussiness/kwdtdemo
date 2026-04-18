@@ -9,8 +9,6 @@ class TestimonialSeeder extends Seeder
 {
     public function run(): void
     {
-        Testimonial::query()->delete();
-
         $testimonials = [
             [
                 'name'        => 'Christine',
@@ -64,7 +62,10 @@ class TestimonialSeeder extends Seeder
         ];
 
         foreach ($testimonials as $testimonial) {
-            Testimonial::create($testimonial);
+            Testimonial::updateOrCreate(
+                ['name' => $testimonial['name'], 'community' => $testimonial['community']],
+                $testimonial
+            );
         }
     }
 }

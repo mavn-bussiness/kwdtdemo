@@ -9,8 +9,6 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        Category::query()->delete();
-
         $categories = [
             ['name' => 'Fisheries',            'slug' => 'fisheries'],
             ['name' => 'Women Empowerment',    'slug' => 'women-empowerment'],

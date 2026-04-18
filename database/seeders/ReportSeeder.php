@@ -11,9 +11,6 @@ class ReportSeeder extends Seeder
 {
     public function run(): void
     {
-        Report::query()->delete();
-        Content::where('type', 'report')->delete();
-
         $user = User::first() ?? User::factory()->create();
 
         $reports = [
@@ -70,25 +67,29 @@ class ReportSeeder extends Seeder
         ];
 
         foreach ($reports as $report) {
-            $content = Content::create([
-                'title'        => $report['title'],
-                'slug'         => $report['slug'],
-                'type'         => 'report',
-                'status'       => 'published',
-                'excerpt'      => $report['excerpt'],
-                'body'         => $report['excerpt'],
-                'author_id'    => $user->id,
-                'published_at' => now(),
-            ]);
+            $content = Content::updateOrCreate(
+                ['slug' => $report['slug']],
+                [
+                    'title'        => $report['title'],
+                    'type'         => 'report',
+                    'status'       => 'published',
+                    'excerpt'      => $report['excerpt'],
+                    'body'         => $report['excerpt'],
+                    'author_id'    => $user->id,
+                    'published_at' => now(),
+                ]
+            );
 
-            Report::create([
-                'content_id'   => $content->id,
-                'file_name'    => $report['file_name'],
-                'file_path'    => $report['file_path'],
-                'file_type'    => $report['file_type'],
-                'file_size_kb' => $report['file_size_kb'],
-                'report_year'  => $report['report_year'],
-            ]);
+            Report::updateOrCreate(
+                ['content_id' => $content->id],
+                [
+                    'file_name'    => $report['file_name'],
+                    'file_path'    => $report['file_path'],
+                    'file_type'    => $report['file_type'],
+                    'file_size_kb' => $report['file_size_kb'],
+                    'report_year'  => $report['report_year'],
+                ]
+            );
         }
 
         $this->command->info('✓ ReportSeeder: '.count($reports).' reports seeded.');
