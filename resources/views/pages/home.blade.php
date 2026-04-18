@@ -518,8 +518,6 @@
             <div class="donate-pay-row reveal">
                 <span class="donate-pay-label">Pay via</span>
                 <span class="donate-pay-pill">PayPal</span>
-                <span class="donate-pay-pill">MTN MoMo</span>
-                <span class="donate-pay-pill">Airtel Money</span>
             </div>
 
         </div>

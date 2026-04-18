@@ -28,10 +28,8 @@ class PaymentTransactionsTable
                 TextColumn::make('gateway')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'paypal'       => 'info',
-                        'mtn_momo'     => 'warning',
-                        'airtel_money' => 'danger',
-                        default        => 'gray',
+                        'paypal' => 'info',
+                        default  => 'gray',
                     }),
 
                 TextColumn::make('amount')
@@ -68,9 +66,7 @@ class PaymentTransactionsTable
 
                 SelectFilter::make('gateway')
                     ->options([
-                        'paypal'       => 'PayPal',
-                        'mtn_momo'     => 'MTN MoMo',
-                        'airtel_money' => 'Airtel Money',
+                        'paypal' => 'PayPal',
                     ]),
             ])
             ->recordActions([

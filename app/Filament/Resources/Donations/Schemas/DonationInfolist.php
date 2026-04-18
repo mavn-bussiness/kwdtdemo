@@ -57,10 +57,8 @@ class DonationInfolist
                             ->label('Payment Method')
                             ->badge()
                             ->color(fn (string $state): string => match ($state) {
-                                'paypal'       => 'info',
-                                'mtn_momo'     => 'warning',
-                                'airtel_money' => 'danger',
-                                default        => 'gray',
+                                'paypal' => 'info',
+                                default  => 'gray',
                             }),
 
                         TextEntry::make('status')

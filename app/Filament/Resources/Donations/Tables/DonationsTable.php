@@ -47,8 +47,6 @@ class DonationsTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'paypal' => 'info',
-                        'mtn_momo' => 'warning',
-                        'airtel_money' => 'danger',
                         default => 'gray',
                     }),
 
@@ -79,8 +77,6 @@ class DonationsTable
                     ->label('Method')
                     ->options([
                         'paypal' => 'PayPal',
-                        'mtn_momo' => 'MTN MoMo',
-                        'airtel_money' => 'Airtel Money',
                     ]),
             ])
             ->recordActions([

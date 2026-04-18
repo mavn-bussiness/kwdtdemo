@@ -104,25 +104,6 @@
                             </svg>
                             PayPal
                         </span>
-                        {{-- MTN badge --}}
-                        <span class="payment-badge" style="display:inline-flex; align-items:center; gap:.4rem;">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-                                <rect x="5" y="2" width="14" height="20" rx="2"/>
-                                <path d="M9 7h6M9 11h6M9 15h4"/>
-                                <circle cx="15.5" cy="15.5" r=".75" fill="currentColor" stroke="none"/>
-                            </svg>
-                            MTN Mobile Money
-                        </span>
-                        {{-- Airtel badge --}}
-                        <span class="payment-badge" style="display:inline-flex; align-items:center; gap:.4rem;">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-                                <path d="M1.5 8.5a13 13 0 0121 0"/>
-                                <path d="M5 12a9 9 0 0114 0"/>
-                                <path d="M8.5 15.5a5 5 0 017 0"/>
-                                <circle cx="12" cy="19" r=".75" fill="currentColor" stroke="none"/>
-                            </svg>
-                            Airtel Money
-                        </span>
                     </div>
                     <p class="payment-security">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline; margin-right:.3rem; vertical-align:middle;">

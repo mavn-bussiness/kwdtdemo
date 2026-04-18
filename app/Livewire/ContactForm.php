@@ -13,6 +13,8 @@ class ContactForm extends Component
 
     public string $email = '';
 
+    public string $phone = '';
+
     public string $subject = '';
 
     public string $message = '';
