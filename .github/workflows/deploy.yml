@@ -68,7 +68,6 @@ jobs:
             "cd ${{ secrets.CPANEL_REMOTE_PATH }} && \
             php artisan storage:link --force && \
             php artisan migrate --force && \
-            php artisan db:seed --force && \
             chmod -R 775 storage bootstrap/cache && \
             php artisan optimize:clear && \
             php artisan config:cache && \
