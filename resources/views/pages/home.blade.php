@@ -212,7 +212,7 @@
                     healthcare, education, and economic opportunity.
                 </p>
                 <div class="about-inline-stats reveal">
-                    @foreach([['1995','Founded'],['1,235','Women Reached'],['3','Districts']] as $s)
+                    @foreach([['1996','Founded'],['1,235','Women Reached'],['3','Districts']] as $s)
                         <div class="about-inline-stat">
                             <span>{{ $s[0] }}</span>
                             <span>{{ $s[1] }}</span>

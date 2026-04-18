@@ -9,58 +9,57 @@ class TestimonialSeeder extends Seeder
 {
     public function run(): void
     {
-        // Clear existing testimonials
         Testimonial::query()->delete();
 
         $testimonials = [
             [
-                'name' => 'Nakalyango Prossy',
-                'community' => 'Namayumba Landing Site',
-                'quote' => 'KWDT changed my life. Through their training programs, I learned soap making skills and now I can support my family. I\'m proud to be part of this movement.',
+                'name'        => 'Christine',
+                'community'   => 'Silverfish Fisher & Processor, Lake Victoria',
+                'quote'       => 'This method is associated with illegal fishing because it requires using smaller boats, which is illegal as the fisheries directives state we should only use the 28 ft. vessels! We need policies that protect both the fish and our livelihoods.',
                 'is_featured' => true,
-                'order' => 1,
+                'order'       => 1,
             ],
             [
-                'name' => 'Margaret Nakato',
-                'community' => 'Katuba, Buikwe',
-                'quote' => 'The clean water project brought dignity back to our community. No more walking miles for water. This is real change that KWDT brings.',
+                'name'        => 'Teopista',
+                'community'   => 'Nangoma Landing Site',
+                'quote'       => 'We can no longer afford to send our children to school because we are not working. The silver fish business was our primary source of income. There is also a rise in domestic violence, as men no longer contribute financially to their families.',
                 'is_featured' => true,
-                'order' => 2,
+                'order'       => 2,
             ],
             [
-                'name' => 'Aisha Sserwanja',
-                'community' => 'Kasensero Landing Site',
-                'quote' => 'My daughter\'s life changed when we got access to menstrual health products and education. Thank you KWDT for fighting for our daughters.',
+                'name'        => 'Female Participant',
+                'community'   => 'Sowe, Mukono District',
+                'quote'       => 'Training with the men has given us confidence and an opportunity to freely manage menstruation. For the first time, men in our community are stepping into the conversation — and into the solution.',
                 'is_featured' => true,
-                'order' => 3,
+                'order'       => 3,
             ],
             [
-                'name' => 'James Kato',
-                'community' => 'Ggaba Landing Site',
-                'quote' => 'Through KWDT\'s sustainable fisheries training, I learned better fishing methods that earn me more while protecting the lake. Truly transformational.',
+                'name'        => 'Lydia Kateregga',
+                'community'   => 'Katosi, Mukono District',
+                'quote'       => 'My children are safe from the sexual harassment that takes place when girls go to fetch water late in the evening. That alone is worth more than the money I earn from building rainwater tanks.',
                 'is_featured' => true,
-                'order' => 4,
+                'order'       => 4,
             ],
             [
-                'name' => 'Joan Kiprotich',
-                'community' => 'Dunga, Kismayu',
-                'quote' => 'KWDT recognized that we are not just beneficiaries but partners in development. Their respect for our voices made all the difference.',
+                'name'        => 'Grace Namutebi',
+                'community'   => 'Mpunge Sub-County, Mukono',
+                'quote'       => 'When I first joined a KWDT women\'s group I was surviving on UGX 3,000 a day — barely enough to feed my four children. Two years later, I own two dairy cows, have installed a biogas plant, and am training other women in my village on organic farming.',
                 'is_featured' => true,
-                'order' => 5,
+                'order'       => 5,
             ],
             [
-                'name' => 'Peter Waweru',
-                'community' => 'Homa Bay Region',
-                'quote' => 'The organization\'s commitment to sustainable practices has improved both the lake\'s health and our community\'s well-being.',
+                'name'        => 'Harriet Nakyeyune',
+                'community'   => 'Buvuma Island District',
+                'quote'       => 'The Abavubi app shows me the current market rate per kilogram — 14% higher than what the middleman offered me yesterday. I declined his offer and shipped directly. Digital tools have changed how I do business.',
                 'is_featured' => false,
-                'order' => 6,
+                'order'       => 6,
             ],
             [
-                'name' => 'Ruth Omondi',
-                'community' => 'Entebbe Area',
-                'quote' => 'I joined KWDT\'s women\'s cooperative and now earn three times what I used to. Education and support make the real difference.',
+                'name'        => 'Catherine Joséphine Nalugga',
+                'community'   => 'KWDT Project Officer',
+                'quote'       => 'Water is not just a development issue — it is a survival issue. It is the pulse of all Sustainable Development Goals. Fair involvement of rights holders must take precedence over tokenistic inclusivity. Participation without power is not participation.',
                 'is_featured' => false,
-                'order' => 7,
+                'order'       => 7,
             ],
         ];
 

@@ -31,12 +31,12 @@
 
                 <div class="about-timeline">
                     @foreach([
-                        ['1995', 'Founded at Katosi Landing Site, Mukono District'],
-                        ['2003', 'Expanded to Kalangala Island District'],
-                        ['2012', 'Launched WASH programme in Buvuma'],
+                        ['1996', 'Founded at Katosi Landing Site as Katosi Women Fishing Group with 26 women'],
+                        ['2000', 'Fishing ban prompted diversification; renamed Katosi Women Fishing & Development Association'],
+                        ['2004', 'Community growth led to formation of Katosi Women Development Trust (KWDT)'],
+                        ['2012', 'Received 3rd Kyoto World Water Grand Prize & Rio+20 Best Practice Award'],
                         ['2019', 'Represented Uganda at UN Water Conference'],
-                        ['2023', 'FAO CFS Gender Equality Guidelines partnership'],
-                        ['2025', '1,235 women across 52 community groups'],
+                        ['2025', '1,235 women across 52 community groups in 3 districts'],
                     ] as [$yr, $ev])
                         <div class="timeline-item">
                             <span class="timeline-year">{{ $yr }}</span>

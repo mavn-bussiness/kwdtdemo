@@ -9,30 +9,23 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        // Clear existing categories
         Category::query()->delete();
 
         $categories = [
-            [
-                'name' => 'Water & Sanitation',
-                'slug' => 'water-sanitation',
-            ],
-            [
-                'name' => 'Menstrual Health',
-                'slug' => 'menstrual-health',
-            ],
-            [
-                'name' => 'Fisheries',
-                'slug' => 'fisheries',
-            ],
-            [
-                'name' => 'Women Empowerment',
-                'slug' => 'women-empowerment',
-            ],
+            ['name' => 'Fisheries',            'slug' => 'fisheries'],
+            ['name' => 'Women Empowerment',    'slug' => 'women-empowerment'],
+            ['name' => 'WASH',                 'slug' => 'wash'],
+            ['name' => 'Climate & Environment','slug' => 'climate-environment'],
+            ['name' => 'Advocacy',             'slug' => 'advocacy'],
+            ['name' => 'Economic Empowerment', 'slug' => 'economic-empowerment'],
+            ['name' => 'Health',               'slug' => 'health'],
+            ['name' => 'Education',            'slug' => 'education'],
+            ['name' => 'Water & Sanitation',   'slug' => 'water-sanitation'],
+            ['name' => 'Menstrual Health',     'slug' => 'menstrual-health'],
         ];
 
         foreach ($categories as $category) {
-            Category::create($category);
+            Category::firstOrCreate(['slug' => $category['slug']], $category);
         }
     }
 }
