@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -36,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
         if (app()->isProduction()) {
             URL::forceScheme('https');
         }
+
+        Paginator::defaultView('vendor.pagination.kwdt');
 
         Content::observe(ContentObserver::class);
         Partner::observe(PartnerObserver::class);

@@ -21,9 +21,11 @@
     object-fit: cover; opacity: 0;
     transition: opacity 1.4s var(--ease);
     transform: scale(1.06);
+}
+.hero-slide.active {
+    opacity: 1;
     animation: heroZoom 9s linear infinite alternate;
 }
-.hero-slide.active { opacity: 1; }
 
 @keyframes heroZoom {
     from { transform: scale(1.06); }
