@@ -17,8 +17,8 @@ return new class extends Migration
             }
         });
 
-        // Backfill any existing users that have a null role
-        DB::table('users')->whereNull('role')->orWhere('role', '')->update(['role' => 'super_admin']);
+        // Backfill any existing users that have a null role — default to editor, not super_admin
+        DB::table('users')->whereNull('role')->orWhere('role', '')->update(['role' => 'editor']);
     }
 
     public function down(): void

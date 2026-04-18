@@ -23,7 +23,7 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        // Backfill any user with a null/empty role
-        User::whereNull('role')->orWhere('role', '')->update(['role' => 'super_admin']);
+        // Backfill any user with a null/empty role — default to editor, not super_admin
+        User::whereNull('role')->orWhere('role', '')->update(['role' => 'editor']);
     }
 }
