@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
-use App\Http\Middleware\AutoLoginInDev;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login(\App\Filament\Pages\Auth\Login::class)
+            ->login()
             ->authGuard('web')
             ->brandName('Katosi Women\nDevelopment Trust')
             ->brandLogo(asset('images/kwdt-logo.webp'))
@@ -51,7 +50,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.config('app.version', '1').'"><style id="login-bg-style"></style>'
+                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.filemtime(public_path('css/filament-admin.css')).'"><style id="login-bg-style"></style>'
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_START,
+                fn () => view('filament.login-bg')->render()
             )
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
@@ -66,7 +69,6 @@ class AdminPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
-                AutoLoginInDev::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,

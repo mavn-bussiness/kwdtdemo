@@ -484,3 +484,185 @@
 /* User menu */
 .dark .fi-account-name  { color: #F1F5F9 !important; }
 .dark .fi-account-email { color: #64748B !important; }
+
+/* ── Login page — premium card styling ──────────────────── */
+
+/* Outer wrapper — glass morphism */
+.fi-simple-main {
+    filter: drop-shadow(0 32px 64px rgba(0,0,0,0.6));
+}
+
+.fi-simple-page {
+    background: rgba(255,255,255,0.96) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+    border-radius: 1.25rem !important;
+    border: 1px solid rgba(255,255,255,0.6) !important;
+    box-shadow:
+        0 2px 0 rgba(255,107,0,0.8),
+        0 24px 48px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255,107,0,0.12) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+/* Orange top accent bar */
+.fi-simple-page::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #E05A00, #FF6B00, #FF8C33, #FF6B00, #E05A00);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Inner content padding */
+.fi-simple-page-content {
+    padding: 2rem 2.25rem 2.25rem !important;
+}
+
+/* Logo — larger and centred */
+.fi-simple-header {
+    text-align: center;
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 1.25rem !important;
+    border-bottom: 1px solid #F1F5F9 !important;
+}
+
+.fi-simple-header .fi-logo img {
+    height: 4rem !important;
+    width: auto !important;
+    margin: 0 auto 0.75rem !important;
+    display: block !important;
+}
+
+/* "Sign in" heading */
+.fi-simple-header-heading {
+    font-size: 1.375rem !important;
+    font-weight: 800 !important;
+    color: #1E293B !important;
+    letter-spacing: -0.02em !important;
+}
+
+/* Subheading if present */
+.fi-simple-header-subheading {
+    color: #64748B !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Field labels */
+.fi-fo-field-label {
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    margin-bottom: 0.35rem !important;
+}
+
+/* Inputs */
+.fi-simple-page .fi-input {
+    border-radius: 0.625rem !important;
+    border: 1.5px solid #E2E8F0 !important;
+    background: #F8FAFC !important;
+    color: #1E293B !important;
+    font-size: 0.9375rem !important;
+    padding: 0.65rem 0.875rem !important;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s !important;
+}
+
+.fi-simple-page .fi-input:focus {
+    border-color: #FF6B00 !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 3px rgba(255,107,0,0.12) !important;
+    outline: none !important;
+}
+
+/* Sign in button */
+.fi-simple-page .fi-btn {
+    border-radius: 0.625rem !important;
+    font-weight: 700 !important;
+    font-size: 0.9375rem !important;
+    letter-spacing: 0.01em !important;
+    padding: 0.75rem 1.5rem !important;
+    background: linear-gradient(135deg, #FF6B00, #E05A00) !important;
+    border: none !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba(255,107,0,0.4) !important;
+    transition: all 0.2s !important;
+    text-shadow: none !important;
+}
+
+.fi-simple-page .fi-btn:hover {
+    background: linear-gradient(135deg, #FF8C33, #FF6B00) !important;
+    box-shadow: 0 6px 20px rgba(255,107,0,0.5) !important;
+}
+
+.fi-simple-page .fi-btn:active {
+    box-shadow: 0 2px 8px rgba(255,107,0,0.3) !important;
+}
+
+/* Remember me checkbox */
+.fi-simple-page .fi-checkbox-input {
+    accent-color: #FF6B00 !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    border-radius: 4px !important;
+}
+
+/* Forgot password link */
+.fi-simple-page a {
+    color: #FF6B00 !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+}
+
+.fi-simple-page a:hover {
+    color: #E05A00 !important;
+    text-decoration: underline !important;
+}
+
+/* ── Remove outer white box — single card only ───────────── */
+.fi-simple-main-ctn {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.fi-simple-main {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    filter: none !important;
+}
+
+/* The inner fi-simple-page IS the card — make it the only visible box */
+.fi-simple-page {
+    box-shadow:
+        0 0 0 1px rgba(255,107,0,0.15),
+        0 32px 64px rgba(0,0,0,0.45),
+        0 8px 24px rgba(0,0,0,0.25) !important;
+}
+
+/* ── Login page — fixed centre, no scroll ────────────────── */
+.fi-simple-layout {
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    padding: 1rem !important;
+}
+
+.fi-simple-main-ctn {
+    width: 100% !important;
+    max-width: 26rem !important;
+    margin: 0 auto !important;
+}
