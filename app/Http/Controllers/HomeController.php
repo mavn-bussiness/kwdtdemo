@@ -39,7 +39,7 @@ class HomeController extends Controller
         // ── Slots 0-2 — three latest published blog / news articles ──────────
         try {
             $posts = Content::published()
-                ->ofType('blog')
+                ->whereIn('type', ['blog', 'news'])
                 ->latestPublished()
                 ->take(3)
                 ->get();
