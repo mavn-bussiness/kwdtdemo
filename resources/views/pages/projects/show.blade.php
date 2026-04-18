@@ -70,9 +70,9 @@
             </div>
 
             {{-- Project description --}}
-            @if($project->content->content)
+            @if($project->content->body)
                 <div class="show-body prose">
-                    {!! $project->content->content !!}
+                    {!! $project->content->body !!}
                 </div>
             @endif
 

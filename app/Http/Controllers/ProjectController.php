@@ -23,13 +23,15 @@ class ProjectController extends Controller
 
     public function show(string $slug)
     {
-        $content = Content::published()->ofType('project')
+        $content = Content::published()
             ->where('slug', $slug)
             ->with(['project', 'media', 'categories'])
             ->firstOrFail();
 
         $project = $content->project;
 
-        return view('pages.projects.show', compact('project'));
+        abort_if(is_null($project), 404);
+
+        return view('pages.projects.show', compact('project', 'content'));
     }
 }

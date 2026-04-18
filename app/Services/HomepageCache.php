@@ -37,6 +37,8 @@ class HomepageCache
     public static function projects()
     {
         return static::remember('homepage.projects', 12 * 60, fn () => Project::with('content')
+            ->whereHas('content', fn ($q) => $q->published())
+            ->latest('updated_at')
             ->take(3)
             ->get()
         );
