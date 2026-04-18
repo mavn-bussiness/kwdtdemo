@@ -22,7 +22,7 @@ class ContentInfolist
                 TextEntry::make('categories.name')
                     ->label('Category')
                     ->badge()
-                    ->separator(',')
+                    ->separator(','),
 
                 // ── Row 3: Publication ────────────────────────────────────────
                 TextEntry::make('status')
