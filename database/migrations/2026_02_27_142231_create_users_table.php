@@ -28,7 +28,7 @@ return new class extends Migration
 
             // Role column — ENUM so it's easy to expand later (e.g. add 'editor')
             if (! Schema::hasColumn('users', 'role')) {
-                $table->enum('role', ['super_admin'])->default('super_admin')->after('email');
+                $table->string('role')->default('super_admin')->after('email');
             }
         });
     }

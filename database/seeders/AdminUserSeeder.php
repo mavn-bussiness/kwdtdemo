@@ -17,10 +17,16 @@ class AdminUserSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@katosi.org'],
             [
-                'name' => 'Benedict Magandazi',
+                'name'     => 'Benedict Magandazi',
                 'password' => Hash::make('Admin123'),
-                'role' => 'super_admin',
+                'role'     => 'super_admin',
             ]
         );
+
+        // Ensure role is correctly set in case migration ran with wrong column type
+        User::where('email', 'admin@katosi.org')
+            ->whereNull('role')
+            ->orWhere('role', '')
+            ->update(['role' => 'super_admin']);
     }
 }
