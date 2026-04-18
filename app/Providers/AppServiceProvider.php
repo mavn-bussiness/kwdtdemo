@@ -26,7 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Laravel Cloud forces SESSION_DRIVER=cookie at platform level.
+        // Override here so database driver is always used in production,
+        // and session domain is correctly bound to the production host.
+        if (app()->isProduction()) {
+            config([
+                'session.driver' => 'database',
+                'session.domain' => parse_url(config('app.url'), PHP_URL_HOST),
+                'session.secure' => true,
+                'session.same_site' => 'lax',
+            ]);
+        }
     }
 
     /**
