@@ -28,6 +28,14 @@ class Dashboard extends BaseDashboard
 
     public function getWidgets(): array
     {
+        $user = auth()->user();
+
+        if ($user?->isEditor()) {
+            return [
+                KwdtContentActivityChart::class,
+            ];
+        }
+
         return [
             KwdtStatsOverview::class,
             KwdtDonationsTrendChart::class,

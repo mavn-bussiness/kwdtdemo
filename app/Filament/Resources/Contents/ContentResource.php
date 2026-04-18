@@ -30,6 +30,34 @@ class ContentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        $query = parent::getEloquentQuery();
+        // Editors only see their own content
+        if (auth()->user()?->isEditor()) {
+            $query->where('author_id', auth()->id());
+        }
+        return $query;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        if ($user?->isEditor()) {
+            return $record->author_id === auth()->id();
+        }
+        return $user?->isAdmin() ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        if ($user?->isEditor()) {
+            return false; // editors cannot delete
+        }
+        return $user?->isAdmin() ?? false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ContentForm::configure($schema);

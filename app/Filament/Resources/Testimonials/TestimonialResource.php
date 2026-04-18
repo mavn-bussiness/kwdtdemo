@@ -30,6 +30,11 @@ class TestimonialResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'author_name';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return TestimonialForm::configure($schema);

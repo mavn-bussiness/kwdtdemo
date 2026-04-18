@@ -25,6 +25,11 @@ class DonationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'donor_name';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     // Donations arrive via the public payment flow — no create/edit in admin
     public static function canCreate(): bool
     {

@@ -30,6 +30,37 @@ class UsersResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        // Only super_admin can edit other admins/super_admins
+        if (in_array($record->role, ['admin', 'super_admin'])) {
+            return $user?->isSuperAdmin() ?? false;
+        }
+        return $user?->isAdmin() ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        // Cannot delete yourself
+        if ($record->id === auth()->id()) return false;
+        // Only super_admin can delete admins
+        if (in_array($record->role, ['admin', 'super_admin'])) {
+            return auth()->user()?->isSuperAdmin() ?? false;
+        }
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return UsersForm::configure($schema);

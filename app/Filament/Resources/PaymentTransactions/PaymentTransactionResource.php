@@ -27,6 +27,11 @@ class PaymentTransactionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'gateway_ref';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     // Transactions are created by the payment gateway — no create/edit in admin
     public static function canCreate(): bool
     {

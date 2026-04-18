@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -25,10 +26,17 @@ class UsersTable
 
                 TextColumn::make('role')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'super_admin' => 'Super Admin',
+                        'admin'       => 'Admin',
+                        'editor'      => 'Editor',
+                        default       => ucfirst($state),
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'super_admin' => 'danger',
-                        'admin' => 'warning',
-                        default => 'gray',
+                        'admin'       => 'warning',
+                        'editor'      => 'info',
+                        default       => 'gray',
                     }),
 
                 TextColumn::make('created_at')
@@ -37,7 +45,12 @@ class UsersTable
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->options([
+                        'editor'      => 'Editor',
+                        'admin'       => 'Admin',
+                        'super_admin' => 'Super Admin',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -47,6 +60,7 @@ class UsersTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }
