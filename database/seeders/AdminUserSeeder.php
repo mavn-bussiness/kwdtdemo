@@ -23,10 +23,7 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        // Ensure role is correctly set in case migration ran with wrong column type
-        User::where('email', 'admin@katosi.org')
-            ->whereNull('role')
-            ->orWhere('role', '')
-            ->update(['role' => 'super_admin']);
+        // Backfill any user with a null/empty role
+        User::whereNull('role')->orWhere('role', '')->update(['role' => 'super_admin']);
     }
 }

@@ -50,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.filemtime(public_path('css/filament-admin.css')).'"><style id="login-bg-style"></style>'
+                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').(file_exists(public_path('css/filament-admin.css')) ? '?v='.filemtime(public_path('css/filament-admin.css')) : '').'"><style id="login-bg-style"></style>'
             )
             ->renderHook(
                 PanelsRenderHook::BODY_START,
