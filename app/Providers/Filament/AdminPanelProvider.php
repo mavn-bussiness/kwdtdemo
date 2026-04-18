@@ -53,10 +53,6 @@ class AdminPanelProvider extends PanelProvider
                 PanelsRenderHook::HEAD_END,
                 fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.config('app.version', '1').'"><style id="login-bg-style"></style>'
             )
-            ->renderHook(
-                PanelsRenderHook::BODY_START,
-                fn () => view('filament.login-bg')->render()
-            )
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
