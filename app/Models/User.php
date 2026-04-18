@@ -46,7 +46,7 @@ class User extends Authenticatable
     /**
      * All content items authored by this user.
      */
-    public function content(): User|HasMany
+    public function content(): HasMany
     {
         return $this->hasMany(Content::class, 'author_id');
     }
@@ -54,7 +54,7 @@ class User extends Authenticatable
     /**
      * All media files uploaded by this user.
      */
-    public function uploadedMedia(): User|HasMany
+    public function uploadedMedia(): HasMany
     {
         return $this->hasMany(Media::class, 'uploaded_by');
     }

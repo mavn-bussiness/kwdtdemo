@@ -17,17 +17,21 @@ class KwdtContentActivityChart extends BarChartWidget
         $months = collect(range(5, 0))->map(fn ($i) => now()->subMonths($i));
         $labels = $months->map(fn ($m) => $m->format('M Y'))->toArray();
 
-        $published = $months->map(fn ($m) => Content::where('status', 'published')
-            ->whereYear('created_at', $m->year)
-            ->whereMonth('created_at', $m->month)
-            ->count()
+        $rows = Content::whereIn('status', ['published', 'draft'])
+            ->where('created_at', '>=', now()->subMonths(5)->startOfMonth())
+            ->selectRaw('status, YEAR(created_at) as yr, MONTH(created_at) as mo, COUNT(*) as cnt')
+            ->groupByRaw('status, YEAR(created_at), MONTH(created_at)')
+            ->get()
+            ->groupBy('status');
+
+        $toMap = fn (string $status) => $months->map(
+            fn ($m) => (int) ($rows->get($status, collect())
+                ->first(fn ($r) => $r->yr == $m->year && $r->mo == $m->month)
+                ?->cnt ?? 0)
         )->toArray();
 
-        $drafts = $months->map(fn ($m) => Content::where('status', 'draft')
-            ->whereYear('created_at', $m->year)
-            ->whereMonth('created_at', $m->month)
-            ->count()
-        )->toArray();
+        $published = $toMap('published');
+        $drafts    = $toMap('draft');
 
         return [
             'datasets' => [

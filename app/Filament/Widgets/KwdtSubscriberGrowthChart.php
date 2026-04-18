@@ -17,22 +17,19 @@ class KwdtSubscriberGrowthChart extends LineChartWidget
         $months = collect(range(5, 0))->map(fn ($i) => now()->subMonths($i));
         $labels = $months->map(fn ($m) => $m->format('M Y'))->toArray();
 
-        $newSubs = $months->map(fn ($m) => NewsletterSubscriber::where('is_active', true)
-            ->whereYear('subscribed_at', $m->year)
+        $newSubs = $months->map(fn ($m) => NewsletterSubscriber::whereYear('subscribed_at', $m->year)
             ->whereMonth('subscribed_at', $m->month)
             ->count()
         )->toArray();
 
-        // Cumulative total up to each month
-        $cumulative = [];
-        $base = NewsletterSubscriber::where('is_active', true)
-            ->where('subscribed_at', '<', now()->subMonths(5)->startOfMonth())
-            ->count();
-        $running = $base;
-        foreach ($newSubs as $n) {
-            $running += $n;
-            $cumulative[] = $running;
-        }
+        // Cumulative active count as of each month-end (accounts for unsubscribes)
+        $cumulative = $months->map(fn ($m) => NewsletterSubscriber::where('subscribed_at', '<=', $m->copy()->endOfMonth())
+            ->where(fn ($q) => $q
+                ->whereNull('unsubscribed_at')
+                ->orWhere('unsubscribed_at', '>', $m->copy()->endOfMonth())
+            )
+            ->count()
+        )->toArray();
 
         return [
             'datasets' => [

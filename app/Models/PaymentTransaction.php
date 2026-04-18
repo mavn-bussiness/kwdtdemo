@@ -105,11 +105,11 @@ class PaymentTransaction extends Model
      */
     public function gatewayLabel(): string
     {
-        return match ($this->payment_gateway) {
+        return match ($this->gateway) {
             'paypal' => 'PayPal',
             'mtn_momo' => 'MTN Mobile Money',
             'airtel_money' => 'Airtel Money',
-            default => ucfirst($this->payment_gateway),
+            default => ucfirst($this->gateway),
         };
     }
 }

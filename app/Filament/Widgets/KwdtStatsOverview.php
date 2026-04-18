@@ -16,14 +16,16 @@ class KwdtStatsOverview extends BaseWidget
     protected function getStats(): array
     {
         // Single query for all donation stats
+        $now = now();
+        $lastMonth = $now->copy()->subMonth();
         $donationStats = Donation::where('status', 'success')
             ->selectRaw('
                 SUM(amount_usd) as total_revenue,
                 SUM(CASE WHEN YEAR(created_at) = ? AND MONTH(created_at) = ? THEN 1 ELSE 0 END) as this_month,
                 SUM(CASE WHEN YEAR(created_at) = ? AND MONTH(created_at) = ? THEN 1 ELSE 0 END) as last_month
             ', [
-                now()->year, now()->month,
-                now()->subMonth()->year, now()->subMonth()->month,
+                $now->year, $now->month,
+                $lastMonth->year, $lastMonth->month,
             ])
             ->first();
 

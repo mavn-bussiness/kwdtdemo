@@ -13,7 +13,10 @@ class AutoLoginInDev
     public function handle(Request $request, Closure $next): Response
     {
         if (app()->isLocal() && ! Auth::check()) {
-            Auth::login(User::first());
+            $user = User::whereIn('role', ['admin', 'super_admin'])->first();
+            if ($user) {
+                Auth::login($user);
+            }
         }
 
         return $next($request);

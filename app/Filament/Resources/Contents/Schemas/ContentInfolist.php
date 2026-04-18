@@ -19,8 +19,10 @@ class ContentInfolist
                 // ── Row 2: Classification ─────────────────────────────────────
                 TextEntry::make('type')
                     ->placeholder('-'),
-                TextEntry::make('category.name')
-                    ->label('Category'),
+                TextEntry::make('categories.name')
+                    ->label('Category')
+                    ->badge()
+                    ->separator(',')
 
                 // ── Row 3: Publication ────────────────────────────────────────
                 TextEntry::make('status')

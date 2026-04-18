@@ -21,7 +21,6 @@ class KwdtUpcomingEvents extends BaseWidget
                     ->with('content')
                     ->where('event_date', '>=', now())
                     ->orderBy('event_date')
-                    ->limit(6)
             )
             ->columns([
                 TextColumn::make('event_date')
@@ -46,6 +45,6 @@ class KwdtUpcomingEvents extends BaseWidget
                     ->label('Capacity')
                     ->placeholder('Unlimited'),
             ])
-            ->paginated(false);
+            ->paginated([6, 10, 25]);
     }
 }

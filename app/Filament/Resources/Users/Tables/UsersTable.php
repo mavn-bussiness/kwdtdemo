@@ -15,7 +15,26 @@ class UsersTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('role')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'super_admin' => 'danger',
+                        'admin' => 'warning',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('created_at')
+                    ->label('Joined')
+                    ->dateTime('d M Y')
+                    ->sortable(),
             ])
             ->filters([
                 //

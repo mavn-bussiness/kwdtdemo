@@ -44,7 +44,7 @@ class Donation extends Model
      * All payment attempts for this donation.
      * A donor might retry after a failed first attempt — each attempt is a new transaction.
      */
-    public function transactions(): Donation|HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(PaymentTransaction::class);
     }
