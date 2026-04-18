@@ -135,8 +135,19 @@ class ProjectSeeder extends Seeder
             fn ($name, $slug) => Category::firstOrCreate(['slug' => $slug], ['name' => $name])
         );
 
+        $projectMeta = [
+            'micro-credit-loans-scheme'              => ['status' => 'ongoing',   'location' => 'Kalangala, Mpatta, Buvuma', 'funder' => 'Swiss Hand Foundation',    'start_date' => '2011-01-01'],
+            'solar-powered-lighting'                 => ['status' => 'ongoing',   'location' => 'Mukono, Kalangala, Buvuma', 'funder' => 'Mwangaza Solar Solutions',  'start_date' => '2018-01-01'],
+            'focus-frauen'                           => ['status' => 'ongoing',   'location' => 'Mukono, Kalangala',         'funder' => 'Fokus Frauen Switzerland',  'start_date' => '2020-01-01'],
+            'katosi-women-center-for-development'    => ['status' => 'planned',   'location' => 'Katosi, Mukono',            'funder' => 'ASF Sweden',                'start_date' => '2022-01-01'],
+            'uganda-saxony-partnership'              => ['status' => 'ongoing',   'location' => 'Uganda / Saxony',           'funder' => 'Free State of Saxony',      'start_date' => '2019-01-01'],
+            'arche-nova-wash-fishing-communities'    => ['status' => 'ongoing',   'location' => 'Mukono, Kalangala, Buvuma', 'funder' => 'arche noVa',                'start_date' => '2017-01-01'],
+            'giz-responsible-fisheries-business-chain-project' => ['status' => 'completed', 'location' => '15 Districts, Uganda', 'funder' => 'GIZ RFBCP',           'start_date' => '2021-01-01', 'end_date' => '2023-12-31'],
+            'resilience-building-menstrual-health'   => ['status' => 'ongoing',   'location' => 'Mukono, Kalangala',         'funder' => 'arche noVa',                'start_date' => '2022-01-01'],
+        ];
+
         foreach ($projects as $data) {
-            $project = Content::updateOrCreate(
+            $content = Content::updateOrCreate(
                 ['slug' => $data['slug']],
                 [
                     'title'          => $data['title'],
@@ -151,9 +162,24 @@ class ProjectSeeder extends Seeder
             );
 
             $categoryIds = $cats->only($data['categories'])->pluck('id');
-            $project->categories()->sync($categoryIds);
+            $content->categories()->sync($categoryIds);
+
+            // Create or update the matching projects row
+            $meta = $projectMeta[$data['slug']] ?? [];
+            \App\Models\Project::updateOrCreate(
+                ['content_id' => $content->id],
+                [
+                    'status'              => $meta['status']     ?? 'ongoing',
+                    'location'            => $meta['location']   ?? null,
+                    'funder'              => $meta['funder']      ?? null,
+                    'start_date'          => $meta['start_date'] ?? now()->subYear()->toDateString(),
+                    'end_date'            => $meta['end_date']   ?? null,
+                    'beneficiaries_count' => null,
+                    'budget_usd'          => null,
+                ]
+            );
         }
 
-        $this->command->info('✓ ProjectSeeder: ' . count($projects) . ' projects seeded.');
+        $this->command->info('✓ ProjectSeeder: ' . count($projects) . ' projects seeded (content + projects rows).');
     }
 }
