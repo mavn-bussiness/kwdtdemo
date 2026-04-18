@@ -2,13 +2,15 @@
 
 namespace App\Filament\Resources\Events\Schemas;
 
-use App\Models\Content;
-use App\Models\Event;
+use App\Models\Category;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Validation\Rule;
 
 class EventForm
 {
@@ -17,30 +19,62 @@ class EventForm
         return $schema
             ->columns(2)
             ->components([
-                // Only show content entries typed as 'event'
-                Select::make('content_id')
-                    ->label('Content Entry')
-                    ->options(function ($record) {
-                        $takenIds = Event::when(
-                            $record,
-                            fn ($q) => $q->where('id', '!=', $record->id)
-                        )->pluck('content_id');
-
-                        return Content::where('type', 'event')
-                            ->whereNotIn('id', $takenIds)
-                            ->orderBy('title')
-                            ->pluck('title', 'id');
-                    })
-                    ->searchable()
+                // ── Content fields ────────────────────────────────────────────
+                TextInput::make('title')
                     ->required()
-                    ->rules(fn ($record) => [
-                        Rule::unique('events', 'content_id')
-                            ->when($record, fn ($rule) => $rule->ignore($record->id)),
-                    ])
-                    ->validationMessages(['unique' => 'An event already exists for this content entry.'])
-                    ->helperText('Only content entries with type "Event" are shown.')
+                    ->live(onBlur: true)
+                    ->columnSpan(1),
+
+                TextInput::make('slug')
+                    ->required()
+                    ->unique('content', 'slug', ignoreRecord: true)
+                    ->helperText('Auto-generated from title. You may customise it.')
+                    ->columnSpan(1),
+
+                Select::make('categories')
+                    ->label('Categories')
+                    ->options(fn () => Category::orderBy('name')->pluck('name', 'id'))
+                    ->multiple()
+                    ->searchable()
+                    ->columnSpan(1),
+
+                Radio::make('publish_status')
+                    ->label('Publish Status')
+                    ->options(['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'])
+                    ->default('draft')
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        if ($state === 'published') {
+                            $set('published_at', now()->toDateTimeString());
+                        }
+                    })
+                    ->inline()
+                    ->columnSpan(1),
+
+                DateTimePicker::make('published_at')
+                    ->label('Published At')
+                    ->nullable()
+                    ->columnSpan(1),
+
+                FileUpload::make('featured_image')
+                    ->label('Featured Image')
+                    ->image()
+                    ->disk('public')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->directory('content/images')
+                    ->visibility('public')
                     ->columnSpanFull(),
 
+                RichEditor::make('excerpt')
+                    ->columnSpanFull(),
+
+                RichEditor::make('body')
+                    ->label('Content Body')
+                    ->columnSpanFull(),
+
+                // ── Event-specific fields ─────────────────────────────────────
                 DateTimePicker::make('event_date')
                     ->label('Start Date & Time')
                     ->required()

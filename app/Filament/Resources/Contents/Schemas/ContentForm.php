@@ -32,16 +32,15 @@ class ContentForm
                 // ── Row 2: Type + Status ─────────────────────────────────────
                 Select::make('type')
                     ->options([
-                        'blog' => 'Blog Post',
-                        'news' => 'News',
-                        'event' => 'Event',
+                        'blog'    => 'Blog Post',
+                        'news'    => 'News',
+                        'event'   => 'Event',
                         'project' => 'Project',
-                        'report' => 'Report',
-                        'page' => 'Static Page',
-                        'award' => 'Award',
-                        'thematic_area' => 'Thematic Area',
+                        'report'  => 'Report',
+                        'page'    => 'Static Page',
                     ])
                     ->required()
+                    ->helperText('Awards and Thematic Areas are managed in their own sections.')
                     ->columnSpan(1),
 
                 Radio::make('status')
