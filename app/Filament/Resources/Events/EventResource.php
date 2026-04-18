@@ -26,7 +26,9 @@ class EventResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = null;
+
+    protected static bool $isGloballySearchable = false;
 
     public static function canAccess(): bool
     {

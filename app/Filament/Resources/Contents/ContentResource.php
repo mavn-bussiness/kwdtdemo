@@ -30,6 +30,8 @@ class ContentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static int $globalSearchResultsLimit = 5;
+
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         $query = parent::getEloquentQuery();
