@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('APP_ENV') === 'production' ? 'database' : env('SESSION_DRIVER', 'file'),
+    'driver' => env('SESSION_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'domain' => env('APP_ENV') === 'production' ? null : env('SESSION_DOMAIN'),
+    'domain' => env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('APP_ENV') === 'production' ? true : env('SESSION_SECURE_COOKIE', false),
+    'secure' => env('SESSION_SECURE_COOKIE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +199,7 @@ return [
     |
     */
 
-    'same_site' => env('APP_ENV') === 'production' ? 'lax' : env('SESSION_SAME_SITE', 'lax'),
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
     /*
     |--------------------------------------------------------------------------

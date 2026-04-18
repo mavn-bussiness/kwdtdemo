@@ -1,12 +1,20 @@
 @php
     use Illuminate\Support\Facades\Storage;
-    $images = collect(Storage::disk('public')->files('content/images'))
-        ->filter(fn($f) => preg_match('/\.(jpg|jpeg|png|webp)$/i', $f))
-        ->values()
-        ->map(fn($f) => Storage::disk('public')->url($f))
-        ->toArray();
+    try {
+        $images = collect(Storage::disk('public')->files('content/images'))
+            ->filter(fn($f) => preg_match('/\.(jpg|jpeg|png|webp)$/i', $f))
+            ->values()
+            ->map(fn($f) => Storage::disk('public')->url($f))
+            ->toArray();
+    } catch (\Throwable $e) {
+        $images = [];
+    }
     if (empty($images)) {
-        $images = [asset('images/kwdt-logo.webp')];
+        $images = [
+            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg',
+            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
+            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',
+        ];
     }
     $count = count($images);
     $duration = $count * 6;

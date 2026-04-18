@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\Login::class)
             ->authGuard('web')
             ->brandName('Katosi Women\nDevelopment Trust')
             ->brandLogo(asset('images/kwdt-logo.webp'))
