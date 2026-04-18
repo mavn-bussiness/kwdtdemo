@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\Content;
 use App\Models\Partner;
+use App\Models\Project;
 use App\Models\Testimonial;
 use App\Observers\ContentObserver;
 use App\Observers\PartnerObserver;
+use App\Observers\ProjectObserver;
 use App\Observers\TestimonialObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -42,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
 
         Content::observe(ContentObserver::class);
         Partner::observe(PartnerObserver::class);
+        Project::observe(ProjectObserver::class);
         Testimonial::observe(TestimonialObserver::class);
     }
 

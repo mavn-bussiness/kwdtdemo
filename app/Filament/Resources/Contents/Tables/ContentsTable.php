@@ -24,15 +24,13 @@ class ContentsTable
                 TextColumn::make('type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'blog' => 'info',
-                        'news' => 'info',
+                        'blog'    => 'info',
+                        'news'    => 'info',
                         'project' => 'warning',
-                        'event' => 'primary',
-                        'report' => 'gray',
-                        'page' => 'gray',
-                        'award' => 'success',
-                        'thematic_area' => 'danger',
-                        default => 'gray',
+                        'event'   => 'primary',
+                        'report'  => 'gray',
+                        'page'    => 'gray',
+                        default   => 'gray',
                     })
                     ->sortable(),
 
@@ -68,14 +66,12 @@ class ContentsTable
 
                 SelectFilter::make('type')
                     ->options([
-                        'blog' => 'Blog Post',
-                        'news' => 'News',
-                        'event' => 'Event',
+                        'blog'    => 'Blog Post',
+                        'news'    => 'News',
+                        'event'   => 'Event',
                         'project' => 'Project',
-                        'report' => 'Report',
-                        'page' => 'Static Page',
-                        'award' => 'Award',
-                        'thematic_area' => 'Thematic Area',
+                        'report'  => 'Report',
+                        'page'    => 'Static Page',
                     ]),
             ])
             ->recordActions([

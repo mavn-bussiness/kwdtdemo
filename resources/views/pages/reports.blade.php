@@ -35,7 +35,7 @@
                            target="_blank"
                            rel="noopener"
                            class="group transition-all hover:-translate-y-0.5">
-                            <span class="flex-1">{{ $report->file_name }}</span>
+                            <span class="flex-1">{{ $report->content->title ?? $report->file_name }}</span>
                             @if($report->file_type)
                                 <span class="shrink-0 text-xs font-mono font-semibold px-2 py-0.5 rounded"
                                       style="background:var(--sand-dark); color:var(--ink-light)">

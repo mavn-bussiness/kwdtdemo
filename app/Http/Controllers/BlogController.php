@@ -69,12 +69,14 @@ class BlogController extends Controller
 
     public function show(string $slug)
     {
-        $post = Content::published()->ofType('blog')
+        $post = Content::published()
+            ->whereIn('type', ['blog', 'news'])
             ->where('slug', $slug)
             ->with(['categories', 'author', 'media'])
             ->firstOrFail();
 
-        $related = Content::published()->ofType('blog')
+        $related = Content::published()
+            ->whereIn('type', ['blog', 'news'])
             ->where('id', '!=', $post->id)
             ->whereHas(
                 'categories',
@@ -85,8 +87,8 @@ class BlogController extends Controller
             ->take(3)
             ->get();
 
-        // Sidebar data
-        $recent = Content::published()->ofType('blog')
+        $recent = Content::published()
+            ->whereIn('type', ['blog', 'news'])
             ->where('id', '!=', $post->id)
             ->latestPublished()
             ->with('categories')
@@ -95,7 +97,7 @@ class BlogController extends Controller
 
         $categories = Category::whereHas(
             'content',
-            fn ($q) => $q->published()->ofType('blog')
+            fn ($q) => $q->published()->whereIn('type', ['blog', 'news'])
         )->get();
 
         return view('pages.blog.show', compact(

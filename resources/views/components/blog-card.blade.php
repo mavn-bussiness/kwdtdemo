@@ -21,7 +21,7 @@
         </span>
     </div>
 
-    <h3 class="group-hover:text-clay transition-colors duration-200"
+    <h3 class="group-hover:text-orange transition-colors duration-200"
         style="transition-property:color">
         {{ $post->title }}
     </h3>
@@ -31,13 +31,13 @@
     @endif
 
     <div class="flex items-center justify-between mt-auto pt-3"
-         style="border-top:1px solid var(--sand-dark); margin-top:auto">
+         style="border-top:1px solid var(--cream-dark); margin-top:auto">
         <span class="blog-date" style="margin:0">
             {{ $post->published_at->format('M d, Y') }}
         </span>
         <span class="flex items-center gap-1 text-xs font-semibold
                      transition-all duration-200 group-hover:gap-2"
-              style="color:var(--clay); font-size:.78rem">
+              style="color:var(--orange); font-size:.78rem">
             Read
             <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
                  fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
