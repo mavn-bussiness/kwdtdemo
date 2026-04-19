@@ -115,6 +115,6 @@ class Content extends Model
             return $this->featured_image;
         }
 
-        return \Illuminate\Support\Facades\Storage::url($this->featured_image);
+        return asset($this->featured_image);
     }
 }

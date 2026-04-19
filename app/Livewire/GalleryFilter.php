@@ -90,7 +90,7 @@ class GalleryFilter extends Component
         if ($this->filter === 'all') {
             TeamMember::active()->whereNotNull('photo_url')->where('photo_url', '!=', '')->get()
                 ->each(fn ($t) => $items->push([
-                    'src'   => \Illuminate\Support\Facades\Storage::url($t->photo_url),
+                    'src'   => str_starts_with($t->photo_url, 'http') ? $t->photo_url : asset($t->photo_url),
                     'alt'   => $t->name,
                     'label' => $t->name,
                 ]));
@@ -98,7 +98,7 @@ class GalleryFilter extends Component
             // 4. Award images
             Award::whereNotNull('image_url')->where('image_url', '!=', '')->orderBy('order')->get()
                 ->each(fn ($a) => $items->push([
-                    'src'   => \Illuminate\Support\Facades\Storage::url($a->image_url),
+                    'src'   => $a->imageUrl(),
                     'alt'   => $a->title,
                     'label' => $a->title,
                 ]));

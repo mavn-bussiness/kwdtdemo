@@ -40,9 +40,8 @@ class Partner extends Model
     {
         if (! empty($this->attributes['logo_url'])) {
             $val = $this->attributes['logo_url'];
-            // Local storage path
             if (! str_starts_with($val, 'http')) {
-                return \Illuminate\Support\Facades\Storage::url($val);
+                return asset($val);
             }
             return $val;
         }
