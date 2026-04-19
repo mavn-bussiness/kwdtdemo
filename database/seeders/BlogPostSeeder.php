@@ -31,15 +31,15 @@ class BlogPostSeeder extends Seeder
 
         // ── Squarespace CDN images already used by KWDT ───────────────────────
         $imgs = [
-            'community' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg',
-            'women' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
-            'field' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',
-            'water' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',
-            'lake' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg',
-            'meeting' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG',
-            'fisheries' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/85e1a80d-da0d-4326-8423-372ad989d2cb/IMG_9742+-+Edited.jpg',
-            'forum' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/df9cfb01-47a4-45ec-9054-a828f74eb768/2+IMG_9851.jpg',
-            'group' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg',
+            'community' => 'images/content/arche-uganda-194.jpg',
+            'women'     => 'images/content/arche-uganda-196.jpg',
+            'field'     => 'images/static/dsc03764.jpg',
+            'water'     => 'images/content/dsc05383.jpg',
+            'lake'      => 'images/content/arche-uganda-218.jpg',
+            'meeting'   => 'images/content/dsc01464-2.jpg',
+            'fisheries' => 'images/content/img-9742-edited.jpg',
+            'forum'     => 'images/content/2-img-9851.jpg',
+            'group'     => 'images/content/arche-uganda-204.jpg',
         ];
 
         // ── Blog posts ────────────────────────────────────────────────────────

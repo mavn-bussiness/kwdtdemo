@@ -14,7 +14,7 @@ class PartnerSeeder extends Seeder
         $partners = [
             [
                 'name' => 'World Forum for Fish Workers and Fish Harvesters',
-                'logo_url' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a79a067-a783-42f4-b8ee-fb06a514ef05/1+WFF.png?format=500w',
+                'logo_url' => 'images/partners/1-wff.png',
                 'website' => 'https://worldfisherforum.org/',
                 'description' => 'International network of fish workers and harvesters advocating for sustainable fisheries and social justice.',
                 'is_active' => true,
@@ -22,7 +22,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Women For Water Partnership',
-                'logo_url' => 'https://womenforwater.org/wp-content/uploads/2023/02/logo-black.png',
+                'logo_url' => 'images/partners/logo-black.png',
                 'website' => 'https://womenforwater.org/projects-work/',
                 'description' => 'A partnership of women\'s organization and networks to unite women leadership in water and sanitation.',
                 'is_active' => true,
@@ -30,7 +30,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Wocan',
-                'logo_url' => 'https://www.wocan.org/wp-content/uploads/2023/06/wocan-logo.svg',
+                'logo_url' => 'images/partners/wocan-logo.svg',
                 'website' => 'https://www.wocan.org/',
                 'description' => 'A women led international membership network of women and men professionals and women organizations that pioneers in gender equality and climate change.',
                 'is_active' => true,
@@ -38,7 +38,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'The Butterfly Effect',
-                'logo_url' => 'https://www.effetpapillon.org//public/static/project/css/images/logo_EN.png',
+                'logo_url' => 'images/partners/logo-en.png',
                 'website' => 'https://www.effetpapillon.org/en/',
                 'description' => 'A network of international and local CSO/NGO, from all over the globe, which advocates for effective local solutions that have a sustainable impact on improving access to water and sanitation and water resource management.',
                 'is_active' => true,
@@ -46,7 +46,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Gender Water Alliance',
-                'logo_url' => 'https://genderandwater.org/%2b%2btheme%2b%2bgwa.theme/images/logo.png',
+                'logo_url' => 'images/partners/logo.png',
                 'website' => 'https://genderandwater.org/en/',
                 'description' => 'Promotes women and men\'s equitable access to and management of safe water.',
                 'is_active' => true,
@@ -54,7 +54,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Uganda National NGO Forum',
-                'logo_url' => 'https://ngoforum.or.ug/wp-content/uploads/2024/01/UNNGOFlogoBase.png',
+                'logo_url' => 'images/partners/unngoflogobase.png',
                 'website' => 'https://ngoforum.or.ug/',
                 'description' => 'Provides a sharing and reflection platform for NGOs in Uganda.',
                 'is_active' => true,
@@ -62,7 +62,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Uganda Water and Sanitation NGO Network',
-                'logo_url' => 'https://uwasnet.org/wp-content/uploads/2024/04/uwasnet-logo-new.png',
+                'logo_url' => 'images/partners/uwasnet-logo-new.png',
                 'website' => 'https://uwasnet.org/',
                 'description' => 'National coordination of CSOs including social enterprises, development programs, private sector and NGOs on water and environment.',
                 'is_active' => true,
@@ -70,7 +70,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Uganda Women\'s Network',
-                'logo_url' => 'https://www.uwonet.or.ug/wp-content/themes/uwonet/images/uwonet-logo-with-tagline.png',
+                'logo_url' => 'images/partners/uwonet-logo-with-tagline.png',
                 'website' => 'https://www.uwonet.or.ug/',
                 'description' => 'Uganda Women\'s Network (UWONET) is a women\'s rights advocacy organization that exists to coordinate collective action among women\'s rights and gender equality stakeholders for the attainment of gender equality and equity in Uganda.',
                 'is_active' => true,
@@ -78,7 +78,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Women of Uganda Network',
-                'logo_url' => 'https://wougnet.org/wp-content/uploads/2025/11/cropped-cropped-wougnet-logo.png',
+                'logo_url' => 'images/partners/cropped-cropped-wougnet-logo.png',
                 'website' => 'https://wougnet.org/',
                 'description' => 'Ugandan center for management training and development.',
                 'is_active' => true,
@@ -86,7 +86,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Uganda National Women\'s Fish Organisation',
-                'logo_url' => 'https://unwfo.org/wp-content/uploads/2024/04/cropped-UNWFO-logo-2.png',
+                'logo_url' => 'images/partners/cropped-unwfo-logo-2.png',
                 'website' => 'https://unwfo.org/',
                 'description' => 'UNWFO is a registered non-profit organization established in 2015 and officially launched in 2019 with the support of the Ministry of Agriculture Animal Industry and Fisheries. The Organization serves as a network for women and youth involved in fish production, processing, marketing and trade.',
                 'is_active' => true,
@@ -94,7 +94,7 @@ class PartnerSeeder extends Seeder
             ],
             [
                 'name' => 'Mukono District NGO Forum',
-                'logo_url' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/64f05fc1-386f-481f-9540-bfa708f11880/7+MUDINFO.jpeg?format=500w',
+                'logo_url' => 'images/partners/7-mudinfo.jpeg',
                 'website' => 'https://mukonongoforum.wordpress.com/',
                 'description' => 'German NGO supporting community-based development projects.',
                 'is_active' => true,
