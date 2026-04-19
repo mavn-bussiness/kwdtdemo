@@ -18,8 +18,8 @@
             @foreach($images as $image)
                 <div class="aspect-square overflow-hidden rounded-lg">
                     <img
-                        src="{{ $image->url() }}"
-                        alt="{{ $image->alt_text ?? $image->file_name }}"
+                        src="{{ $image['src'] }}"
+                        alt="{{ $image['alt'] }}"
                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         loading="lazy">
                 </div>
