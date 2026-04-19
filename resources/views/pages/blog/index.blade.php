@@ -6,7 +6,7 @@
             @if($featured?->featuredImageUrl())
                 <img src="{{ $featured->featuredImageUrl() }}" alt="{{ $featured->title }}" loading="eager">
             @else
-                <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg" alt="KWDT Community" loading="eager">
+                <img src="/storage/images/static/arche-uganda-194.jpg" alt="KWDT Community" loading="eager">
             @endif
         </div>
         <div class="news-hero-overlay" aria-hidden="true"></div>

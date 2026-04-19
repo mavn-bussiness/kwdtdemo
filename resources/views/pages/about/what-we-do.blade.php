@@ -41,14 +41,14 @@
             'hiv-gender-disability-and-health' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>',
         ];
         $images = [
-            'economic-empowerment' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
-            'water-sanitation-hygiene-wash' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f1a11664-9d66-411b-9d02-1f3158773ad9/DSC08536.JPG',
-            'education-and-knowledge-empowerment' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg',
-            'environment-conservation' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',
-            'hiv-gender-disability-and-health' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg',
+            'economic-empowerment' => '/storage/images/static/arche-uganda-196.jpg',
+            'water-sanitation-hygiene-wash' => '/storage/images/static/dsc08536.jpg',
+            'education-and-knowledge-empowerment' => '/storage/images/static/arche-uganda-195.jpg',
+            'environment-conservation' => '/storage/images/static/dsc03764.jpg',
+            'hiv-gender-disability-and-health' => '/storage/images/static/arche-uganda-218.jpg',
         ];
         $fallbackIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
-        $fallbackImg  = 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg';
+        $fallbackImg  = '/storage/images/static/arche-uganda-194.jpg';
     @endphp
 
     <section class="wwd-areas-section">

@@ -4,7 +4,7 @@
 
     <div class="news-hero news-hero--slim">
         <div class="news-hero-bg">
-            <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
+            <img src="/storage/images/static/arche-uganda-194.jpg"
                  alt="KWDT documents and reports"
                  loading="eager">
         </div>

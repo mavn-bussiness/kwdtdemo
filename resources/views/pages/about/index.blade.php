@@ -22,10 +22,10 @@
             <div class="about-split-left reveal">
                 <div class="about-img-stack">
                     <img class="about-img-main"
-                         src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
+                         src="/storage/images/static/arche-uganda-194.jpg"
                          alt="KWDT community members at Lake Victoria">
                     <img class="about-img-float"
-                         src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/1725726824597-ANFQUJ865S7FZTKYNEX7/2023+KWDT+Coordinator+receives+Evolving+women.jpeg"
+                         src="/storage/images/static/2023-kwdt-coordinator-receives-evolving-women.jpeg"
                          alt="KWDT Coordinator receives award">
                 </div>
 

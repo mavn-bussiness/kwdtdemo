@@ -14,11 +14,20 @@ use Illuminate\Support\Str;
 class DownloadRemoteImages extends Command
 {
     protected $signature   = 'images:download-remote {--dry-run : Preview without saving}';
-    protected $description = 'Download all remote images and update DB paths to local storage';
+    protected $description = 'Download all remote images and update DB paths and blade views to local storage';
 
     private int $downloaded = 0;
     private int $skipped    = 0;
     private int $failed     = 0;
+
+    /** Blade files that contain hardcoded remote image URLs */
+    private array $bladeFiles = [
+        'resources/views/pages/home.blade.php',
+        'resources/views/pages/reports.blade.php',
+        'resources/views/pages/blog/index.blade.php',
+        'resources/views/pages/about/index.blade.php',
+        'resources/views/pages/about/what-we-do.blade.php',
+    ];
 
     public function handle(): int
     {
@@ -60,11 +69,13 @@ class DownloadRemoteImages extends Command
             dry:      $dry,
         );
 
+        $this->processBladeFiles($dry);
+
         $this->newLine();
         $this->table(['Stat', 'Count'], [
-            ['Downloaded',             $this->downloaded],
+            ['Downloaded',              $this->downloaded],
             ['Skipped (already local)', $this->skipped],
-            ['Failed',                 $this->failed],
+            ['Failed',                  $this->failed],
         ]);
 
         if ($dry) {
@@ -72,6 +83,71 @@ class DownloadRemoteImages extends Command
         }
 
         return self::SUCCESS;
+    }
+
+    private function processBladeFiles(bool $dry): void
+    {
+        $this->info("\n── blade view hardcoded URLs ──");
+
+        foreach ($this->bladeFiles as $relative) {
+            $fullPath = base_path($relative);
+
+            if (! file_exists($fullPath)) {
+                continue;
+            }
+
+            $content  = file_get_contents($fullPath);
+            $modified = $content;
+            $changed  = false;
+
+            // Extract all unique https://images.squarespace-cdn.com/... URLs
+            preg_match_all(
+                '#https://images\.squarespace-cdn\.com/[^\s\'"]+#',
+                $content,
+                $matches
+            );
+
+            foreach (array_unique($matches[0]) as $url) {
+                $storagePath = $this->resolveStoragePath($url, 'images/static');
+                $publicUrl   = '/storage/' . $storagePath;
+
+                if (Storage::disk('public')->exists($storagePath)) {
+                    $this->line("  EXIST {$storagePath}");
+                    $this->skipped++;
+                } elseif ($dry) {
+                    $this->line("  WOULD → {$storagePath}");
+                    $this->downloaded++;
+                    continue; // don't replace in dry-run
+                } else {
+                    try {
+                        $response = Http::timeout(30)->get($url);
+
+                        if (! $response->successful()) {
+                            $this->error("  FAIL  [{$response->status()}] {$url}");
+                            $this->failed++;
+                            continue;
+                        }
+
+                        Storage::disk('public')->put($storagePath, $response->body());
+                        $this->line("  OK    {$storagePath}");
+                        $this->downloaded++;
+                    } catch (\Throwable $e) {
+                        $this->error("  FAIL  {$url} — {$e->getMessage()}");
+                        $this->failed++;
+                        continue;
+                    }
+                }
+
+                // Replace URL in blade content
+                $modified = str_replace($url, $publicUrl, $modified);
+                $changed  = true;
+            }
+
+            if ($changed && ! $dry) {
+                file_put_contents($fullPath, $modified);
+                $this->line("  UPDATED blade: {$relative}");
+            }
+        }
     }
 
     private function processTable(
@@ -93,13 +169,8 @@ class DownloadRemoteImages extends Command
                 continue;
             }
 
-            $urlPath  = parse_url($url, PHP_URL_PATH);
-            $basename = basename(urldecode($urlPath));
-            $basename = Str::slug(pathinfo($basename, PATHINFO_FILENAME))
-                        .'.'.strtolower(pathinfo($basename, PATHINFO_EXTENSION) ?: 'jpg');
-            $storagePath = "{$folder}/{$basename}";
+            $storagePath = $this->resolveStoragePath($url, $folder);
 
-            // If file already downloaded, just update the DB path
             if (Storage::disk('public')->exists($storagePath)) {
                 $this->line("  EXIST {$storagePath}");
                 if (! $dry) {
@@ -134,5 +205,17 @@ class DownloadRemoteImages extends Command
                 $this->failed++;
             }
         }
+    }
+
+    private function resolveStoragePath(string $url, string $folder): string
+    {
+        $urlPath  = parse_url($url, PHP_URL_PATH);
+        $basename = basename(urldecode($urlPath));
+        // Strip query strings like ?format=500w
+        $basename = strtok($basename, '?');
+        $basename = Str::slug(pathinfo($basename, PATHINFO_FILENAME))
+                    . '.' . strtolower(pathinfo($basename, PATHINFO_EXTENSION) ?: 'jpg');
+
+        return "{$folder}/{$basename}";
     }
 }

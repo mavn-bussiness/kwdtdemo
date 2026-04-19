@@ -16,9 +16,9 @@
                 @foreach($heroSlides as $i => $slide)
                     @php
                         $fallbacks = [
-                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg',
-                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',
-                            'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',
+                            '/storage/images/static/arche-uganda-194.jpg',
+                            '/storage/images/static/arche-uganda-196.jpg',
+                            '/storage/images/static/dsc05383.jpg',
                         ];
                         $imgSrc = $slide['image'] ?? $fallbacks[$i % count($fallbacks)];
                     @endphp
@@ -32,11 +32,11 @@
 
                 {{-- Static fallback when DB is empty / seeding ──────── --}}
                 @foreach([
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg', 'alt' => 'KWDT women community'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg', 'alt' => 'Economic Empowerment'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',          'alt' => 'Community field work'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',          'alt' => 'Clean water project'],
-                    ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg',  'alt' => 'Fisheries forum'],
+                    ['src' => '/storage/images/static/arche-uganda-194.jpg', 'alt' => 'KWDT women community'],
+                    ['src' => '/storage/images/static/arche-uganda-196.jpg', 'alt' => 'Economic Empowerment'],
+                    ['src' => '/storage/images/static/dsc03764.jpg',          'alt' => 'Community field work'],
+                    ['src' => '/storage/images/static/dsc05383.jpg',          'alt' => 'Clean water project'],
+                    ['src' => '/storage/images/static/arche-uganda-204.jpg',  'alt' => 'Fisheries forum'],
                 ] as $i => $slide)
                     <img class="hero-slide {{ $i === 0 ? 'active' : '' }}"
                          src="{{ $slide['src'] }}" alt="{{ $slide['alt'] }}"
@@ -178,11 +178,11 @@
             {{-- Image collage with shapes --}}
             <div class="about-collage reveal">
                 <div class="collage-main">
-                    <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f1a11664-9d66-411b-9d02-1f3158773ad9/DSC08536.JPG"
+                    <img src="/storage/images/static/dsc08536.jpg"
                          alt="KWDT community" loading="lazy">
                 </div>
                 <div class="collage-float">
-                    <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg"
+                    <img src="/storage/images/static/arche-uganda-195.jpg"
                          alt="Women empowerment" loading="lazy">
                 </div>
                 <div class="collage-circle" aria-hidden="true"></div>
@@ -245,13 +245,13 @@
             <div class="about-slider-viewport">
                 <div class="about-slider-track" id="photoSliderTrack">
                     @foreach([
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg',  'cap' => 'Women at Katosi Landing Site'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg',  'cap' => 'Economic Empowerment Programme'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',           'cap' => 'Community Field Work'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG',           'cap' => 'Clean Water Access Project'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg',  'cap' => 'CFS Gender Equality Programme'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG',        'cap' => 'UN Headquarters Advocacy'],
-                        ['src' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg', 'cap' => 'Justice Forum on Fisheries'],
+                        ['src' => '/storage/images/static/arche-uganda-194.jpg',  'cap' => 'Women at Katosi Landing Site'],
+                        ['src' => '/storage/images/static/arche-uganda-196.jpg',  'cap' => 'Economic Empowerment Programme'],
+                        ['src' => '/storage/images/static/dsc03764.jpg',           'cap' => 'Community Field Work'],
+                        ['src' => '/storage/images/static/dsc05383.jpg',           'cap' => 'Clean Water Access Project'],
+                        ['src' => '/storage/images/static/arche-uganda-218.jpg',  'cap' => 'CFS Gender Equality Programme'],
+                        ['src' => '/storage/images/static/dsc01464-2.jpg',        'cap' => 'UN Headquarters Advocacy'],
+                        ['src' => '/storage/images/static/arche-uganda-204.jpg', 'cap' => 'Justice Forum on Fisheries'],
                     ] as $slide)
                         <div class="about-slide">
                             <img src="{{ $slide['src'] }}" alt="{{ $slide['cap'] }}" loading="lazy">
@@ -284,10 +284,10 @@
         </div>
         <div class="themes-grid">
             @foreach([
-                ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg', 'num' => '01', 'title' => 'Economic Empowerment', 'body' => 'Supporting women in agriculture, fisheries and micro-businesses to build financial independence and long-term stability.'],
-                ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f1a11664-9d66-411b-9d02-1f3158773ad9/DSC08536.JPG',           'num' => '02', 'title' => 'WASH',                  'body' => 'Improving access to clean water, sanitation and hygiene in rural and fishing landing sites across three districts.'],
-                ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg', 'num' => '03', 'title' => 'Education',             'body' => 'Providing formal and non-formal education opportunities that unlock leadership and participation for women and girls.'],
-                ['img' => 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/3ef1650d-ef5e-4b49-bc13-1b771013aa68/DSC03764.JPG',           'num' => '04', 'title' => 'Environment Conservation','body' => 'Promoting sustainable practices to protect Lake Victoria ecosystems and secure livelihoods for future generations.'],
+                ['img' => '/storage/images/static/arche-uganda-196.jpg', 'num' => '01', 'title' => 'Economic Empowerment', 'body' => 'Supporting women in agriculture, fisheries and micro-businesses to build financial independence and long-term stability.'],
+                ['img' => '/storage/images/static/dsc08536.jpg',           'num' => '02', 'title' => 'WASH',                  'body' => 'Improving access to clean water, sanitation and hygiene in rural and fishing landing sites across three districts.'],
+                ['img' => '/storage/images/static/arche-uganda-195.jpg', 'num' => '03', 'title' => 'Education',             'body' => 'Providing formal and non-formal education opportunities that unlock leadership and participation for women and girls.'],
+                ['img' => '/storage/images/static/dsc03764.jpg',           'num' => '04', 'title' => 'Environment Conservation','body' => 'Promoting sustainable practices to protect Lake Victoria ecosystems and secure livelihoods for future generations.'],
             ] as $theme)
                 <div class="theme-card reveal">
                     <div class="theme-img">
@@ -350,7 +350,7 @@
             @forelse($featuredProjects as $project)
                 @php
                     $url   = $project->content?->slug ? route('projects.show', $project->content->slug) : route('projects.index');
-                    $img   = $project->content?->featuredImageUrl() ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG';
+                    $img   = $project->content?->featuredImageUrl() ?? '/storage/images/static/dsc05383.jpg';
                     $title = $project->content?->title ?? 'Project';
                     $cat   = $project->statusLabel();
                     $loc   = $project->location ?? 'Uganda';
@@ -371,9 +371,9 @@
                 </a>
             @empty
                 @foreach([
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG','tag'=>'WASH','title'=>'Clean Water Access at Katooke Landing Site','loc'=>'Buikwe District'],
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/fc6e9483-6da8-4944-b548-91aef5bb9f99/ARCHE_UGANDA_204.jpg','tag'=>'Human Rights','title'=>'Justice Forum on Fisheries & Human Rights','loc'=>'Kalangala'],
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/c8973b94-5f49-4092-974c-26e2359d0baa/ARCHE_UGANDA_218.jpg','tag'=>'Regional','title'=>'CFS Gender Equality & Food Security Guidelines','loc'=>'Regional Africa'],
+                    ['img'=>'/storage/images/static/dsc05383.jpg','tag'=>'WASH','title'=>'Clean Water Access at Katooke Landing Site','loc'=>'Buikwe District'],
+                    ['img'=>'/storage/images/static/arche-uganda-204.jpg','tag'=>'Human Rights','title'=>'Justice Forum on Fisheries & Human Rights','loc'=>'Kalangala'],
+                    ['img'=>'/storage/images/static/arche-uganda-218.jpg','tag'=>'Regional','title'=>'CFS Gender Equality & Food Security Guidelines','loc'=>'Regional Africa'],
                 ] as $p)
                     <a href="{{ route('projects.index') }}" class="hp-project-card reveal">
                         <div class="hp-project-img">
@@ -415,7 +415,7 @@
             @forelse($latestBlogs as $post)
                 <article class="hp-news-item reveal">
                     <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-img-wrap">
-                        <img src="{{ $post->featuredImageUrl() ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
+                        <img src="{{ $post->featuredImageUrl() ?? '/storage/images/static/arche-uganda-196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
                     </a>
                     <div class="hp-news-body">
                         <div class="hp-news-meta">
@@ -433,9 +433,9 @@
                 </article>
             @empty
                 @foreach([
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/f3fce0f7-c4b3-4e55-ba3e-04c48e8ee2c6/DSC01464+2.JPG','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
-                    ['img'=>'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/80995547-893f-431c-ab16-455253aee6c6/ARCHE_UGANDA_195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
+                    ['img'=>'/storage/images/static/arche-uganda-196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
+                    ['img'=>'/storage/images/static/dsc01464-2.jpg','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
+                    ['img'=>'/storage/images/static/arche-uganda-195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
                 ] as $n)
                     <article class="hp-news-item reveal">
                         <a href="{{ route('blog.index') }}" class="hp-news-img-wrap">
@@ -465,7 +465,7 @@
         {{-- Left: Community photo --}}
         <div class="donate-img-panel">
             <img
-                src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg"
+                src="/storage/images/static/arche-uganda-194.jpg"
                 alt="KWDT women community members at Katosi"
                 loading="lazy">
             <div class="donate-img-panel-overlay" aria-hidden="true"></div>
