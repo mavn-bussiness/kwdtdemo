@@ -22,6 +22,11 @@ class GalleryFilter extends Component
 
     protected $queryString = ['filter'];
 
+    public function paginationView(): string
+    {
+        return 'vendor.pagination.kwdt';
+    }
+
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;

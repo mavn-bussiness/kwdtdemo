@@ -1,34 +1,38 @@
 <div>
-    {{-- Filter buttons --}}
-    <div class="flex gap-3 justify-center mb-8">
-        @foreach(['all' => 'All', 'news' => 'News', 'event' => 'Events', 'project' => 'Projects'] as $value => $label)
-            <button
-                wire:click="setFilter('{{ $value }}')"
-                class="px-4 py-2 rounded {{ $filter === $value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700' }}">
-                {{ $label }}
-            </button>
-        @endforeach
+    {{-- Filter bar --}}
+    <div class="news-filter-bar" style="position:static; box-shadow:none; margin-bottom:2rem;">
+        <div class="news-filter-inner" style="max-width:none; justify-content:center;">
+            @foreach(['all' => 'All', 'news' => 'News', 'event' => 'Events', 'project' => 'Projects', 'blog' => 'Blog'] as $value => $label)
+                <button
+                    wire:click="setFilter('{{ $value }}')"
+                    class="news-filter-tab {{ $filter === $value ? 'active' : '' }}">
+                    {{ $label }}
+                </button>
+            @endforeach
+        </div>
     </div>
 
     {{-- Image grid --}}
     @if($images->isEmpty())
-        <p class="text-center text-gray-500 py-16">No images found.</p>
+        <p style="text-align:center; color:var(--earth-muted); padding:4rem 0;">No images found.</p>
     @else
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="gallery-grid">
             @foreach($images as $image)
-                <div class="aspect-square overflow-hidden rounded-lg">
+                <div class="gallery-item">
                     <img
                         src="{{ $image['src'] }}"
                         alt="{{ $image['alt'] }}"
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         loading="lazy">
+                    @if(!empty($image['label']))
+                        <span class="gallery-item-label">{{ $image['label'] }}</span>
+                    @endif
                 </div>
             @endforeach
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-8">
-            {{ $images->links() }}
+        <div class="pagination-wrap">
+            {{ $images->links('vendor.pagination.kwdt') }}
         </div>
     @endif
 </div>
