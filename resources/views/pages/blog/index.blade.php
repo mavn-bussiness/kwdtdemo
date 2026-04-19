@@ -6,7 +6,7 @@
             @if($featured?->featuredImageUrl())
                 <img src="{{ $featured->featuredImageUrl() }}" alt="{{ $featured->title }}" loading="eager">
             @else
-                <img src="/storage/images/static/arche-uganda-194.jpg" alt="KWDT Community" loading="eager">
+                <img src="/images/static/arche-uganda-194.jpg" alt="KWDT Community" loading="eager">
             @endif
         </div>
         <div class="news-hero-overlay" aria-hidden="true"></div>

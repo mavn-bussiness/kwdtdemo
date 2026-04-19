@@ -22,10 +22,10 @@
             <div class="about-split-left reveal">
                 <div class="about-img-stack">
                     <img class="about-img-main"
-                         src="/storage/images/static/arche-uganda-194.jpg"
+                         src="/images/static/arche-uganda-194.jpg"
                          alt="KWDT community members at Lake Victoria">
                     <img class="about-img-float"
-                         src="/storage/images/static/2023-kwdt-coordinator-receives-evolving-women.jpeg"
+                         src="/images/static/2023-kwdt-coordinator-receives-evolving-women.jpeg"
                          alt="KWDT Coordinator receives award">
                 </div>
 

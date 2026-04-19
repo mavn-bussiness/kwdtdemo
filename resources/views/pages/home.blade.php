@@ -16,9 +16,9 @@
                 @foreach($heroSlides as $i => $slide)
                     @php
                         $fallbacks = [
-                            '/storage/images/static/arche-uganda-194.jpg',
-                            '/storage/images/static/arche-uganda-196.jpg',
-                            '/storage/images/static/dsc05383.jpg',
+                            '/images/static/arche-uganda-194.jpg',
+                            '/images/static/arche-uganda-196.jpg',
+                            '/images/static/dsc05383.jpg',
                         ];
                         $imgSrc = $slide['image'] ?? $fallbacks[$i % count($fallbacks)];
                     @endphp
@@ -32,11 +32,11 @@
 
                 {{-- Static fallback when DB is empty / seeding ──────── --}}
                 @foreach([
-                    ['src' => '/storage/images/static/arche-uganda-194.jpg', 'alt' => 'KWDT women community'],
-                    ['src' => '/storage/images/static/arche-uganda-196.jpg', 'alt' => 'Economic Empowerment'],
-                    ['src' => '/storage/images/static/dsc03764.jpg',          'alt' => 'Community field work'],
-                    ['src' => '/storage/images/static/dsc05383.jpg',          'alt' => 'Clean water project'],
-                    ['src' => '/storage/images/static/arche-uganda-204.jpg',  'alt' => 'Fisheries forum'],
+                    ['src' => '/images/static/arche-uganda-194.jpg', 'alt' => 'KWDT women community'],
+                    ['src' => '/images/static/arche-uganda-196.jpg', 'alt' => 'Economic Empowerment'],
+                    ['src' => '/images/static/dsc03764.jpg',          'alt' => 'Community field work'],
+                    ['src' => '/images/static/dsc05383.jpg',          'alt' => 'Clean water project'],
+                    ['src' => '/images/static/arche-uganda-204.jpg',  'alt' => 'Fisheries forum'],
                 ] as $i => $slide)
                     <img class="hero-slide {{ $i === 0 ? 'active' : '' }}"
                          src="{{ $slide['src'] }}" alt="{{ $slide['alt'] }}"
@@ -178,11 +178,11 @@
             {{-- Image collage with shapes --}}
             <div class="about-collage reveal">
                 <div class="collage-main">
-                    <img src="/storage/images/static/dsc08536.jpg"
+                    <img src="/images/static/dsc08536.jpg"
                          alt="KWDT community" loading="lazy">
                 </div>
                 <div class="collage-float">
-                    <img src="/storage/images/static/arche-uganda-195.jpg"
+                    <img src="/images/static/arche-uganda-195.jpg"
                          alt="Women empowerment" loading="lazy">
                 </div>
                 <div class="collage-circle" aria-hidden="true"></div>
@@ -245,13 +245,13 @@
             <div class="about-slider-viewport">
                 <div class="about-slider-track" id="photoSliderTrack">
                     @foreach([
-                        ['src' => '/storage/images/static/arche-uganda-194.jpg',  'cap' => 'Women at Katosi Landing Site'],
-                        ['src' => '/storage/images/static/arche-uganda-196.jpg',  'cap' => 'Economic Empowerment Programme'],
-                        ['src' => '/storage/images/static/dsc03764.jpg',           'cap' => 'Community Field Work'],
-                        ['src' => '/storage/images/static/dsc05383.jpg',           'cap' => 'Clean Water Access Project'],
-                        ['src' => '/storage/images/static/arche-uganda-218.jpg',  'cap' => 'CFS Gender Equality Programme'],
-                        ['src' => '/storage/images/static/dsc01464-2.jpg',        'cap' => 'UN Headquarters Advocacy'],
-                        ['src' => '/storage/images/static/arche-uganda-204.jpg', 'cap' => 'Justice Forum on Fisheries'],
+                        ['src' => '/images/static/arche-uganda-194.jpg',  'cap' => 'Women at Katosi Landing Site'],
+                        ['src' => '/images/static/arche-uganda-196.jpg',  'cap' => 'Economic Empowerment Programme'],
+                        ['src' => '/images/static/dsc03764.jpg',           'cap' => 'Community Field Work'],
+                        ['src' => '/images/static/dsc05383.jpg',           'cap' => 'Clean Water Access Project'],
+                        ['src' => '/images/static/arche-uganda-218.jpg',  'cap' => 'CFS Gender Equality Programme'],
+                        ['src' => '/images/static/dsc01464-2.jpg',        'cap' => 'UN Headquarters Advocacy'],
+                        ['src' => '/images/static/arche-uganda-204.jpg', 'cap' => 'Justice Forum on Fisheries'],
                     ] as $slide)
                         <div class="about-slide">
                             <img src="{{ $slide['src'] }}" alt="{{ $slide['cap'] }}" loading="lazy">
@@ -284,10 +284,10 @@
         </div>
         <div class="themes-grid">
             @foreach([
-                ['img' => '/storage/images/static/arche-uganda-196.jpg', 'num' => '01', 'title' => 'Economic Empowerment', 'body' => 'Supporting women in agriculture, fisheries and micro-businesses to build financial independence and long-term stability.'],
-                ['img' => '/storage/images/static/dsc08536.jpg',           'num' => '02', 'title' => 'WASH',                  'body' => 'Improving access to clean water, sanitation and hygiene in rural and fishing landing sites across three districts.'],
-                ['img' => '/storage/images/static/arche-uganda-195.jpg', 'num' => '03', 'title' => 'Education',             'body' => 'Providing formal and non-formal education opportunities that unlock leadership and participation for women and girls.'],
-                ['img' => '/storage/images/static/dsc03764.jpg',           'num' => '04', 'title' => 'Environment Conservation','body' => 'Promoting sustainable practices to protect Lake Victoria ecosystems and secure livelihoods for future generations.'],
+                ['img' => '/images/static/arche-uganda-196.jpg', 'num' => '01', 'title' => 'Economic Empowerment', 'body' => 'Supporting women in agriculture, fisheries and micro-businesses to build financial independence and long-term stability.'],
+                ['img' => '/images/static/dsc08536.jpg',           'num' => '02', 'title' => 'WASH',                  'body' => 'Improving access to clean water, sanitation and hygiene in rural and fishing landing sites across three districts.'],
+                ['img' => '/images/static/arche-uganda-195.jpg', 'num' => '03', 'title' => 'Education',             'body' => 'Providing formal and non-formal education opportunities that unlock leadership and participation for women and girls.'],
+                ['img' => '/images/static/dsc03764.jpg',           'num' => '04', 'title' => 'Environment Conservation','body' => 'Promoting sustainable practices to protect Lake Victoria ecosystems and secure livelihoods for future generations.'],
             ] as $theme)
                 <div class="theme-card reveal">
                     <div class="theme-img">
@@ -350,7 +350,7 @@
             @forelse($featuredProjects as $project)
                 @php
                     $url   = $project->content?->slug ? route('projects.show', $project->content->slug) : route('projects.index');
-                    $img   = $project->content?->featuredImageUrl() ?? '/storage/images/static/dsc05383.jpg';
+                    $img   = $project->content?->featuredImageUrl() ?? '/images/static/dsc05383.jpg';
                     $title = $project->content?->title ?? 'Project';
                     $cat   = $project->statusLabel();
                     $loc   = $project->location ?? 'Uganda';
@@ -371,9 +371,9 @@
                 </a>
             @empty
                 @foreach([
-                    ['img'=>'/storage/images/static/dsc05383.jpg','tag'=>'WASH','title'=>'Clean Water Access at Katooke Landing Site','loc'=>'Buikwe District'],
-                    ['img'=>'/storage/images/static/arche-uganda-204.jpg','tag'=>'Human Rights','title'=>'Justice Forum on Fisheries & Human Rights','loc'=>'Kalangala'],
-                    ['img'=>'/storage/images/static/arche-uganda-218.jpg','tag'=>'Regional','title'=>'CFS Gender Equality & Food Security Guidelines','loc'=>'Regional Africa'],
+                    ['img'=>'/images/static/dsc05383.jpg','tag'=>'WASH','title'=>'Clean Water Access at Katooke Landing Site','loc'=>'Buikwe District'],
+                    ['img'=>'/images/static/arche-uganda-204.jpg','tag'=>'Human Rights','title'=>'Justice Forum on Fisheries & Human Rights','loc'=>'Kalangala'],
+                    ['img'=>'/images/static/arche-uganda-218.jpg','tag'=>'Regional','title'=>'CFS Gender Equality & Food Security Guidelines','loc'=>'Regional Africa'],
                 ] as $p)
                     <a href="{{ route('projects.index') }}" class="hp-project-card reveal">
                         <div class="hp-project-img">
@@ -415,7 +415,7 @@
             @forelse($latestBlogs as $post)
                 <article class="hp-news-item reveal">
                     <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-img-wrap">
-                        <img src="{{ $post->featuredImageUrl() ?? '/storage/images/static/arche-uganda-196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
+                        <img src="{{ $post->featuredImageUrl() ?? '/images/static/arche-uganda-196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
                     </a>
                     <div class="hp-news-body">
                         <div class="hp-news-meta">
@@ -433,9 +433,9 @@
                 </article>
             @empty
                 @foreach([
-                    ['img'=>'/storage/images/static/arche-uganda-196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
-                    ['img'=>'/storage/images/static/dsc01464-2.jpg','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
-                    ['img'=>'/storage/images/static/arche-uganda-195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
+                    ['img'=>'/images/static/arche-uganda-196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
+                    ['img'=>'/images/static/dsc01464-2.jpg','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
+                    ['img'=>'/images/static/arche-uganda-195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
                 ] as $n)
                     <article class="hp-news-item reveal">
                         <a href="{{ route('blog.index') }}" class="hp-news-img-wrap">
@@ -465,7 +465,7 @@
         {{-- Left: Community photo --}}
         <div class="donate-img-panel">
             <img
-                src="/storage/images/static/arche-uganda-194.jpg"
+                src="/images/static/arche-uganda-194.jpg"
                 alt="KWDT women community members at Katosi"
                 loading="lazy">
             <div class="donate-img-panel-overlay" aria-hidden="true"></div>

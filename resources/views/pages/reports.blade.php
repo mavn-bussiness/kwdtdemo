@@ -4,7 +4,7 @@
 
     <div class="news-hero news-hero--slim">
         <div class="news-hero-bg">
-            <img src="/storage/images/static/arche-uganda-194.jpg"
+            <img src="/images/static/arche-uganda-194.jpg"
                  alt="KWDT documents and reports"
                  loading="eager">
         </div>
