@@ -100,4 +100,21 @@ class Content extends Model
     {
         return $query->latest('published_at');
     }
+
+    /**
+     * Resolve featured_image to a public URL regardless of whether
+     * the stored value is a full external URL or a local storage path.
+     */
+    public function featuredImageUrl(): ?string
+    {
+        if (empty($this->featured_image)) {
+            return null;
+        }
+
+        if (str_starts_with($this->featured_image, 'http')) {
+            return $this->featured_image;
+        }
+
+        return \Illuminate\Support\Facades\Storage::url($this->featured_image);
+    }
 }

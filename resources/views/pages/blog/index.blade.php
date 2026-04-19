@@ -3,8 +3,8 @@
     {{-- ── Page Hero ─────────────────────────────────────────── --}}
     <div class="news-hero">
         <div class="news-hero-bg" aria-hidden="true">
-            @if($featured?->featured_image)
-                <img src="{{ $featured->featured_image }}" alt="{{ $featured->title }}" loading="eager">
+            @if($featured?->featuredImageUrl())
+                <img src="{{ $featured->featuredImageUrl() }}" alt="{{ $featured->title }}" loading="eager">
             @else
                 <img src="https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/82eada9f-8188-4ebd-bab8-3fdcf85ca5f8/ARCHE_UGANDA_194.jpg" alt="KWDT Community" loading="eager">
             @endif
@@ -44,8 +44,8 @@
 
                     {{-- Post image --}}
                     <a href="{{ route('blog.show', $post->slug) }}" class="news-post-img-wrap">
-                        @if($post->featured_image)
-                            <img src="{{ $post->featured_image }}"
+                        @if($post->featuredImageUrl())
+                            <img src="{{ $post->featuredImageUrl() }}"
                                  alt="{{ $post->title }}"
                                  loading="lazy">
                         @else
@@ -125,8 +125,8 @@
                         @foreach($recent as $item)
                             <a href="{{ route('blog.show', $item->slug) }}" class="sidebar-recent-item">
                                 <div class="sidebar-recent-img">
-                                    @if($item->featured_image)
-                                        <img src="{{ $item->featured_image }}" alt="{{ $item->title }}" loading="lazy">
+                                    @if($item->featuredImageUrl())
+                                        <img src="{{ $item->featuredImageUrl() }}" alt="{{ $item->title }}" loading="lazy">
                                     @else
                                         <div class="sidebar-recent-img-placeholder"></div>
                                     @endif

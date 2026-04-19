@@ -22,4 +22,17 @@ class Award extends Model
         'year' => 'integer',
         'order' => 'integer',
     ];
+
+    public function imageUrl(): ?string
+    {
+        if (empty($this->image_url)) {
+            return null;
+        }
+
+        if (str_starts_with($this->image_url, 'http')) {
+            return $this->image_url;
+        }
+
+        return \Illuminate\Support\Facades\Storage::url($this->image_url);
+    }
 }

@@ -17,9 +17,9 @@
         <article class="show-main">
 
             {{-- Featured image --}}
-            @if($post->featured_image)
+            @if($post->featuredImageUrl())
                 <div class="show-featured-img reveal">
-                    <img src="{{ $post->featured_image }}" alt="{{ $post->title }}" loading="eager">
+                    <img src="{{ $post->featuredImageUrl() }}" alt="{{ $post->title }}" loading="eager">
                 </div>
             @endif
 
@@ -113,8 +113,8 @@
                         @foreach($recent as $item)
                             <a href="{{ route('blog.show', $item->slug) }}" class="sidebar-recent-item">
                                 <div class="sidebar-recent-img">
-                                    @if($item->featured_image)
-                                        <img src="{{ $item->featured_image }}" alt="{{ $item->title }}" loading="lazy">
+                                    @if($item->featuredImageUrl())
+                                        <img src="{{ $item->featuredImageUrl() }}" alt="{{ $item->title }}" loading="lazy">
                                     @else
                                         <div class="sidebar-recent-img-placeholder"></div>
                                     @endif

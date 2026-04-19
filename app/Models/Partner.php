@@ -38,13 +38,15 @@ class Partner extends Model
      */
     public function getLogoUrlAttribute(): ?string
     {
-        // 1. Direct column takes priority (fastest path)
         if (! empty($this->attributes['logo_url'])) {
-            return $this->attributes['logo_url'];
+            $val = $this->attributes['logo_url'];
+            // Local storage path
+            if (! str_starts_with($val, 'http')) {
+                return \Illuminate\Support\Facades\Storage::url($val);
+            }
+            return $val;
         }
 
-        // 2. Fall back to the first media record
-        //    Works whether the relationship is already loaded or not.
         $media = $this->relationLoaded('media')
             ? $this->media->first()
             : $this->media()->first();
@@ -53,7 +55,6 @@ class Partner extends Model
             return null;
         }
 
-        // Support common Media model field names
         return $media->url
             ?? $media->original_url
             ?? $media->path

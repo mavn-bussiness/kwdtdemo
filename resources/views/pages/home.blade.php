@@ -350,7 +350,7 @@
             @forelse($featuredProjects as $project)
                 @php
                     $url   = $project->content?->slug ? route('projects.show', $project->content->slug) : route('projects.index');
-                    $img   = $project->content?->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG';
+                    $img   = $project->content?->featuredImageUrl() ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/d764e888-bfec-47a8-b5a6-a1f0f288a166/DSC05383.JPG';
                     $title = $project->content?->title ?? 'Project';
                     $cat   = $project->statusLabel();
                     $loc   = $project->location ?? 'Uganda';
@@ -415,7 +415,7 @@
             @forelse($latestBlogs as $post)
                 <article class="hp-news-item reveal">
                     <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-img-wrap">
-                        <img src="{{ $post->featured_image ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
+                        <img src="{{ $post->featuredImageUrl() ?? 'https://images.squarespace-cdn.com/content/v1/66daa23ce2a9864d9d00cc45/0a689bfb-2ee0-4451-ae42-f9fc54f37d71/ARCHE_UGANDA_196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
                     </a>
                     <div class="hp-news-body">
                         <div class="hp-news-meta">

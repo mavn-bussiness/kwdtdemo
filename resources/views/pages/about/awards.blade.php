@@ -70,8 +70,8 @@
                             <article class="award-card">
 
                                 <div class="award-card-visual">
-                                    @if($award->image_url)
-                                        <img src="{{ $award->image_url }}"
+                                    @if($award->imageUrl())
+                                        <img src="{{ $award->imageUrl() }}"
                                              alt="{{ $award->title }}"
                                              loading="lazy">
                                     @else

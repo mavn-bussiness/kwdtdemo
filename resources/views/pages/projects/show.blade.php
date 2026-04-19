@@ -15,9 +15,9 @@
         {{-- Main column --}}
         <div class="show-main">
             {{-- Featured image --}}
-            @if($project->content->featured_image)
+            @if($project->content->featuredImageUrl())
                 <div class="show-featured-img">
-                    <img src="{{ $project->content->featured_image }}"
+                    <img src="{{ $project->content->featuredImageUrl() }}"
                          alt="{{ $project->content->title }}">
                 </div>
             @endif

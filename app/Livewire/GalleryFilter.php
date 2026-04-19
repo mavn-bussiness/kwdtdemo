@@ -75,11 +75,14 @@ class GalleryFilter extends Component
             }
 
             $contentQuery->latest('published_at')->get()->each(function ($c) use ($items) {
-                $items->push([
-                    'src'   => \Illuminate\Support\Facades\Storage::url($c->featured_image),
-                    'alt'   => $c->title,
-                    'label' => $c->title,
-                ]);
+                $url = $c->featuredImageUrl();
+                if ($url) {
+                    $items->push([
+                        'src'   => $url,
+                        'alt'   => $c->title,
+                        'label' => $c->title,
+                    ]);
+                }
             });
         }
 
