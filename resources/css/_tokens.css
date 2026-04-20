@@ -1,39 +1,42 @@
 /* ============================================================
-   _tokens.css — KWDT Design System — Red Cross Uganda inspired
-   Orange + White. Clean sections. No gradients. No brown.
+   _tokens.css — KWDT Design System
+   Brand colors from KWDT UG logo palette.
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 [x-cloak] { display: none !important; }
 :root {
-    /* ── Brand orange ───────────────────────────────────────── */
-    --orange:        #FF6B00;
-    --orange-dark:   #E05A00;
-    --orange-deeper: #C24A00;
-    --orange-light:  #FF8C33;
-    --orange-pale:   #FFF0E6;
+    /* ── Brand amber/gold — primary ────────────────────────── */
+    --orange:        #ed9e27;   /* primary brand amber            */
+    --orange-dark:   #f49e2e;   /* slightly warmer amber          */
+    --orange-deeper: #c47e10;   /* darkened for hover/active      */
+    --orange-light:  #f8c731;   /* bright gold                    */
+    --orange-pale:   #fefdf7;   /* off-white brand tint           */
 
     /* ── Gold accent ────────────────────────────────────────── */
-    --gold:          #FF8C00;
-    --gold-light:    #FFB347;
+    --gold:          #f8c731;   /* bright logo gold               */
+    --gold-light:    #e6c07a;   /* muted warm gold                */
 
-    /* ── Text — dark slate, readable, no brown/black ─────────── */
-    --earth:         #1F2937;   /* headings — dark slate          */
-    --earth-mid:     #374151;   /* body copy                      */
-    --earth-light:   #6B7280;   /* captions, meta                 */
-    --earth-muted:   #9CA3AF;   /* placeholders, disabled         */
+    /* ── Text ───────────────────────────────────────────────── */
+    --earth:         #000000;   /* headings — pure black          */
+    --earth-mid:     #1a1a1a;   /* body copy                      */
+    --earth-light:   #4a4a4a;   /* captions, meta                 */
+    --earth-muted:   #e6c07a;   /* placeholders, disabled         */
 
-    /* ── Dark panels — solid orange (like Red Cross red bands) ─ */
-    --panel:         #FF6B00;
-    --panel-mid:     #E05A00;
+    /* ── Dark panels ────────────────────────────────────────── */
+    --panel:         #ed9e27;
+    --panel-mid:     #f49e2e;
     --panel-border:  rgba(255,255,255,.2);
 
-    /* ── Page surfaces — white + light gray alternating ─────── */
-    --cream:         #FFFFFF;   /* primary page bg                */
-    --cream-mid:     #F7F7F7;   /* alternate section bg           */
-    --cream-dark:    #E5E7EB;   /* borders, dividers              */
-    --white:         #FFFFFF;
+    /* ── Page surfaces ──────────────────────────────────────── */
+    --cream:         #ffffff;   /* primary page bg                */
+    --cream-mid:     #fefdf7;   /* alternate section bg           */
+    --cream-dark:    #e6c07a;   /* borders, dividers              */
+    --white:         #ffffff;
+
+    /* ── Brand gradient (180deg white → amber) ──────────────── */
+    --gradient-brand: linear-gradient(180deg, #ffffff 0%, #ed9e27 100%);
 
     /* ── Typography ─────────────────────────────────────────── */
     --font-display: 'Poppins', system-ui, sans-serif;
@@ -85,15 +88,16 @@ a  { color: inherit; text-decoration: none; }
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── Section alternating backgrounds (Red Cross style) ───────── */
-.section-white  { background: #FFFFFF; }
-.section-gray   { background: #F7F7F7; }
-.section-orange { background: var(--orange); color: #fff; }
+/* ── Section alternating backgrounds ────────────────────────── */
+.section-white    { background: #ffffff; }
+.section-gray     { background: #fefdf7; }
+.section-orange   { background: var(--orange); color: #fff; }
+.section-gradient { background: var(--gradient-brand); }
 
-/* ── Subtle dot pattern for sections (like Red Cross Uganda) ─── */
+/* ── Subtle dot pattern for sections ────────────────────────── */
 .section-pattern {
-    background-color: #F7F7F7;
-    background-image: radial-gradient(circle, rgba(255,107,0,.12) 1px, transparent 1px);
+    background-color: #fefdf7;
+    background-image: radial-gradient(circle, rgba(237,158,39,.15) 1px, transparent 1px);
     background-size: 24px 24px;
 }
 
