@@ -1,21 +1,20 @@
 /* ============================================================
    KWDT Admin — Professional Theme
-   Sidebar: dark slate #1E2530 | Accent: #FF6B00
-   Page: #F8FAFC | Cards: white
+   Brand colors from KWDT UG logo palette.
    ============================================================ */
 
 :root {
-    --kwdt-orange:        #FF6B00;
-    --kwdt-orange-dark:   #E05A00;
-    --kwdt-orange-light:  #FF8C33;
-    --kwdt-orange-muted:  rgba(255,107,0,0.10);
+    --kwdt-orange:        #ed9e27;
+    --kwdt-orange-dark:   #c47e10;
+    --kwdt-orange-light:  #f8c731;
+    --kwdt-orange-muted:  rgba(237,158,39,0.10);
 
     --sidebar-bg:         #FFFFFF;
     --sidebar-header-bg:  #FFFFFF;
     --sidebar-border:     #E5E7EB;
     --sidebar-text:       #374151;
     --sidebar-text-hover: #111827;
-    --sidebar-active-bg:  rgba(255,107,0,0.08);
+    --sidebar-active-bg:  rgba(237,158,39,0.08);
     --sidebar-group:      #9CA3AF;
 
     --bg-page:            #F8FAFC;
@@ -29,7 +28,7 @@
     --topbar-bg:          #FFFFFF;
     --topbar-border:      #E2E8F0;
     --table-header-bg:    #F8FAFC;
-    --table-row-hover:    #FFF7F0;
+    --table-row-hover:    #fefdf7;
 }
 
 .dark {
@@ -38,7 +37,7 @@
     --sidebar-border:     #1F2937;
     --sidebar-text:       #9CA3AF;
     --sidebar-text-hover: #F9FAFB;
-    --sidebar-active-bg:  rgba(255,107,0,0.15);
+    --sidebar-active-bg:  rgba(237,158,39,0.15);
     --sidebar-group:      #4B5563;
 
     --bg-page:            #0F172A;
@@ -51,7 +50,7 @@
     --topbar-bg:          #1E293B;
     --topbar-border:      #334155;
     --table-header-bg:    #162032;
-    --table-row-hover:    rgba(255,107,0,0.06);
+    --table-row-hover:    rgba(237,158,39,0.06);
 }
 
 /* ── Sidebar ─────────────────────────────────────────────── */
@@ -393,8 +392,8 @@
 }
 
 .dark .fi-dropdown-list-item-button:hover {
-    background-color: rgba(255,107,0,0.12) !important;
-    color: #FF8C33 !important;
+    background-color: rgba(237,158,39,0.12) !important;
+    color: #f8c731 !important;
 }
 
 /* Modals */
@@ -455,11 +454,11 @@
 
 /* Tabs */
 .dark .fi-tabs-tab { color: #94A3B8 !important; }
-.dark .fi-tabs-tab[aria-selected="true"] { color: #FF8C33 !important; border-bottom-color: #FF8C33 !important; }
+.dark .fi-tabs-tab[aria-selected="true"] { color: #f8c731 !important; border-bottom-color: #f8c731 !important; }
 
 /* Pagination */
 .dark .fi-pagination-item button { color: #94A3B8 !important; }
-.dark .fi-pagination-item button:hover { background-color: rgba(255,107,0,0.12) !important; color: #FF8C33 !important; }
+.dark .fi-pagination-item button:hover { background-color: rgba(237,158,39,0.12) !important; color: #f8c731 !important; }
 
 /* Stats overview */
 .dark .fi-wi-stats-overview-stat {
@@ -499,9 +498,9 @@
     border-radius: 1.25rem !important;
     border: 1px solid rgba(255,255,255,0.6) !important;
     box-shadow:
-        0 2px 0 rgba(255,107,0,0.8),
+        0 2px 0 rgba(237,158,39,0.8),
         0 24px 48px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(255,107,0,0.12) !important;
+        0 0 0 1px rgba(237,158,39,0.12) !important;
     overflow: hidden !important;
     padding: 0 !important;
 }
@@ -511,7 +510,7 @@
     content: '';
     display: block;
     height: 4px;
-    background: linear-gradient(90deg, #E05A00, #FF6B00, #FF8C33, #FF6B00, #E05A00);
+    background: linear-gradient(90deg, #c47e10, #ed9e27, #f8c731, #ed9e27, #c47e10);
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
 }
@@ -576,9 +575,9 @@
 }
 
 .fi-simple-page .fi-input:focus {
-    border-color: #FF6B00 !important;
+    border-color: #ed9e27 !important;
     background: #fff !important;
-    box-shadow: 0 0 0 3px rgba(255,107,0,0.12) !important;
+    box-shadow: 0 0 0 3px rgba(237,158,39,0.12) !important;
     outline: none !important;
 }
 
@@ -589,26 +588,26 @@
     font-size: 0.9375rem !important;
     letter-spacing: 0.01em !important;
     padding: 0.75rem 1.5rem !important;
-    background: linear-gradient(135deg, #FF6B00, #E05A00) !important;
+    background: linear-gradient(135deg, #ed9e27, #c47e10) !important;
     border: none !important;
     color: #fff !important;
-    box-shadow: 0 4px 14px rgba(255,107,0,0.4) !important;
+    box-shadow: 0 4px 14px rgba(237,158,39,0.4) !important;
     transition: all 0.2s !important;
     text-shadow: none !important;
 }
 
 .fi-simple-page .fi-btn:hover {
-    background: linear-gradient(135deg, #FF8C33, #FF6B00) !important;
-    box-shadow: 0 6px 20px rgba(255,107,0,0.5) !important;
+    background: linear-gradient(135deg, #f8c731, #ed9e27) !important;
+    box-shadow: 0 6px 20px rgba(237,158,39,0.5) !important;
 }
 
 .fi-simple-page .fi-btn:active {
-    box-shadow: 0 2px 8px rgba(255,107,0,0.3) !important;
+    box-shadow: 0 2px 8px rgba(237,158,39,0.3) !important;
 }
 
 /* Remember me checkbox */
 .fi-simple-page .fi-checkbox-input {
-    accent-color: #FF6B00 !important;
+    accent-color: #ed9e27 !important;
     width: 1rem !important;
     height: 1rem !important;
     border-radius: 4px !important;
@@ -616,13 +615,13 @@
 
 /* Forgot password link */
 .fi-simple-page a {
-    color: #FF6B00 !important;
+    color: #ed9e27 !important;
     font-weight: 500 !important;
     text-decoration: none !important;
 }
 
 .fi-simple-page a:hover {
-    color: #E05A00 !important;
+    color: #c47e10 !important;
     text-decoration: underline !important;
 }
 
@@ -645,7 +644,7 @@
 /* The inner fi-simple-page IS the card — make it the only visible box */
 .fi-simple-page {
     box-shadow:
-        0 0 0 1px rgba(255,107,0,0.15),
+        0 0 0 1px rgba(237,158,39,0.15),
         0 32px 64px rgba(0,0,0,0.45),
         0 8px 24px rgba(0,0,0,0.25) !important;
 }

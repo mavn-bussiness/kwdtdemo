@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->ensureStorageLink();
 
         if (app()->isProduction()) {
             URL::forceScheme('https');
@@ -46,6 +48,16 @@ class AppServiceProvider extends ServiceProvider
         Partner::observe(PartnerObserver::class);
         Project::observe(ProjectObserver::class);
         Testimonial::observe(TestimonialObserver::class);
+    }
+
+    protected function ensureStorageLink(): void
+    {
+        $link = public_path('storage');
+        $target = storage_path('app/public');
+
+        if (! file_exists($link) && file_exists($target)) {
+            (new Filesystem)->link($target, $link);
+        }
     }
 
     /**
