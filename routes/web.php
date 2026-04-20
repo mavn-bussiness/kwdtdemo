@@ -5,6 +5,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProjectController;
@@ -34,6 +35,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
 });
 
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
 Route::get('/reports', [ReportController::class,  'index'])->name('reports');
 Route::get('/careers', [CareerController::class,  'index'])->name('careers');
 

@@ -265,6 +265,18 @@
                             </svg>
                             Awards &amp; Recognition
                         </a></li>
+                    <li role="none"><a href="{{ route('testimonials') }}" role="menuitem">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                            </svg>
+                            Testimonials
+                        </a></li>
+                    <li role="none"><a href="{{ route('testimonials') }}" role="menuitem">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                            </svg>
+                            Testimonials
+                        </a></li>
                 </ul>
             </li>
 
@@ -395,6 +407,8 @@
                 <a href="{{ route('gallery') }}" class="mob-sub">Photo Gallery</a>
                 <a href="{{ route('reports') }}" class="mob-sub">Annual Reports</a>
                 <a href="{{ route('awards') }}" class="mob-sub">Awards &amp; Recognition</a>
+                <a href="{{ route('testimonials') }}" class="mob-sub">Testimonials</a>
+                <a href="{{ route('testimonials') }}" class="mob-sub">Testimonials</a>
             </div>
         </div>
 

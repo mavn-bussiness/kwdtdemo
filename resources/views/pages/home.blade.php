@@ -445,75 +445,6 @@
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
-         TESTIMONIALS
-    ══════════════════════════════════════════════════════════ --}}
-    <section class="testimonials-section" aria-label="Testimonials">
-
-        <div class="hp-section-head">
-            <div>
-                <span class="section-label reveal">Voices</span>
-                <h2 class="hp-section-title reveal">From Our Community</h2>
-            </div>
-        </div>
-
-        <div class="testimonials-slider" id="testimonialsSlider">
-
-            <button class="testimonials-arrow testimonials-arrow--prev" id="testimonialsPrev" aria-label="Previous testimonial">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <button class="testimonials-arrow testimonials-arrow--next" id="testimonialsNext" aria-label="Next testimonial">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-
-            @forelse($testimonials as $i => $t)
-                <div class="testimonial-card {{ $i === 0 ? 'is-active' : '' }}" data-testimonial="{{ $i }}">
-                    <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
-                    <blockquote class="testimonial-quote">{{ $t->quote }}</blockquote>
-                    <div class="testimonial-author">
-                        @if($t->photo_url)
-                            <img src="{{ $t->photo_url }}" alt="{{ $t->name }}" class="testimonial-photo" loading="lazy">
-                        @else
-                            <div class="testimonial-photo testimonial-photo--placeholder" aria-hidden="true">
-                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                            </div>
-                        @endif
-                        <div class="testimonial-meta">
-                            <span class="testimonial-name">{{ $t->name }}</span>
-                            @if($t->community)
-                                <span class="testimonial-community">{{ $t->community }}</span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @empty
-                @foreach([
-                    ['quote' => 'KWDT changed my life. I now run my own fish-processing business and can pay school fees for all my children.', 'name' => 'Fatuma N.', 'community' => 'Katosi Landing Site, Mukono'],
-                    ['quote' => 'Before KWDT, I had no voice in my community. Today I lead a women\'s savings group of 40 members.', 'name' => 'Grace A.', 'community' => 'Kalangala District'],
-                    ['quote' => 'The clean water project brought a borehole to our village. Our children no longer miss school due to waterborne illness.', 'name' => 'Sarah K.', 'community' => 'Buvuma Island'],
-                ] as $i => $t)
-                    <div class="testimonial-card {{ $i === 0 ? 'is-active' : '' }}" data-testimonial="{{ $i }}">
-                        <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
-                        <blockquote class="testimonial-quote">{{ $t['quote'] }}</blockquote>
-                        <div class="testimonial-author">
-                            <div class="testimonial-photo testimonial-photo--placeholder" aria-hidden="true">
-                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                            </div>
-                            <div class="testimonial-meta">
-                                <span class="testimonial-name">{{ $t['name'] }}</span>
-                                <span class="testimonial-community">{{ $t['community'] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endforelse
-
-        </div>
-
-        <div class="testimonials-dots" id="testimonialsDots"></div>
-
-    </section>
-
-    {{-- ══════════════════════════════════════════════════════════
          DONATE
     ══════════════════════════════════════════════════════════ --}}
     <section class="donate-section" id="donate">
@@ -791,42 +722,6 @@
                 function reset() {
                     clearInterval(timer);
                     timer = setInterval(function () { goTo(idx + 1); }, 6000);
-                }
-
-                prev.addEventListener('click', function () { goTo(idx - 1); reset(); });
-                next.addEventListener('click', function () { goTo(idx + 1); reset(); });
-
-                reset();
-            })();
-
-            // ── Testimonials slider ──────────────────────────────────
-            (function () {
-                var cards    = document.querySelectorAll('[data-testimonial]');
-                var dotsWrap = document.getElementById('testimonialsDots');
-                var prev     = document.getElementById('testimonialsPrev');
-                var next     = document.getElementById('testimonialsNext');
-                if (!cards.length) return;
-                var idx = 0, timer;
-
-                cards.forEach(function (_, i) {
-                    var d = document.createElement('button');
-                    d.className = 'testimonials-dot' + (i === 0 ? ' active' : '');
-                    d.setAttribute('aria-label', 'Testimonial ' + (i + 1));
-                    d.addEventListener('click', function () { goTo(i); reset(); });
-                    dotsWrap.appendChild(d);
-                });
-
-                function goTo(n) {
-                    cards[idx].classList.remove('is-active');
-                    dotsWrap.children[idx].classList.remove('active');
-                    idx = (n + cards.length) % cards.length;
-                    cards[idx].classList.add('is-active');
-                    dotsWrap.children[idx].classList.add('active');
-                }
-
-                function reset() {
-                    clearInterval(timer);
-                    timer = setInterval(function () { goTo(idx + 1); }, 7000);
                 }
 
                 prev.addEventListener('click', function () { goTo(idx - 1); reset(); });
