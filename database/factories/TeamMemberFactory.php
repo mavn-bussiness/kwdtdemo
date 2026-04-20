@@ -12,7 +12,13 @@ class TeamMemberFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'name'      => $this->faker->name(),
+            'title'     => $this->faker->jobTitle(),
+            'bio'       => $this->faker->paragraph(),
+            'photo_url' => null,
+            'email'     => $this->faker->safeEmail(),
+            'order'     => $this->faker->numberBetween(0, 100),
+            'is_active' => true,
         ];
     }
 }

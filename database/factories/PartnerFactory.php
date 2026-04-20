@@ -18,7 +18,7 @@ class PartnerFactory extends Factory
             'website' => $this->faker->word(),
             'description' => $this->faker->text(),
             'is_active' => $this->faker->boolean(),
-            'order' => $this->faker->randomNumber(),
+            'order'       => $this->faker->numberBetween(0, 100),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
