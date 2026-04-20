@@ -366,8 +366,7 @@
     </section>
 
     {{-- ══════════════════════════════════════════════════════════
-         LATEST NEWS — Red Cross style: stacked horizontal cards
-         Large image left, text right, bold orange left-border accent
+         LATEST NEWS — Two-column image/content slider
     ══════════════════════════════════════════════════════════ --}}
     <section class="hp-news-section" aria-label="Latest News">
 
@@ -382,11 +381,19 @@
             </a>
         </div>
 
-        <div class="hp-news-list">
-            @forelse($latestBlogs as $post)
-                <article class="hp-news-item reveal">
+        <div class="hp-news-slider" id="hpNewsSlider">
+
+            <button class="hp-news-arrow hp-news-arrow--prev" id="hpNewsPrev" aria-label="Previous news">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="hp-news-arrow hp-news-arrow--next" id="hpNewsNext" aria-label="Next news">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+
+            @forelse($latestBlogs as $i => $post)
+                <div class="hp-news-slide {{ $i === 0 ? 'is-active' : '' }}" data-news-slide="{{ $i }}">
                     <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-img-wrap">
-                        <img src="{{ $post->featuredImageUrl() ?? '/images/static/arche-uganda-196.jpg' }}" alt="{{ $post->title }}" loading="lazy">
+                        <img src="{{ $post->featuredImageUrl() ?? '/images/static/arche-uganda-196.jpg' }}" alt="{{ $post->title }}" loading="{{ $i === 0 ? 'eager' : 'lazy' }}">
                     </a>
                     <div class="hp-news-body">
                         <div class="hp-news-meta">
@@ -399,37 +406,43 @@
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
                         <p class="hp-news-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->body ?? ''), 160) }}</p>
-                        <a href="{{ route('blog.show', $post->slug) }}" class="hp-card-arrow">Read more →</a>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="hp-news-readmore">
+                            Read More
+                            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
                     </div>
-                </article>
+                </div>
             @empty
                 @foreach([
-                    ['img'=>'/images/static/arche-uganda-196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods and economic independence across Lake Victoria\'s fishing communities.'],
-                    ['img'=>'/images/static/dsc01464-2.jpg','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations — advocating for the rights of women in artisanal fisheries.'],
-                    ['img'=>'/images/static/arche-uganda-195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities across Mukono, Kalangala, and Buvuma.'],
-                ] as $n)
-                    <article class="hp-news-item reveal">
-                        <a href="{{ route('blog.index') }}" class="hp-news-img-wrap">
-                            <img src="{{ $n['img'] }}" alt="{{ $n['title'] }}" loading="lazy">
+                    ['img'=>'/images/static/arche-uganda-196.jpg','tag'=>'Union','date'=>'12 Jun 2025','title'=>'Katosi Women Fish Processors and Traders Union','excerpt'=>'Empowering women in the fish processing and trading sector to build sustainable livelihoods.','url'=>'blog.index'],
+                    ['img'=>'/images/static/dsc01464-2.jpg','tag'=>'Advocacy','date'=>'03 May 2025','title'=>'Reclaiming the Narrative: KWDT at the UN Headquarters','excerpt'=>'A powerful voice for rural communities at global water and fisheries dialogues at the United Nations.','url'=>'blog.index'],
+                    ['img'=>'/images/static/arche-uganda-195.jpg','tag'=>'Health','date'=>'20 Mar 2025','title'=>'KWDT Champions a #PeriodFriendlyWorld','excerpt'=>'Community-driven menstrual health and hygiene solutions making a lasting difference in rural fishing communities.','url'=>'blog.index'],
+                ] as $i => $n)
+                    <div class="hp-news-slide {{ $i === 0 ? 'is-active' : '' }}" data-news-slide="{{ $i }}">
+                        <a href="{{ route($n['url']) }}" class="hp-news-img-wrap">
+                            <img src="{{ $n['img'] }}" alt="{{ $n['title'] }}" loading="{{ $i === 0 ? 'eager' : 'lazy' }}">
                         </a>
                         <div class="hp-news-body">
                             <div class="hp-news-meta">
                                 <span class="hp-news-tag">{{ $n['tag'] }}</span>
                                 <span class="hp-news-date">{{ $n['date'] }}</span>
                             </div>
-                            <h3 class="hp-news-title"><a href="{{ route('blog.index') }}">{{ $n['title'] }}</a></h3>
+                            <h3 class="hp-news-title"><a href="{{ route($n['url']) }}">{{ $n['title'] }}</a></h3>
                             <p class="hp-news-excerpt">{{ $n['excerpt'] }}</p>
-                            <a href="{{ route('blog.index') }}" class="hp-card-arrow">Read more →</a>
+                            <a href="{{ route($n['url']) }}" class="hp-news-readmore">
+                                Read More
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
                         </div>
-                    </article>
+                    </div>
                 @endforeach
             @endforelse
+
         </div>
 
-    </section>
+        <div class="hp-news-dots" id="hpNewsDots"></div>
 
-    {{-- ══════════════════════════════════════════════════════════
-         DONATE SECTION
+    </section>
     ══════════════════════════════════════════════════════════ --}}
     <section class="donate-section" id="donate">
 
@@ -680,34 +693,38 @@
 
             // ── News slider ──────────────────────────────────────
             (function () {
-                const track    = document.getElementById('newsSliderTrack');
-                const dotsWrap = document.getElementById('newsSliderDots');
-                const prev     = document.getElementById('newsSliderPrev');
-                const next     = document.getElementById('newsSliderNext');
-                if (!track) return;
-                const slides = track.querySelectorAll('.hp-news-slide');
-                let idx = 0;
+                var slides   = document.querySelectorAll('[data-news-slide]');
+                var dotsWrap = document.getElementById('hpNewsDots');
+                var prev     = document.getElementById('hpNewsPrev');
+                var next     = document.getElementById('hpNewsNext');
+                if (!slides.length) return;
+                var idx = 0, timer;
 
                 slides.forEach(function (_, i) {
-                    const d = document.createElement('button');
+                    var d = document.createElement('button');
                     d.className = 'hp-news-dot' + (i === 0 ? ' active' : '');
                     d.setAttribute('aria-label', 'Slide ' + (i + 1));
-                    d.addEventListener('click', function () { goTo(i); });
+                    d.addEventListener('click', function () { goTo(i); reset(); });
                     dotsWrap.appendChild(d);
                 });
 
                 function goTo(n) {
+                    slides[idx].classList.remove('is-active');
+                    dotsWrap.children[idx].classList.remove('active');
                     idx = (n + slides.length) % slides.length;
-                    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-                    Array.from(dotsWrap.children).forEach(function (d, i) {
-                        d.classList.toggle('active', i === idx);
-                    });
+                    slides[idx].classList.add('is-active');
+                    dotsWrap.children[idx].classList.add('active');
                 }
 
-                prev.addEventListener('click', function () { goTo(idx - 1); });
-                next.addEventListener('click', function () { goTo(idx + 1); });
+                function reset() {
+                    clearInterval(timer);
+                    timer = setInterval(function () { goTo(idx + 1); }, 6000);
+                }
 
-                setInterval(function () { goTo(idx + 1); }, 6000);
+                prev.addEventListener('click', function () { goTo(idx - 1); reset(); });
+                next.addEventListener('click', function () { goTo(idx + 1); reset(); });
+
+                reset();
             })();
 
             // ── Scroll reveal ────────────────────────────────────────
