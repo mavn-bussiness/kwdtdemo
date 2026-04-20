@@ -27,8 +27,8 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->login()
             ->authGuard('web')
-            ->authorize(fn () => true)
             ->brandName('Katosi Women Development Trust')
             ->brandLogo(fn () => asset('images/kwdt-logo.webp'))
             ->brandLogoHeight('2.5rem')
@@ -75,6 +75,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->authMiddleware([
+                \Filament\Http\Middleware\Authenticate::class,
             ]);
     }
 }
