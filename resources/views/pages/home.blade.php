@@ -59,11 +59,6 @@
         <div class="hero-slide-dots" id="heroSlideDots" aria-hidden="true"></div>
 
         {{-- ── Dynamic slide content panels — one per CMS item ──────── --}}
-        {{--
-            Each panel IS the hero content for that slide.
-            JS toggles .is-active to crossfade between them.
-            Static fallback panel shown when no CMS data exists.
-        --}}
         <div class="hero-slides-content" id="heroSlidesContent">
 
             @if(isset($heroSlides) && count($heroSlides))
@@ -72,12 +67,11 @@
                     <div class="hero-content hero-content--slide {{ $i === 0 ? 'is-active' : '' }}"
                          data-slide-content="{{ $i }}">
 
-                        {{-- Organisation tag + type badge ──────────────── --}}
                         <div class="hero-tag-row">
                             <span class="hero-tag">Katosi Women Development Trust</span>
                             <span class="hero-content-type hero-content-type--{{ $slide['type'] }}">
                                 @if($slide['type'] === 'blog')
-                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-8H7v8M7 4v4h8"/></svg>
+                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z"/></svg>
                                     Latest News
                                 @elseif($slide['type'] === 'project')
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -89,17 +83,16 @@
                             </span>
                         </div>
 
-                        {{-- Main headline — the article/project title ───── --}}
-                        <h1 class="hero-headline">
-                            {{ Str::limit($slide['title'], 80) }}
+                        <h1 class="hero-headline" data-headline="{{ Str::limit($slide['title'], 80) }}">
+                            @foreach(explode(' ', Str::limit($slide['title'], 80)) as $wi => $word)
+                                <span class="word"><span class="word-inner" style="transition-delay: {{ 0.2 + $wi * 0.07 }}s">{{ $word }}</span></span>
+                            @endforeach
                         </h1>
 
-                        {{-- Meta line (date / location / status) ─────────── --}}
                         @if($slide['meta'])
                             <p class="hero-sub hero-sub--meta">{{ $slide['meta'] }}</p>
                         @endif
 
-                        {{-- CTAs ─────────────────────────────────────────── --}}
                         <div class="hero-actions">
                             <a href="{{ $slide['url'] }}" class="btn-primary">
                                 @if($slide['type'] === 'blog') Read Article
@@ -116,20 +109,22 @@
 
             @else
 
-                {{-- Static fallback ──────────────────────────────────── --}}
+                {{-- Static fallback --}}
                 <div class="hero-content hero-content--slide is-active" data-slide-content="0">
                     <div class="hero-tag-row">
                         <span class="hero-tag">Katosi Women Development Trust</span>
-                        <span class="hero-content-type hero-content-type--project">Established 1995</span>
+                        <span class="hero-content-type hero-content-type--project">Est. 1995</span>
                     </div>
                     <h1 class="hero-headline">
-                        Empowering Women<br>in Fisher Communities
+                        @foreach(['Empowering', 'Women', 'in', 'Fisher', 'Communities'] as $wi => $word)
+                            <span class="word"><span class="word-inner" style="transition-delay: {{ 0.2 + $wi * 0.08 }}s">{{ $word }}</span></span>
+                        @endforeach
                     </h1>
-                    <p class="hero-sub hero-sub--meta">
-                        Mukono · Kalangala · Buvuma
-                    </p>
+                    <p class="hero-sub hero-sub--meta">Mukono &middot; Kalangala &middot; Buvuma</p>
                     <div class="hero-actions">
-                        <a href="{{ route('projects.index') }}" class="btn-primary">Our Projects →</a>
+                        <a href="{{ route('projects.index') }}" class="btn-primary">Our Projects
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
                         <a href="{{ route('about.index') }}" class="btn-ghost">About KWDT</a>
                     </div>
                 </div>
@@ -635,16 +630,25 @@
                     dotsWrap.appendChild(d);
                 });
 
+                function resetWords(panel) {
+                    panel.querySelectorAll('.word-inner').forEach(function (w) {
+                        w.style.transform = 'translateY(110%)';
+                        w.style.opacity   = '0';
+                    });
+                }
+
                 function go(n) {
-                    // Background image swap
+                    const oldPanel = document.querySelector('[data-slide-content="' + current + '"]');
+                    if (oldPanel) {
+                        oldPanel.classList.remove('is-active');
+                        // Reset words so they re-animate on next visit
+                        setTimeout(function () { resetWords(oldPanel); }, 400);
+                    }
                     slides[current].classList.remove('active');
                     dotsWrap.children[current] && dotsWrap.children[current].classList.remove('active');
 
-                    // Content panel swap — deactivate old, activate new
-                    const oldPanel = document.querySelector('[data-slide-content="' + current + '"]');
-                    if (oldPanel) oldPanel.classList.remove('is-active');
-
                     current = n;
+
                     slides[current].classList.add('active');
                     dotsWrap.children[current] && dotsWrap.children[current].classList.add('active');
 
@@ -654,7 +658,7 @@
 
                 function reset() {
                     clearInterval(timer);
-                    timer = setInterval(function () { go((current + 1) % slides.length); }, 6000);
+                    timer = setInterval(function () { go((current + 1) % slides.length); }, 7000);
                 }
 
                 reset();
