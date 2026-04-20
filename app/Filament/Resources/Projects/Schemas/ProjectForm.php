@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ProjectForm
 {
@@ -19,10 +20,12 @@ class ProjectForm
     {
         return $schema
             ->components([
-                // ── Content fields ────────────────────────────────────────────
                 TextInput::make('title')
                     ->required()
                     ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) =>
+                        $set('slug', $state ? Str::slug($state) : '')
+                    )
                     ->columnSpan(1),
 
                 TextInput::make('slug')

@@ -110,11 +110,9 @@ class Content extends Model
         if (empty($this->featured_image)) {
             return null;
         }
-
         if (str_starts_with($this->featured_image, 'http')) {
             return $this->featured_image;
         }
-
-        return asset($this->featured_image);
+        return asset('storage/' . ltrim($this->featured_image, '/'));
     }
 }

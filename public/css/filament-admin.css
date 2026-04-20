@@ -666,3 +666,206 @@
     max-width: 26rem !important;
     margin: 0 auto !important;
 }
+
+/* ── Skeleton / shimmer loading — YouTube style ─────────── */
+
+@keyframes kwdt-shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position: 600px 0; }
+}
+
+.kwdt-skeleton {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 37%,
+        #f0f0f0 63%
+    );
+    background-size: 600px 100%;
+    animation: kwdt-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+.dark .kwdt-skeleton {
+    background: linear-gradient(
+        90deg,
+        #1e293b 25%,
+        #273548 37%,
+        #1e293b 63%
+    );
+    background-size: 600px 100%;
+}
+
+/* Filament's built-in wire:loading targets */
+[wire\:loading],
+[wire\:loading\.delay],
+[wire\:loading\.inline-flex] {
+    pointer-events: none;
+}
+
+/* Widget wrapper while Livewire is loading */
+.fi-wi-chart[wire\:loading\.class],
+.fi-wi-stats-overview[wire\:loading\.class],
+.fi-wi-table-widget[wire\:loading\.class] {
+    opacity: 0.6;
+}
+
+/* ── Skeleton placeholders injected while widgets load ───── */
+
+/* Wrap each widget in a relative container so skeleton overlays it */
+.fi-dashboard-widgets .fi-wi-chart,
+.fi-dashboard-widgets .fi-wi-stats-overview,
+.fi-dashboard-widgets .fi-wi-table-widget {
+    position: relative;
+}
+
+/* The skeleton overlay — shown via .kwdt-loading class on the widget */
+.fi-wi-chart.kwdt-loading::after,
+.fi-wi-stats-overview.kwdt-loading::after,
+.fi-wi-table-widget.kwdt-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        rgba(240,240,240,0.9) 25%,
+        rgba(224,224,224,0.9) 37%,
+        rgba(240,240,240,0.9) 63%
+    );
+    background-size: 600px 100%;
+    animation: kwdt-shimmer 1.4s ease infinite;
+    z-index: 10;
+}
+
+.dark .fi-wi-chart.kwdt-loading::after,
+.dark .fi-wi-stats-overview.kwdt-loading::after,
+.dark .fi-wi-table-widget.kwdt-loading::after {
+    background: linear-gradient(
+        90deg,
+        rgba(30,41,59,0.95) 25%,
+        rgba(39,53,72,0.95) 37%,
+        rgba(30,41,59,0.95) 63%
+    );
+    background-size: 600px 100%;
+}
+
+/* ── Stat card skeletons (before data loads) ─────────────── */
+.fi-wi-stats-overview-stat.kwdt-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-label,
+.fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-value,
+.fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-description {
+    color: transparent !important;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 37%,
+        #f0f0f0 63%
+    );
+    background-size: 600px 100%;
+    animation: kwdt-shimmer 1.4s ease infinite;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.dark .fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-label,
+.dark .fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-value,
+.dark .fi-wi-stats-overview-stat.kwdt-loading .fi-wi-stats-overview-stat-description {
+    background: linear-gradient(
+        90deg,
+        #1e293b 25%,
+        #273548 37%,
+        #1e293b 63%
+    );
+    background-size: 600px 100%;
+}
+
+/* ── Livewire native loading indicator on widgets ────────── */
+.fi-wi-chart [wire\:loading],
+.fi-wi-table-widget [wire\:loading] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Table rows skeleton while loading */
+.fi-ta-row.kwdt-loading .fi-ta-cell {
+    color: transparent !important;
+    background: linear-gradient(
+        90deg,
+        #f8fafc 25%,
+        #f0f0f0 37%,
+        #f8fafc 63%
+    ) !important;
+    background-size: 600px 100% !important;
+    animation: kwdt-shimmer 1.4s ease infinite !important;
+    border-radius: 4px;
+}
+
+.dark .fi-ta-row.kwdt-loading .fi-ta-cell {
+    background: linear-gradient(
+        90deg,
+        #162032 25%,
+        #1e293b 37%,
+        #162032 63%
+    ) !important;
+    background-size: 600px 100% !important;
+}
+
+/* ── Filament's own wire:loading spinner — style it orange ── */
+.fi-loading-indicator {
+    color: var(--kwdt-orange) !important;
+}
+
+/* NProgress-style top bar that Filament uses during navigation */
+#nprogress .bar {
+    background: var(--kwdt-orange) !important;
+    height: 3px !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px var(--kwdt-orange), 0 0 5px var(--kwdt-orange) !important;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: var(--kwdt-orange) !important;
+    border-left-color: var(--kwdt-orange) !important;
+}
+
+/* ── Brand logo — login card + sidebar ──────────────────── */
+
+/* Sidebar logo */
+.fi-sidebar-header .fi-logo img,
+.fi-sidebar-header .fi-logo svg {
+    height: 2.75rem !important;
+    width: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+
+/* Login card logo — larger and centred */
+.fi-simple-header .fi-logo img,
+.fi-simple-header .fi-logo svg {
+    height: 5rem !important;
+    width: auto !important;
+    display: block !important;
+    margin: 0 auto 0.5rem !important;
+    object-fit: contain !important;
+}
+
+/* Ensure the logo anchor doesn't collapse */
+.fi-logo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+}
+
+/* Hide the text brand name when a logo image is present */
+.fi-logo:has(img) .fi-brand-name {
+    display: none !important;
+}

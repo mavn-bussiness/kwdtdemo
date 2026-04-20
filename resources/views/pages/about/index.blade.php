@@ -135,8 +135,8 @@
                 @foreach($members as $member)
                     <div class="team-card reveal">
                         <div class="team-card-img">
-                            @if($member->photo_url)
-                                <img src="{{ $member->photo_url }}" alt="{{ $member->name }}" loading="lazy">
+                            @if($member->photoUrl())
+                                <img src="{{ $member->photoUrl() }}" alt="{{ $member->name }}" loading="lazy">
                             @else
                                 <div class="team-initials">
                                     {{ collect(explode(' ', $member->name))->map(fn($w) => strtoupper($w[0]))->take(2)->join('') }}

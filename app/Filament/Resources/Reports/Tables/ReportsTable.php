@@ -25,6 +25,21 @@ class ReportsTable
                     ->searchable()
                     ->wrap(),
 
+                TextColumn::make('content.status')
+                    ->label('Publish Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'published' => 'success',
+                        'draft'     => 'warning',
+                        'archived'  => 'danger',
+                        default     => 'gray',
+                    }),
+
+                TextColumn::make('content.categories.name')
+                    ->label('Categories')
+                    ->badge()
+                    ->separator(','),
+
                 TextColumn::make('file_name')
                     ->label('File')
                     ->searchable(),
@@ -37,6 +52,13 @@ class ReportsTable
                 TextColumn::make('file_size_kb')
                     ->label('Size')
                     ->formatStateUsing(fn ($state) => $state ? $state.' KB' : '—'),
+
+                TextColumn::make('content.published_at')
+                    ->label('Published')
+                    ->date('d M Y')
+                    ->placeholder('—')
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('created_at')
                     ->dateTime()

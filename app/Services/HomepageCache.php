@@ -26,7 +26,7 @@ class HomepageCache
     public static function blogs()
     {
         return static::remember('homepage.blogs', 6 * 60, fn () => Content::published()
-            ->whereIn('type', ['blog', 'news'])
+            ->ofType('blog')
             ->latestPublished()
             ->with('categories')
             ->take(3)

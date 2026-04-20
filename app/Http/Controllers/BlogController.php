@@ -15,14 +15,12 @@ class BlogController extends Controller
             ->with('categories')
             ->first();
 
-        // ── Sidebar: 5 most-recent posts (independent of filters) ────────────
         $recent = Content::published()->ofType('blog')
             ->latestPublished()
             ->with('categories')
             ->take(5)
             ->get();
 
-        // ── Categories with post counts ───────────────────────────────────────
         $categories = Category::whereHas(
             'content',
             fn ($q) => $q->published()->ofType('blog')
@@ -33,7 +31,6 @@ class BlogController extends Controller
             ->orderByDesc('content_count')
             ->get();
 
-        // ── Main paginated post list ──────────────────────────────────────────
         $query = Content::published()->ofType('blog')
             ->latestPublished()
             ->with('categories');
@@ -70,13 +67,13 @@ class BlogController extends Controller
     public function show(string $slug)
     {
         $post = Content::published()
-            ->whereIn('type', ['blog', 'news'])
+            ->ofType('blog')
             ->where('slug', $slug)
             ->with(['categories', 'author', 'media'])
             ->firstOrFail();
 
         $related = Content::published()
-            ->whereIn('type', ['blog', 'news'])
+            ->ofType('blog')
             ->where('id', '!=', $post->id)
             ->whereHas(
                 'categories',
@@ -88,7 +85,7 @@ class BlogController extends Controller
             ->get();
 
         $recent = Content::published()
-            ->whereIn('type', ['blog', 'news'])
+            ->ofType('blog')
             ->where('id', '!=', $post->id)
             ->latestPublished()
             ->with('categories')
@@ -97,7 +94,7 @@ class BlogController extends Controller
 
         $categories = Category::whereHas(
             'content',
-            fn ($q) => $q->published()->whereIn('type', ['blog', 'news'])
+            fn ($q) => $q->published()->ofType('blog')
         )->get();
 
         return view('pages.blog.show', compact(

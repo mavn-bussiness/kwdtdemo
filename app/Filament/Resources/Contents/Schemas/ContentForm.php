@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ContentForm
 {
@@ -17,10 +18,12 @@ class ContentForm
     {
         return $schema
             ->components([
-                // ── Row 1: Title + Slug ──────────────────────────────────────
                 TextInput::make('title')
                     ->required()
                     ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) =>
+                        $set('slug', $state ? Str::slug($state) : '')
+                    )
                     ->columnSpan(1),
 
                 TextInput::make('slug')
@@ -32,15 +35,11 @@ class ContentForm
                 // ── Row 2: Type + Status ─────────────────────────────────────
                 Select::make('type')
                     ->options([
-                        'blog'    => 'Blog Post',
-                        'news'    => 'News',
-                        'event'   => 'Event',
-                        'project' => 'Project',
-                        'report'  => 'Report',
-                        'page'    => 'Static Page',
+                        'blog' => 'Blog Post',
+                        'page' => 'Static Page',
                     ])
                     ->required()
-                    ->helperText('Awards and Thematic Areas are managed in their own sections.')
+                    ->helperText('Events, Projects and Reports are managed in their own sections.')
                     ->columnSpan(1),
 
                 Radio::make('status')

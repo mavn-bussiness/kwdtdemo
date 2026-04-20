@@ -33,6 +33,6 @@ class Award extends Model
             return $this->image_url;
         }
 
-        return asset($this->image_url);
+        return asset('storage/' . ltrim($this->image_url, '/'));
     }
 }

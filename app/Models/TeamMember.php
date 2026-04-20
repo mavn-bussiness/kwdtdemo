@@ -53,4 +53,15 @@ class TeamMember extends Model
     {
         return $query->where('is_active', true)->orderBy('order');
     }
+
+    public function photoUrl(): ?string
+    {
+        if (empty($this->photo_url)) {
+            return null;
+        }
+        if (str_starts_with($this->photo_url, 'http')) {
+            return $this->photo_url;
+        }
+        return asset('storage/' . ltrim($this->photo_url, '/'));
+    }
 }

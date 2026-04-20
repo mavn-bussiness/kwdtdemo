@@ -76,7 +76,7 @@
                         <div class="hero-tag-row">
                             <span class="hero-tag">Katosi Women Development Trust</span>
                             <span class="hero-content-type hero-content-type--{{ $slide['type'] }}">
-                                @if($slide['type'] === 'news')
+                                @if($slide['type'] === 'blog')
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-8H7v8M7 4v4h8"/></svg>
                                     Latest News
                                 @elseif($slide['type'] === 'project')
@@ -102,7 +102,7 @@
                         {{-- CTAs ─────────────────────────────────────────── --}}
                         <div class="hero-actions">
                             <a href="{{ $slide['url'] }}" class="btn-primary">
-                                @if($slide['type'] === 'news') Read Article
+                                @if($slide['type'] === 'blog') Read Article
                                 @elseif($slide['type'] === 'project') View Project
                                 @else Learn More
                                 @endif

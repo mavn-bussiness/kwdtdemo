@@ -32,9 +32,21 @@ class ContentResource extends Resource
 
     protected static int $globalSearchResultsLimit = 5;
 
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+        return $user?->isAdmin() || $user?->isEditor();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->isAdmin() || $user?->isEditor();
+    }
+
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->whereNotIn('type', ['event', 'project', 'report']);
         // Editors only see their own content
         if (auth()->user()?->isEditor()) {
             $query->where('author_id', auth()->id());

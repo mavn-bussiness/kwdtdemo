@@ -22,14 +22,30 @@ class ProjectsTable
                     ->sortable()
                     ->wrap(),
 
-                TextColumn::make('status')
+                TextColumn::make('content.status')
+                    ->label('Publish Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'planned' => 'info',
-                        'ongoing' => 'warning',
-                        'completed' => 'success',
-                        default => 'gray',
+                        'published' => 'success',
+                        'draft'     => 'warning',
+                        'archived'  => 'danger',
+                        default     => 'gray',
                     }),
+
+                TextColumn::make('status')
+                    ->label('Project Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'planned'   => 'info',
+                        'ongoing'   => 'warning',
+                        'completed' => 'success',
+                        default     => 'gray',
+                    }),
+
+                TextColumn::make('content.categories.name')
+                    ->label('Categories')
+                    ->badge()
+                    ->separator(','),
 
                 TextColumn::make('start_date')
                     ->date('d M Y')
@@ -60,6 +76,18 @@ class ProjectsTable
                     ->placeholder('—')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('content.published_at')
+                    ->label('Published')
+                    ->date('d M Y')
+                    ->placeholder('—')
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('content.author.name')
+                    ->label('Author')
+                    ->placeholder('—')
+                    ->toggleable(),
             ])
             ->filters([
                 SelectFilter::make('status')

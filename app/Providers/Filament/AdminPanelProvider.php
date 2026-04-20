@@ -30,10 +30,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->authGuard('web')
-            ->brandName('Katosi Women\nDevelopment Trust')
-            ->brandLogo(secure_asset('images/kwdt-logo.webp'))
+            ->brandName('Katosi Women Development Trust')
+            ->brandLogo(fn () => asset('images/kwdt-logo.webp'))
             ->brandLogoHeight('2.5rem')
-            ->favicon(secure_asset('favicon.ico'))
+            ->favicon(fn () => asset('favicon.ico'))
             ->colors([
                 'primary' => Color::hex('#FF6B00'),
                 'gray'    => Color::Zinc,
@@ -51,7 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => '<link rel="stylesheet" href="'.secure_asset('css/filament-admin.css').(file_exists(public_path('css/filament-admin.css')) ? '?v='.filemtime(public_path('css/filament-admin.css')) : '').'"><style id="login-bg-style"></style>'
+                fn () => '<link rel="stylesheet" href="'.asset('css/filament-admin.css').'?v='.(@filemtime(public_path('css/filament-admin.css')) ?: 1).'">'
             )
             ->renderHook(
                 PanelsRenderHook::BODY_START,

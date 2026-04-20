@@ -80,7 +80,7 @@ class User extends Authenticatable
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role !== null && in_array($this->role, ['admin', 'super_admin', 'editor'], true);
+        return in_array($this->role, ['admin', 'super_admin', 'editor'], true);
     }
 
     public function isSuperAdmin(): bool

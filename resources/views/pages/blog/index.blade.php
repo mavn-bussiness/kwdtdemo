@@ -74,7 +74,7 @@
                             <h2 class="news-post-title">{{ $post->title }}</h2>
                         </a>
 
-                        <p class="news-post-excerpt">{{ $post->excerpt }}</p>
+                        <p class="news-post-excerpt">{!! strip_tags($post->excerpt) !!}</p>
 
                         <a href="{{ route('blog.show', $post->slug) }}" class="news-read-btn">
                             Read more

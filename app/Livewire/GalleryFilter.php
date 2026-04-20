@@ -65,7 +65,7 @@ class GalleryFilter extends Component
         });
 
         // 2. Content featured_image (blog, news, event, project, report)
-        if (in_array($this->filter, ['all', 'news', 'event', 'project', 'blog', 'report'])) {
+        if (in_array($this->filter, ['all', 'event', 'project', 'blog', 'report'])) {
             $contentQuery = Content::whereNotNull('featured_image')
                 ->where('featured_image', '!=', '')
                 ->where('status', 'published');

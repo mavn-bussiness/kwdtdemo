@@ -39,14 +39,14 @@ class HomeController extends Controller
         // ── Slots 0-2 — three latest published blog / news articles ──────────
         try {
             $posts = Content::published()
-                ->whereIn('type', ['blog', 'news'])
+                ->ofType('blog')
                 ->latestPublished()
                 ->take(3)
                 ->get();
 
             foreach ($posts as $post) {
                 $slides[] = [
-                    'type'  => 'news',
+                    'type'  => 'blog',
                     'title' => $post->title,
                     'url'   => route('blog.show', $post->slug),
                     'image' => $post->featured_image ?? null,

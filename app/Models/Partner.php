@@ -41,7 +41,7 @@ class Partner extends Model
         if (! empty($this->attributes['logo_url'])) {
             $val = $this->attributes['logo_url'];
             if (! str_starts_with($val, 'http')) {
-                return asset($val);
+                return asset('storage/' . ltrim($val, '/'));
             }
             return $val;
         }
