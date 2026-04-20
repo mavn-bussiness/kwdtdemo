@@ -120,7 +120,7 @@
 .hero-content-type--event   { background: rgba(255,208,107,.18); color: #ffd06b; border: 1px solid rgba(255,208,107,.25); }
 .hero-content-type--project { background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.2); }
 
-/* ── Headline — word-split animation ─────────────────────────── */
+/* ── Headline ────────────────────────────────────────────────── */
 .hero-headline {
     font-family: var(--font-display);
     font-size: clamp(2.2rem, 4.5vw, 4rem);
@@ -130,26 +130,14 @@
     margin-bottom: 1rem;
     max-width: 18ch;
     letter-spacing: -.01em;
-}
-.hero-headline .word {
-    display: inline-block;
-    overflow: hidden;
-    vertical-align: bottom;
-    margin-right: .22em;
-}
-.hero-headline .word-inner {
-    display: inline-block;
-    transform: translateY(110%);
     opacity: 0;
-    transition:
-        transform .6s var(--ease),
-        opacity   .4s var(--ease);
+    transform: translateY(16px);
+    transition: opacity .55s .1s var(--ease), transform .55s .1s var(--ease);
 }
-.is-active .hero-headline .word-inner {
-    transform: translateY(0);
+.is-active .hero-headline {
     opacity: 1;
+    transform: translateY(0);
 }
-/* Stagger each word via inline style set by JS */
 
 /* ── Meta line ───────────────────────────────────────────────── */
 .hero-sub--meta {
@@ -161,7 +149,7 @@
     line-height: 1.5;
     opacity: 0;
     transform: translateY(10px);
-    transition: opacity .5s .55s var(--ease), transform .5s .55s var(--ease);
+    transition: opacity .5s .3s var(--ease), transform .5s .3s var(--ease);
 }
 .is-active .hero-sub--meta { opacity: 1; transform: translateY(0); }
 
@@ -170,7 +158,7 @@
     display: flex; gap: 1rem; flex-wrap: wrap;
     opacity: 0;
     transform: translateY(10px);
-    transition: opacity .5s .7s var(--ease), transform .5s .7s var(--ease);
+    transition: opacity .5s .45s var(--ease), transform .5s .45s var(--ease);
 }
 .is-active .hero-actions { opacity: 1; transform: translateY(0); }
 

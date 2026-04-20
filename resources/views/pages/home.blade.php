@@ -67,10 +67,8 @@
                     <div class="hero-content hero-content--slide {{ $i === 0 ? 'is-active' : '' }}"
                          data-slide-content="{{ $i }}">
 
-                        <h1 class="hero-headline" data-headline="{{ Str::limit($slide['title'], 80) }}">
-                            @foreach(explode(' ', Str::limit($slide['title'], 80)) as $wi => $word)
-                                <span class="word"><span class="word-inner" style="transition-delay: {{ 0.2 + $wi * 0.07 }}s">{{ $word }}</span></span>
-                            @endforeach
+                        <h1 class="hero-headline">
+                            {{ Str::limit($slide['title'], 80) }}
                         </h1>
 
                         @if($slide['meta'])
@@ -96,9 +94,7 @@
                 {{-- Static fallback --}}
                 <div class="hero-content hero-content--slide is-active" data-slide-content="0">
                     <h1 class="hero-headline">
-                        @foreach(['Empowering', 'Women', 'in', 'Fisher', 'Communities'] as $wi => $word)
-                            <span class="word"><span class="word-inner" style="transition-delay: {{ 0.2 + $wi * 0.08 }}s">{{ $word }}</span></span>
-                        @endforeach
+                        Empowering Women in Fisher Communities
                     </h1>
                     <p class="hero-sub hero-sub--meta">Mukono &middot; Kalangala &middot; Buvuma</p>
                     <div class="hero-actions">
@@ -610,20 +606,9 @@
                     dotsWrap.appendChild(d);
                 });
 
-                function resetWords(panel) {
-                    panel.querySelectorAll('.word-inner').forEach(function (w) {
-                        w.style.transform = 'translateY(110%)';
-                        w.style.opacity   = '0';
-                    });
-                }
-
                 function go(n) {
                     const oldPanel = document.querySelector('[data-slide-content="' + current + '"]');
-                    if (oldPanel) {
-                        oldPanel.classList.remove('is-active');
-                        // Reset words so they re-animate on next visit
-                        setTimeout(function () { resetWords(oldPanel); }, 400);
-                    }
+                    if (oldPanel) oldPanel.classList.remove('is-active');
                     slides[current].classList.remove('active');
                     dotsWrap.children[current] && dotsWrap.children[current].classList.remove('active');
 
