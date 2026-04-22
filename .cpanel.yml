@@ -1,26 +1,10 @@
 ---
 deployment:
   tasks:
-    - export APPPATH=/home/$USER/kwdt
-    - export DEPLOYPATH=/home/$USER/public_html
-
-    # Deploy app files above public_html
-    - /bin/mkdir -p $APPPATH
-    - /bin/cp -R . $APPPATH
-
-    # Copy public/ contents into public_html
-    - /bin/cp -R $APPPATH/public/. $DEPLOYPATH/
-
-    # Generate app_path.php so index.php can locate the app root
-    - /bin/echo "<?php return '$APPPATH';" > $DEPLOYPATH/app_path.php
-
-    # Install PHP dependencies (no dev, optimized)
-    - cd $APPPATH && /usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-    # Laravel setup
-    - cd $APPPATH && /usr/local/bin/php artisan storage:link --force
-    - cd $APPPATH && /usr/local/bin/php artisan migrate --force
-    - cd $APPPATH && /usr/local/bin/php artisan optimize:clear
-    - cd $APPPATH && /usr/local/bin/php artisan config:cache
-    - cd $APPPATH && /usr/local/bin/php artisan route:cache
-    - cd $APPPATH && /usr/local/bin/php artisan view:cache
+    - /usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+    - /usr/local/bin/php artisan storage:link --force
+    - /usr/local/bin/php artisan migrate --force
+    - /usr/local/bin/php artisan optimize:clear
+    - /usr/local/bin/php artisan config:cache
+    - /usr/local/bin/php artisan route:cache
+    - /usr/local/bin/php artisan view:cache

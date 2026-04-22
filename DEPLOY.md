@@ -3,59 +3,53 @@
 ## Prerequisites
 
 - cPanel hosting with PHP 8.4+, MySQL, and Git Version Control enabled
-- SSH access (recommended) or cPanel Terminal
+- SSH access
 
 ## Directory Structure
 
-The app lives **above** `public_html` for security:
-
 ```
 /home/<user>/
-├── kwdt/          ← Laravel app (this repo)
-└── public_html/   ← Only public/ contents served here
+├── kwdt/          ← Laravel app (this repo, cloned by cPanel)
+└── public_html@   ← Symlink to ~/kwdt/public
 ```
 
 ## First-Time Setup
 
-### 1. Clone the repo via cPanel Git Version Control
+### 1. Set up repo in cPanel Git Version Control
 
-In cPanel → Git Version Control → Create, set:
+In cPanel → Git Version Control → Create:
 - Repository path: `/home/<user>/kwdt`
 - Clone URL: your repo URL
 
-### 2. Configure the `.env` file
+### 2. Symlink `public_html` to the app's public folder (SSH, one-time)
 
-```bash
-cp /home/<user>/kwdt/.env.production /home/<user>/kwdt/.env
-```
-
-Edit `/home/<user>/kwdt/.env` and fill in:
-- `APP_KEY` — generate with `php artisan key:generate --show`
-- `APP_URL` — your actual domain
-- `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` — from cPanel MySQL Databases
-- `SESSION_DOMAIN` — your domain (e.g. `yourdomain.com`)
-- `MAIL_*` — your cPanel email or SMTP credentials
-- `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` — live PayPal credentials
-
-### 3. Point `public_html` to the app's public folder
-
-Option A — Symlink (preferred, requires SSH):
 ```bash
 rm -rf ~/public_html
 ln -s ~/kwdt/public ~/public_html
 ```
-With a symlink, `../` in `index.php` resolves correctly — no `app_path.php` needed.
 
-Option B — The `.cpanel.yml` deployment task copies `public/` into `public_html` and auto-generates `public_html/app_path.php` with the correct app root path.
-
-### 5. Set storage permissions
+### 3. Configure `.env`
 
 ```bash
-chmod -R 775 /home/<user>/kwdt/storage
-chmod -R 775 /home/<user>/kwdt/bootstrap/cache
+cp ~/kwdt/.env.production ~/kwdt/.env
 ```
 
-### 6. Run initial setup
+Edit `~/kwdt/.env` and fill in:
+- `APP_KEY` — run `php artisan key:generate --show` to get a value
+- `APP_URL` — your actual domain
+- `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` — from cPanel MySQL Databases
+- `SESSION_DOMAIN` — your domain (e.g. `yourdomain.com`)
+- `MAIL_HOST`, `MAIL_USERNAME`, `MAIL_PASSWORD` — your SMTP credentials
+- `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` — live PayPal credentials
+
+### 4. Set permissions
+
+```bash
+chmod -R 775 ~/kwdt/storage
+chmod -R 775 ~/kwdt/bootstrap/cache
+```
+
+### 5. Run initial setup
 
 ```bash
 cd ~/kwdt
@@ -70,11 +64,11 @@ php artisan view:cache
 
 ## Subsequent Deploys
 
-Push to the connected branch — cPanel Git Version Control will run `.cpanel.yml` automatically.
+Push to `main` — cPanel Git Version Control runs `.cpanel.yml` automatically.
 
-## Build Assets Locally Before Pushing
+## Building Assets
 
-Since cPanel has no Node.js, build assets locally before every push:
+cPanel has no Node.js. Build locally before every push:
 
 ```bash
 npm run build
@@ -83,14 +77,14 @@ git commit -m "chore: build assets"
 git push
 ```
 
-## Queue Worker (Optional)
+## Cron Jobs (Optional)
 
-cPanel Cron Jobs → add:
+Task scheduler — add in cPanel Cron Jobs:
 ```
 * * * * * /usr/local/bin/php /home/<user>/kwdt/artisan schedule:run >> /dev/null 2>&1
 ```
 
-For queue processing, add a cron (or use Supervisor if available):
+Queue worker:
 ```
 */5 * * * * /usr/local/bin/php /home/<user>/kwdt/artisan queue:work --stop-when-empty >> /dev/null 2>&1
 ```
