@@ -11,9 +11,8 @@ deployment:
     # Copy public/ contents into public_html
     - /bin/cp -R $APPPATH/public/. $DEPLOYPATH/
 
-    # Point public_html/index.php to the app above public_html
-    - /bin/sed -i "s|__DIR__.'/../vendor|'$APPPATH/vendor|g" $DEPLOYPATH/index.php
-    - /bin/sed -i "s|__DIR__.'/../bootstrap|'$APPPATH/bootstrap|g" $DEPLOYPATH/index.php
+    # Generate app_path.php so index.php can locate the app root
+    - /bin/echo "<?php return '$APPPATH';" > $DEPLOYPATH/app_path.php
 
     # Install PHP dependencies (no dev, optimized)
     - cd $APPPATH && /usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader

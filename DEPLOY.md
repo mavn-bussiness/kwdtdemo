@@ -44,15 +44,9 @@ Option A — Symlink (preferred, requires SSH):
 rm -rf ~/public_html
 ln -s ~/kwdt/public ~/public_html
 ```
+With a symlink, `../` in `index.php` resolves correctly — no `app_path.php` needed.
 
-Option B — The `.cpanel.yml` deployment task copies `public/` into `public_html` automatically on each deploy.
-
-### 4. Fix `index.php` paths (if using Option B copy approach)
-
-The `.cpanel.yml` patches `index.php` paths automatically. Verify after deploy:
-```bash
-head -5 ~/public_html/index.php
-```
+Option B — The `.cpanel.yml` deployment task copies `public/` into `public_html` and auto-generates `public_html/app_path.php` with the correct app root path.
 
 ### 5. Set storage permissions
 
