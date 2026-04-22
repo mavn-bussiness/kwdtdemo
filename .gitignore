@@ -2,13 +2,12 @@
 /node_modules
 /public/hot
 /public/storage
-# /public/build
 /storage/*.key
 /storage/pail
 /vendor
 .env
 .env.backup
-# .env.production is committed for Laravel Cloud deployment
+# .env.production is committed for reference only — copy to .env on server
 .phpactor.json
 .phpunit.result.cache
 Homestead.json
