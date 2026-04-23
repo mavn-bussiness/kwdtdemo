@@ -47,12 +47,29 @@ Route::get('/terms-of-service', fn () => view('pages.terms'))->name('terms');
 
 Route::get('/debug-auth', function () {
     return response()->json([
-        'authenticated' => auth()->check(),
-        'user'          => auth()->user()?->only('id', 'email', 'role'),
-        'session_id'    => session()->getId(),
-        'app_env'       => app()->environment(),
+        'authenticated'  => auth()->check(),
+        'user'           => auth()->user()?->only('id', 'email', 'role'),
+        'session_id'     => session()->getId(),
+        'session_driver' => config('session.driver'),
+        'session_domain' => config('session.domain'),
+        'secure_cookie'  => config('session.secure'),
+        'app_url'        => config('app.url'),
+        'app_env'        => app()->environment(),
+        'is_secure'      => request()->isSecure(),
+        'trusted_proxy'  => request()->server('HTTP_X_FORWARDED_PROTO'),
     ]);
-})->middleware('auth');
+});
+
+Route::get('/debug-admin-access', function () {
+    $user = auth()->user();
+    return response()->json([
+        'authenticated'    => auth()->check(),
+        'user'             => $user?->only('id', 'email', 'role'),
+        'canAccessPanel'   => $user?->canAccessPanel(app('filament')->getPanel('admin')),
+        'isAdmin'          => $user?->isAdmin(),
+        'isSuperAdmin'     => $user?->isSuperAdmin(),
+    ]);
+});
 
 // ── Newsletter ────────────────────────────────────────────────────────────────────────────────
 
