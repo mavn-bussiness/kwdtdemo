@@ -81,8 +81,7 @@ class User extends Authenticatable
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return in_array($this->role, ['admin', 'super_admin', 'editor'], true)
-                && ! empty($this->email_verified_at);
+            return in_array($this->role, ['admin', 'super_admin', 'editor'], true);
         }
 
         return false;
