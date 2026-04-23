@@ -109,6 +109,13 @@ class DownloadRemoteImages extends Command
 
             foreach (array_unique($matches[0]) as $url) {
                 $storagePath = $this->resolveStoragePath($url, 'images/static');
+
+                if ($storagePath === null) {
+                    $this->warn("  SKIP  (disallowed extension) {$url}");
+                    $this->skipped++;
+                    continue;
+                }
+
                 $publicUrl   = '/storage/' . $storagePath;
 
                 if (Storage::disk('public')->exists($storagePath)) {
@@ -171,6 +178,12 @@ class DownloadRemoteImages extends Command
 
             $storagePath = $this->resolveStoragePath($url, $folder);
 
+            if ($storagePath === null) {
+                $this->warn("  SKIP  (disallowed extension) {$url}");
+                $this->skipped++;
+                continue;
+            }
+
             if (Storage::disk('public')->exists($storagePath)) {
                 $this->line("  EXIST {$storagePath}");
                 if (! $dry) {
@@ -207,14 +220,20 @@ class DownloadRemoteImages extends Command
         }
     }
 
-    private function resolveStoragePath(string $url, string $folder): string
+    private function resolveStoragePath(string $url, string $folder): ?string
     {
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+
         $urlPath  = parse_url($url, PHP_URL_PATH);
         $basename = basename(urldecode($urlPath));
-        // Strip query strings like ?format=500w
         $basename = strtok($basename, '?');
-        $basename = Str::slug(pathinfo($basename, PATHINFO_FILENAME))
-                    . '.' . strtolower(pathinfo($basename, PATHINFO_EXTENSION) ?: 'jpg');
+        $ext      = strtolower(pathinfo($basename, PATHINFO_EXTENSION) ?: 'jpg');
+
+        if (! in_array($ext, $allowedExtensions, true)) {
+            return null;
+        }
+
+        $basename = Str::slug(pathinfo($basename, PATHINFO_FILENAME)) . '.' . $ext;
 
         return "{$folder}/{$basename}";
     }

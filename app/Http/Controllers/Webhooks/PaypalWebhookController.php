@@ -67,6 +67,10 @@ class PaypalWebhookController extends Controller
 
     public function handle(Request $request)
     {
+        if (! $this->paypal->verifyWebhookSignature($request)) {
+            return response()->json(['error' => 'Invalid signature'], 401);
+        }
+
         $payload   = $request->all();
         $eventType = $payload['event_type'] ?? null;
         $resource  = $payload['resource'] ?? [];

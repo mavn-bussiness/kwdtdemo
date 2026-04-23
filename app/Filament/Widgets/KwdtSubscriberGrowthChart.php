@@ -17,16 +17,23 @@ class KwdtSubscriberGrowthChart extends LineChartWidget
         $months = collect(range(5, 0))->map(fn ($i) => now()->subMonths($i));
         $labels = $months->map(fn ($m) => $m->format('M Y'))->toArray();
 
-        $newSubs = $months->map(fn ($m) => NewsletterSubscriber::whereYear('subscribed_at', $m->year)
-            ->whereMonth('subscribed_at', $m->month)
-            ->count()
+        $start = now()->subMonths(5)->startOfMonth();
+
+        $newSubRows = NewsletterSubscriber::where('subscribed_at', '>=', $start)
+            ->selectRaw('YEAR(subscribed_at) as yr, MONTH(subscribed_at) as mo, COUNT(*) as cnt')
+            ->groupByRaw('YEAR(subscribed_at), MONTH(subscribed_at)')
+            ->get()
+            ->keyBy(fn ($r) => $r->yr . '-' . $r->mo);
+
+        $newSubs = $months->map(
+            fn ($m) => (int) ($newSubRows->get($m->year . '-' . $m->month)?->cnt ?? 0)
         )->toArray();
 
         // Cumulative active count as of each month-end (accounts for unsubscribes)
-        $cumulative = $months->map(fn ($m) => NewsletterSubscriber::where('subscribed_at', '<=', $m->copy()->endOfMonth())
+        $cumulative = $months->map(fn ($m) => NewsletterSubscriber::where('subscribed_at', '<=', $m->endOfMonth())
             ->where(fn ($q) => $q
                 ->whereNull('unsubscribed_at')
-                ->orWhere('unsubscribed_at', '>', $m->copy()->endOfMonth())
+                ->orWhere('unsubscribed_at', '>', $m->endOfMonth())
             )
             ->count()
         )->toArray();

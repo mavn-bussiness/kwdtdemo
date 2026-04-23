@@ -139,6 +139,39 @@ class PayPalService
         return ['status' => $status, 'data' => $data];
     }
 
+    /**
+     * Verify a PayPal webhook signature.
+     * Returns true if the signature is valid or if no webhook ID is configured (dev fallback).
+     */
+    public function verifyWebhookSignature(\Illuminate\Http\Request $request): bool
+    {
+        $webhookId = config('services.paypal.webhook_id');
+
+        if (empty($webhookId)) {
+            return true; // skip verification if webhook ID not configured
+        }
+
+        try {
+            $token = $this->getAccessToken();
+
+            $response = \Http::withToken($token)
+                ->withoutVerifying()
+                ->post("{$this->baseUrl}/v1/notifications/verify-webhook-signature", [
+                    'auth_algo'         => $request->header('PAYPAL-AUTH-ALGO'),
+                    'cert_url'          => $request->header('PAYPAL-CERT-URL'),
+                    'transmission_id'   => $request->header('PAYPAL-TRANSMISSION-ID'),
+                    'transmission_sig'  => $request->header('PAYPAL-TRANSMISSION-SIG'),
+                    'transmission_time' => $request->header('PAYPAL-TRANSMISSION-TIME'),
+                    'webhook_id'        => $webhookId,
+                    'webhook_event'     => $request->all(),
+                ]);
+
+            return $response->json('verification_status') === 'SUCCESS';
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
