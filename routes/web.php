@@ -43,6 +43,17 @@ Route::get('/contact', fn () => view('pages.contact'))->name('contact');
 Route::get('/privacy-policy', fn () => view('pages.privacy'))->name('privacy');
 Route::get('/terms-of-service', fn () => view('pages.terms'))->name('terms');
 
+// ── Auth Debug (remove after production diagnosis) ───────────────────────────
+
+Route::get('/debug-auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user'          => auth()->user()?->only('id', 'email', 'role'),
+        'session_id'    => session()->getId(),
+        'app_env'       => app()->environment(),
+    ]);
+})->middleware('auth');
+
 // ── Newsletter ────────────────────────────────────────────────────────────────────────────────
 
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
